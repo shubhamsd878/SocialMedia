@@ -1,0 +1,82 @@
+
+
+body{
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+
+
+}
+.footer{
+
+    margin:auto;
+
+}
+.app{
+    /* background-color: rgb(17, 17, 17); */
+    background-image: url('./component/background-image.jpg');
+    background-color: rgb(0, 0, 0);
+    background-repeat: no-repeat ;
+    background-size: cover;
+    color: white;
+    height: 100vh;
+    /* font-family: 'Open Sans', sans-serif; */
+    /* font-family: 'Nunito', sans-serif; */
+}
+
+.bold-text{
+    /* font-family: 'Open Sans', sans-serif; */
+    /* font-family: sans-serif; */
+    /* font-family: montserrat; */
+    /* font-family: 'Hind', sans-serif; */
+    /* font-family: 'DM Sans', sans-serif; */
+    font-family: '-apple-system', sans-serif;
+    font-size: 28px;
+    font-weight: bold;
+    /* font-family: 'Nunito', sans-serif;
+    /font-family: '-apple-system', sans-serif;
+    font-size: 40px;
+    font-weight: 900 ; */
+    /* font-family: 'Overpass', sans-serif; */
+}
+.montserrat{
+    font-family: 'Montserrat', sans-serif;
+}
+
+.card-heading{
+    text-align: left;
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
+.card-hr{
+    border-top: 0.4rem solid black;
+    align-self: center;
+    width: 92%;
+    margin-top: -0.2rem;
+    margin-bottom: -0.2rem;
+}
+
+
+.top-nav-link{
+    padding: 1.3rem 1.3rem;
+    /* background-color: #ffae00; */
+    border-radius: 5rem;
+    color: white;
+    /* margin-top:"1rem"; */
+    transition-delay: 0.1s;
+    transition-duration: 0.4s;
+}
+
+.top-nav-link:hover{
+    /* color: black; */
+    color: #ffae00;
+    text-decoration-line: underline ;
+}    
+
+.footer{
+    background-color: rgba(255, 255, 255, 0);
+}
+.footer-text-muted{
+    color: #e1e1e1;
+}
