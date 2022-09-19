@@ -1,7 +1,15 @@
 import { Container } from "react-bootstrap";
+import {useNavigate} from 'react-router-dom'
 // import '../App.css'
 
-function View() {
+function LandingPage() {
+
+  const navigate = useNavigate();
+
+  const loginPath = () => {
+    let path = 'home'
+    navigate(path)
+  }
   return (
     <Container>
       {/* <div className="row row-cols-1 row-cols-md-2 mb-3 text-center "> */}
@@ -17,7 +25,7 @@ function View() {
               backgroundColor: "rgba(225, 225, 225, 0.1)",
               position: "fixed",
               right: "8rem",
-              bottom: "20rem",
+              top: "20rem",
               width:'40%'
             }}
           >
@@ -46,8 +54,8 @@ function View() {
                   style={{width:'50%'}}
                 />
                 <br/>
-                <button className="btn btn-outline-success" width='4rem' type="submit">
-                  Sign_Up
+                <button className="btn btn-outline-success" width='4rem' onClick={loginPath} >
+                  Login In
                 </button>
               </form>
             </div>
@@ -78,4 +86,4 @@ function View() {
     </Container>
   );
 }
-export default View;
+export default LandingPage;

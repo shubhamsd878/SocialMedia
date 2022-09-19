@@ -15,6 +15,7 @@ body{
 .app{
     /* background-color: rgb(17, 17, 17); */
     background-image: url('./component/background-image.jpg');
+    background-attachment: fixed;
     background-color: rgb(0, 0, 0);
     background-repeat: no-repeat ;
     background-size: cover;

@@ -1,10 +1,7 @@
-import Footer from "./component/Footer";
-import Header from "./component/Header";
-import View from "./component/View";
+import LandingPage from "./component/LandingPage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Formfordev from "./component/Formfordev";
-import Upper from "./component/Upper";
 import './App.css'
+import Home from "./component/Home";
 function App() {
   return (
     <div className = "app">
@@ -12,12 +9,15 @@ function App() {
     <Routes>
       <Route path="/" element={ 
         <>
-          <Header name="Document" procs="Development" link="/dev" />
-          <Upper name="Document"/> 
-          <View/>
-          <Footer/>
+          <LandingPage/>
         </>}  
-        />
+      />
+      <Route path="/home" element={ 
+        <>
+          <Home />
+        </>}  
+      />
+
     </Routes>
   </BrowserRouter>
   </div>

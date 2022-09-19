@@ -1,0 +1,9 @@
+*{
+    /* background-color: yellow; */
+}
+.column{
+    float: left;
+}
+.post_column{
+    margin-left: 20rem;
+}
