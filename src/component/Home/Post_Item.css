@@ -2,7 +2,7 @@
     /* Add shadows to create the "card" effect */
     width: "36rem";
     margin-top: 2rem;
-    background-color: #fcfcfc;
+    background-color: #ff0000;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     transition: 0.3s;
     border-radius: 5px; /* 5px rounded corners */
@@ -27,4 +27,8 @@ img {
     display:flex;
     flex-direction: row;
     align-items: center;
+  }
+
+  .container > p{
+    margin-top: -2.4%;
   }

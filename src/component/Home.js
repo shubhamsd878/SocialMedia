@@ -4,7 +4,7 @@ import Navbar from './Home/Navbar'
 import Post_Item from './Home/Post_Item'
 const Home = () => {
   return (
-    <div>
+    <div className="home">
         <Navbar />
         <div className='column'>
             <div className='post_column'>
@@ -12,7 +12,7 @@ const Home = () => {
             </div>
         </div>
         <div className="column" >
-            <div style={{position:'sticky', left: '0px', top:'0px'}}> hello world</div>
+            <div className='sticky-column' > hello world</div>
         </div>
     </div>
   )

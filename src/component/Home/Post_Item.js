@@ -25,8 +25,10 @@ const Post_Item = () => {
                     <img className='mx-2' src={require('./icons/_share_icon.png')} alt="Avatar" style={{height:'2.1rem'}} />
                 </div>
                     <div className="container">
-                        <h4><b>John Doe</b></h4>
-                        <p>Architect Engineer</p>
+                        <p>100 likes</p>
+                        {/* <h4><b>John Doe</b></h4> */}
+                        <p>Description of the user..</p>
+                        <p>Comments....</p>
                     </div>
             </div>
                        

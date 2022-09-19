@@ -1,4 +1,3 @@
-import { Container } from "react-bootstrap";
 import {useNavigate} from 'react-router-dom'
 // import '../App.css'
 
@@ -11,8 +10,21 @@ function LandingPage() {
     navigate(path)
   }
   return (
-    <Container>
+    <>
       {/* <div className="row row-cols-1 row-cols-md-2 mb-3 text-center "> */}
+
+      {/* ********************* Upper ************************ */}
+
+      <div className="pricing-header p-1 pb-md-4 mx-auto text-center" style={{marginTop:'2.5rem'}}>
+          {/* <h1 className="montserrat display-4 fw-normal" >Track Your Document</h1> */}
+          {/* <p className="fs-5 text-muted"> An integrated system for tracking Goverment Document of different department. </p> */}
+          <h1 className="montserrat display-4 fw-normal" >Connect to Explore!</h1>
+          <p className="fs-5 text-muted"> A system for conneting to the world at your fingertips connect To experience/ </p>
+        </div>
+
+      {/* ********************* Upper ************************ */}
+
+
 
         <div className="col">
 
@@ -25,7 +37,7 @@ function LandingPage() {
               backgroundColor: "rgba(225, 225, 225, 0.1)",
               position: "fixed",
               right: "8rem",
-              top: "20rem",
+              top: "17rem",
               width:'40%'
             }}
           >
@@ -83,7 +95,7 @@ function LandingPage() {
           </div>
         </div> */}
       {/* </div> */}
-    </Container>
+    </>
   );
 }
 export default LandingPage;
