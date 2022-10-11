@@ -2,7 +2,7 @@ import LandingPage from "./component/LandingPage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import './App.css'
 import Home from "./component/Home";
-import Header from './component/Navbar_Landing_Page'
+// import Header from './component/Navbar_Landing_Page'
 import Navbar_Landing_Page from "./component/Navbar_Landing_Page";
 import Navbar_Home_Page from "./component/Home/Navbar_Home_Page";
 function App() {
