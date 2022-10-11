@@ -1,7 +1,7 @@
-import { Container } from "react-bootstrap";
+// import { Container } from "react-bootstrap";
 // import etrack from "./etrack_night2.png";
 import etrack from "./Logo.png";
-function Header(props) {
+function Navbar_Landing_Page(props) {
   return (
     // <Container>
     <header>
@@ -55,4 +55,4 @@ function Header(props) {
     // </Container>
   );
 }
-export default Header;
+export default Navbar_Landing_Page;
