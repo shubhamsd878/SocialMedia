@@ -1,0 +1,11 @@
+.nav_icon{
+    height: 2rem;
+    transition: all 500ms ease-in-out;
+    filter: invert(99%) sepia(0%) saturate(5805%) hue-rotate(264deg) brightness(110%) contrast(104%);
+}
+.nav_icon:hover{
+    filter: invert(61%) sepia(64%) saturate(2331%) hue-rotate(0deg) brightness(102%) contrast(104%);
+}
+
+
+/* ********************************************* */

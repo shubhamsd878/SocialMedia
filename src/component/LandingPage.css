@@ -1,0 +1,25 @@
+/* .toggler{
+    transition: position linear 1s;
+} */
+.vipul{
+    position: absolute;
+    right: 100%;
+    /* overflow-x: hidden; */
+    z-index: -111;
+    /* background-color:rgb(0, 255, 0); */
+    animation: example 3s forwards;
+}
+
+@keyframes example{
+    from{
+        right:-90%
+    }
+    to{
+        /* background-color:rgb(0, 255, 0); */
+        right:-1%
+    }
+}
+
+.float-left{
+    float: left;
+}
