@@ -62,6 +62,7 @@ function LandingPage() {
 
     if(response.status == 200){
       localStorage.setItem('auth', response.token)
+      window.location.reload()
     }
     
     console.log(response)
