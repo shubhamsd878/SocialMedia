@@ -25,20 +25,6 @@ function App() {
           </div>}  
         />)
       }
-      
-    {/* <Routes>
-      <Route path="/" element={ 
-        <div className='landing' style={{height:'100vh'}}>
-          <Navbar_Landing_Page />
-          <LandingPage/>
-        </div>}  
-      />
-      <Route path="/home" element={ 
-        <div className='home'>
-          <Navbar_Home_Page />
-          <Home />
-        </div>}  
-      /> */}
 
     </Routes>
   </BrowserRouter>
