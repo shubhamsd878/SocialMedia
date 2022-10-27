@@ -3,35 +3,42 @@
 import { useState } from "react";
 import etrack from "../Logo.png";
 import './Navbar_Home_Page.css'
-
+import Nav_search from "./Nav_search";
 function Navbar_Home_Page(props) {
 
-  // const [postForm, setPostForm] = useState({})
+// ******************************* css for search ************************
+
+
+
+
+// ***********************************************************************
+
+// const [postForm, setPostForm] = useState({})
   const [file_post, setFile_post] = useState()
 
   const formData = new FormData();
 
-  const handler_post =(e) =>{
+  const handler_post = (e) => {
     // setPostForm({ ...postForm, [e.target.name]: e.target.file})
     setFile_post(e.target.files[0])
     // console.log('file: ', JSON.stringify(postForm))
-    console.log('file: ', e.target.files[0] )
+    console.log('file: ', e.target.files[0])
   }
 
-  const post = async (e) =>{
+  const post = async (e) => {
     e.preventDefault()
 
     formData.append('file', file_post)
     console.log('formData: ' + JSON.stringify(formData))
     await fetch('http://localhost:3001/posts/add', {
-      method:'POST',
-      headers:{
-        'authtoken':localStorage.getItem('auth')
+      method: 'POST',
+      headers: {
+        'authtoken': localStorage.getItem('auth')
       },
       body: formData
     })
-    .then((response)=>{ return response.json() } )
-    .then((response) => {console.log(response)})
+      .then((response) => { return response.json() })
+      .then((response) => { console.log(response) })
   }
   return (
     // <Container>
@@ -63,6 +70,25 @@ function Navbar_Home_Page(props) {
             ></img>
 
           </a>
+          {/* ******************** search users *************************/}
+          <Nav_search />
+          {/* <div class="boxContainer">
+            <table class="elementsContainer">
+              <tr>
+                <td>
+                  <input type="text" placeholder="Search"
+                    class="search"/>
+                </td>
+                <td >
+                  <a href="#"><i class="material-icons">search</i>
+                  </a>
+                </td>
+              </tr>
+            </table>
+          </div> */}
+
+
+          {/* ******************************************************* */}
           <nav
             className="d-inline-flex mt-4 mt-md-0 ms-md-auto"
             // style={{ marginTop: "2rem", marginRight:'4.2rem'}}
@@ -101,7 +127,7 @@ function Navbar_Home_Page(props) {
 
       {/* Modal */}
 
-      
+
       {/* Modal for file upload*/}
       <div
         className="modal fade"
@@ -113,7 +139,7 @@ function Navbar_Home_Page(props) {
         aria-hidden="true"
 
         // custom
-        style={{color:'black'}}
+        style={{ color: 'black' }}
       >
         <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content">
@@ -129,12 +155,12 @@ function Navbar_Home_Page(props) {
                 aria-label="Close"
               />
             </div>
-            
+
             {/* Main of Modal */}
             <div className="modal-body">
               <input type='file' onChange={handler_post}></input>
             </div>
-            
+
 
             <div className="modal-footer">
               <button
