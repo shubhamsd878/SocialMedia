@@ -32,3 +32,31 @@ img {
   .container > p{
     margin-top: -2.4%;
   }
+
+
+.location{
+  margin:-10px 0px;
+}
+
+.imgSrc{
+  width: 100%;
+}
+
+.color{
+  color: black;
+}
+.userImage{
+  height: 3rem;
+  width: 3rem;
+  border-radius: 30%;
+}
+
+.like{
+  height: 2.1rem;
+}
+.comment{
+  height: 2.3rem;
+}
+.share{
+  height: 2.1rem;
+}
