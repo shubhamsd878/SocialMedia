@@ -64,7 +64,8 @@
 
 /* .search:focus .search-query-container{ */
 /* input.search:focus .search-query-container{ */
-.nav-search-container:focus-within .search-query-container{
+/* .nav-search-container:focus-within .search-query-container{ */
+.nav-search-container:hover .search-query-container{
     display: block;
     position:fixed;
     
