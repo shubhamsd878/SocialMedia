@@ -2,8 +2,8 @@
     /* Add shadows to create the "card" effect */
     width: "36rem";
     margin-top: 2rem;
-    background-color: rgba(0,0,0,0);
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    background-color: rgba(22, 22, 22, 0.959);
+    box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.24);
     transition: 0.3s;
     border-radius: 5px; /* 5px rounded corners */
   }
