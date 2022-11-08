@@ -15,8 +15,8 @@ const Post_Item = (props) => {
 
                 {/* <h6 className='mx-2'> user_name </h6> */}
                 <div className="mx-2">
-                    <h6 className=''> user_name </h6>
-                    <p className='location' >location</p>
+                    <h6 className=''> {props.name} </h6>
+                    <p className='location muted' >location</p>
                 </div>
 
             </div>

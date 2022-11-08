@@ -33,7 +33,7 @@ function Navbar_Home_Page(props) {
     await fetch('http://localhost:3001/posts/add', {
       method: 'POST',
       headers: {
-        'authtoken': localStorage.getItem('auth')
+        'authtoken': localStorage.getItem('authtoken')
       },
       body: formData
     })
@@ -118,6 +118,11 @@ function Navbar_Home_Page(props) {
             >
               <img className='nav_icon' src={require('../../Nav_icons/add_post.png')} />
             </a>
+
+            <button onClick={() => {
+              localStorage.removeItem('authtoken')
+              window.location.reload()
+            }}>Logout</button>
 
           </nav>
         </div>

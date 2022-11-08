@@ -1,11 +1,16 @@
 .card {
     /* Add shadows to create the "card" effect */
-    width: "36rem";
-    margin-top: 2rem;
+    max-width: "36rem";
+    margin-top: 0.6rem;
     background-color: rgba(22, 22, 22, 0.959);
-    box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.24);
+    box-shadow: 0 4px 8px 0 rgba(19, 19, 19, 0.24);
     transition: 0.3s;
-    border-radius: 5px; /* 5px rounded corners */
+    /* border-radius: 5px;  */
+  }
+  /* hover not working */
+  .card:hover{
+    box-shadow: 0 4px 8px 0 rgba(167, 167, 167, 0.24);
+
   }
   /* Add rounded corners to the top left and the top right corner of the image */
 img {
@@ -40,6 +45,8 @@ img {
 
 .imgSrc{
   width: 36rem;
+  max-height: 75vh;
+  object-fit: contain;
 }
 
 .color{

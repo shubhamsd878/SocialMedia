@@ -42,8 +42,8 @@ const Home = () => {
 
       if(response.status == 200){
         setPostdata( response.result )
-        setPostLoading(false)
       }
+      setPostLoading(false)
     }
 
     fetchdata()
@@ -64,7 +64,7 @@ const Home = () => {
           { !postLoading && postData.map( (element)=> {
             return (
               <div key={element.id}>
-                <Post_Item file={ element.file }/>
+                <Post_Item file={ element.file } name={element.uid.name} uid={element.uid}/>
               </div>
             )
           })}
