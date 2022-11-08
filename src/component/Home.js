@@ -28,10 +28,12 @@ const Home = () => {
   useEffect(() => {
     const fetchdata = async () => {
 
-      console.log("ksdl jlsdk jsdklj sdlkjdskl jlksdj flskj")
       setPostLoading(true)
 
       response =  await fetch('http://localhost:3001/posts/fetch', {
+        headers:{
+          authtoken: localStorage.getItem('authtoken')
+        },
         method: 'GET'
       })
       response = await response.json()
@@ -39,7 +41,7 @@ const Home = () => {
       console.log('response: ', response)
 
       if(response.status == 200){
-        setPostdata( response.data )
+        setPostdata( response.result )
         setPostLoading(false)
       }
     }

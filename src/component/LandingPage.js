@@ -61,7 +61,7 @@ function LandingPage() {
     response= await response.json()
 
     if(response.status == 200){
-      localStorage.setItem('auth', response.token)
+      localStorage.setItem('authtoken', response.token)
       window.location.reload()
     }
     

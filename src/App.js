@@ -12,7 +12,7 @@ function App() {
     <div className = "app">
     <BrowserRouter>
     <Routes>
-      { localStorage.getItem('auth') ? 
+      { localStorage.getItem('authtoken') ? 
         (<Route path="/" element={ 
           <div className='home'>
             <Navbar_Home_Page />

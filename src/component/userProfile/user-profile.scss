@@ -107,6 +107,13 @@
             background-color: rgb(184, 184, 184);
 
         }
+
+        .link:first-child{
+            border-radius: 0.6em 0px 0px 0.6em;
+        }
+        .link:last-child{
+            border-radius: 0px 0.6em 0.6em 0px;
+        }
     }
 
     .posts{
