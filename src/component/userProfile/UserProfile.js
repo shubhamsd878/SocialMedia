@@ -1,6 +1,6 @@
 import React from 'react'
 import './user-profile.scss'
-import { Routes, Route, Link } from 'react-router-dom'
+import { Routes, Route, Link, useParams } from 'react-router-dom'
 
 import GridPost from './gridPost/GridPost'
 import coverImg from './temp_userprofile/coverImg.JPG'
@@ -15,7 +15,10 @@ import postImg6 from './temp_userprofile/post6.jpg'
 import Post_Item from './cardPost/Post_Item'
 
 // import 'sass'
-const UserProfile = () => {
+const UserProfile = (props) => {
+
+    const propsParams = useParams()
+    {console.warn('warming' + JSON.stringify(propsParams))}
 
     return (
         <div className='userProfile'>
@@ -28,7 +31,8 @@ const UserProfile = () => {
                 {/* profileImage, Name, x-Followers, profileDescription */}
                 {/* <img className='profileImage'></img> */}
                 <img src={profileImg} className='profileImage'></img>
-                <h3 className='profileName'>Shubham Dahiya</h3>
+                <h3 className='profileName'>Shubham Dahiya {propsParams.id}</h3>
+                {/* <h3 className='profileName'>Shubham Dahiya </h3> */}
                 <h6 className="x-followers">100 Followers</h6>
 
                 <div className="profileFunctions">
@@ -44,8 +48,8 @@ const UserProfile = () => {
             <div className="postOptions">
                 {/* gridView, cardView, savedPosts */}
                 {/* Note: the class link is common in the below link for css */}
-                <Link to='/userprofile' className="gridView link"> Grid View</Link>
-                <Link to='/userprofile/cardView' className="cardView link">Card View</Link>
+                <Link to={`/userprofile/${propsParams.id}`} className="gridView link"> Grid View</Link>
+                <Link to={`/userprofile/${propsParams.id}/cardView`} className="cardView link">Card View</Link>
                 <Link to='' className="savedPost link">Saved Post</Link>
 
             </div>

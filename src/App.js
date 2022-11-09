@@ -27,7 +27,7 @@ function App() {
           </div>}  
         />)
       }
-      <Route path='/userProfile/*' element={<UserProfile /> } />
+      <Route path='/userProfile/:id/*' element={<UserProfile /> } />
       {/* // route for userProfile page */}
     </Routes>
   </BrowserRouter>
