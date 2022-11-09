@@ -18,20 +18,29 @@ import Post_Item from './cardPost/Post_Item'
 const UserProfile = (props) => {
 
     const propsParams = useParams()
-    {console.warn('warming' + JSON.stringify(propsParams))}
+    { console.warn('warming' + JSON.stringify(propsParams)) }
 
     return (
         <div className='userProfile'>
             <div className="profileBackground">
-                <img src={coverImg}></img>
+                <img title='cover image' src={coverImg} alt='coverImage'>
+                </img>
+                <span className="material-symbols-outlined" >
+                    border_color
+                </span>
                 {/* <img ></img> */}
+
             </div>
 
             <div className="profileDetails">
                 {/* profileImage, Name, x-Followers, profileDescription */}
                 {/* <img className='profileImage'></img> */}
-                <img src={profileImg} className='profileImage'></img>
-                <h3 className='profileName'>Shubham Dahiya {propsParams.id}</h3>
+                <img src={profileImg} className='profileImage' />
+                <span id='span_update' className="material-symbols-outlined" >
+                    border_color
+                </span>
+
+                <h3 className='profileName'> <b>Shubham Dahiya </b> {propsParams.id}</h3>
                 {/* <h3 className='profileName'>Shubham Dahiya </h3> */}
                 <h6 className="x-followers">100 Followers</h6>
 
@@ -41,7 +50,18 @@ const UserProfile = (props) => {
                     <button className='follow'>Follow</button>
                 </div>
 
-                <p className="profileDescription"> Lorem ipsum dolor sit elit. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam, veritatis! Lorem ipsum dolor sit amet consectetur, adipisicing elit. Illum, atque? Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor, quas? So, perspiciatis labore saepe.</p>
+                {/* To be in Glass Morphism */}
+                <div className="profileDescription">
+
+                <b>
+                    <p ><u> <i>To be in Glassmorphism</i></u> Lorem ipsum dolor sit elit. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam, veritatis! Lorem ipsum dolor sit amet consectetur, adipisicing elit. Illum, atque? Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor, quas? So, perspiciatis labore saepe.
+                        <span className="material-symbols-outlined" >
+                            border_color
+                        </span>
+                    </p>
+                </b>
+                </div>
+
             </div>
 
 

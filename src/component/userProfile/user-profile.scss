@@ -1,4 +1,4 @@
-.userProfile{
+.userProfile {
     display: flex;
     flex-direction: column;
     gap: 1em;
@@ -7,25 +7,53 @@
     margin-left: auto;
     margin-right: auto;
     background-color: rgb(0, 0, 0);
-    // align: center !important;
-    .profileBackground{
-        img{
-            width:100%;
+
+    .profileBackground {
+        position: relative;
+        z-index: 1;
+
+        height: 13em;
+        // height: calc((100vw - 240px)/6.2 - 1px)
+        img {
+            width: 100%;
             // height: needed to change with width of the window;
             // height: 25em;
-            height: 13em;
+            // height: 13em;
+            height: 100%;
             object-fit: cover;
-            background-color: rgba(0, 255, 255, 0.479);
+            object-position: center;
+            // background-color: rgba(0, 255, 255, 0.479);
             border-radius: 0rem 0rem 1rem 1rem;
-            z-index: 4;
+        }
+
+        span {
+            position: absolute;
+            right: 0.5em;
+            bottom: 0.5em;
+
+            color: #cccccc;
+            padding: 10px;
+            border-radius: 10px;
+            transition: .5s;
+            cursor: pointer;
+        }
+
+        span:hover {
+            color: black;
+            background-color: azure;
         }
     }
-    .profileDetails{
+
+    .profileDetails {
         // display: flex;
         // flex-direction: column;
         // row-gap: 0.3rem;
-        .profileImage{
-            background-color: rgba(255, 255, 255,0.2);
+        z-index: 3;
+
+        position: relative;     // necessary for profile update icon (absolute)
+
+        .profileImage {
+            background-color: rgba(255, 255, 255, 0.2);
             height: 10em;
             width: 10em;
             border-radius: 50%;
@@ -34,32 +62,53 @@
             margin-left: auto !important;
             margin-right: auto;
             margin-top: -12%;
-            z-index: 3;
             padding: 2px;
             border: 2px solid rgb(252, 128, 12);
 
             object-fit: cover;
         }
 
-        .profileName{
+        // particulary for element
+        #span_update{
+            position: absolute;
+            left:48%;
+            top: -5%;
+        }
+
+        // for 2 span_icons, profile + description
+        span{
+            
+            color: #cccccc;
+            padding: 10px;
+            border-radius: 10px;
+            transition: .5s;
+            cursor: pointer;
+        }
+
+        span:hover {
+            color: black;
+            background-color: azure;
+        }
+
+        .profileName {
             width: fit-content;
             margin-left: auto;
             margin-right: auto;
         }
 
-        .x-followers{
+        .x-followers {
             width: fit-content;
             margin-left: auto;
             margin-right: auto;
-        }        
+        }
 
-        .profileFunctions{
+        .profileFunctions {
             display: flex;
             flex-direction: row;
             justify-content: center;
             gap: 3em;
-            
-            button{
+
+            button {
                 border: none;
                 padding: 0.3rem 2rem;
                 border-radius: 1em;
@@ -67,29 +116,40 @@
                 font-weight: 500;
             }
 
-            .message{
+            .message {}
 
-            }
-
-            .follow{
+            .follow {
                 color: white;
                 background-color: rgb(0, 162, 255);
             }
 
         }
 
-        .profileDescription{
+        .profileDescription {
+            
             text-align: justify;
-            margin: 0.3em 6em 0.3em 6em;
+            padding: 0.5em 0.5em 1.1em 0.5em;
+            margin: 0.6em 6em 0.3em 6em;
+            border-radius: 0.6em;
+            position: relative;     // necessary for profile update icon (absolute)
+            border: 1px solid white;
+
+            span{
+                position: absolute;
+                right: 3px;
+                bottom: 3px;
+
+            }
         }
 
     }
-    .postOptions{
+
+    .postOptions {
         display: flex;
         flex-direction: row;
-        
-        .link{
-            border:none;
+
+        .link {
+            border: none;
             background-color: rgb(216, 216, 216);
             width: 100%;
             // height: 3em;
@@ -102,35 +162,38 @@
             text-align: center;
             color: black;
         }
-        .link:hover{
+
+        .link:hover {
             // background-color: rgb(196, 196, 196);
             background-color: rgb(184, 184, 184);
 
         }
 
-        .link:first-child{
+        .link:first-child {
             border-radius: 0.6em 0px 0px 0.6em;
         }
-        .link:last-child{
+
+        .link:last-child {
             border-radius: 0px 0.6em 0.6em 0px;
         }
     }
 
-    .posts{
-        padding-bottom:100px;
+    .posts {
+        padding-bottom: 100px;
         display: grid;
         grid-template-columns: auto auto auto;
         grid-auto-rows: max-content;
         justify-content: space-around;
         align-content: space-around;
         row-gap: 0.3em;
-        .post{
+
+        .post {
             object-fit: contain;
             background-color: transparent;
         }
     }
-    
-    .cardView{
+
+    .cardView {
         margin-left: auto;
         margin-right: auto;
     }
