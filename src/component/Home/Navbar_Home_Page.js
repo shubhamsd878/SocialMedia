@@ -1,6 +1,7 @@
 // import { Container } from "react-bootstrap";
 // import etrack from "./etrack_night2.png";
 import { useState } from "react";
+import {Link} from 'react-router-dom'
 import etrack from "../Logo.png";
 import './Navbar_Home_Page.css'
 import Nav_search from "./Nav_search";
@@ -123,6 +124,8 @@ function Navbar_Home_Page(props) {
               localStorage.removeItem('authtoken')
               window.location.reload()
             }}>Logout</button>
+
+            <Link to={`/userProfile/${localStorage.getItem('uid')}`}> userProfile</Link>
 
           </nav>
         </div>
