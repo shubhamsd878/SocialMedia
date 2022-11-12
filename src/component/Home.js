@@ -1,5 +1,7 @@
 
 import React from 'react'
+import Helmet from 'react-helmet'
+
 import './Home.css'
 import Navbar from './Home/Navbar_Home_Page'
 import Post_Item from './Home/Post_Item'
@@ -56,9 +58,11 @@ const [ imgSrc , setSrc]= useState('imageSRc');
             img.setAttribute('src',`data:image/png;base64,${data.data[i].file}`)
 
             let postItemHeaderMiddle= document.createElement('div');
+            // postItemHeaderMiddle.setAttribute("id","middle");
             postItemHeaderMiddle.classList.add('post_item_header',"my-2")
 
             let like = document.createElement("img")
+            like.setAttribute('id',"liker");
             like.classList.add('mx-2')
             like.classList.add('like')
             like.setAttribute('src',likeicon)
@@ -128,9 +132,25 @@ const [ imgSrc , setSrc]= useState('imageSRc');
         <div className="column" >
             <div className='sticky-column' > hello world</div>
         </div>
+        <Helmet>
+          <script src='domManipulation.js' type='text/javascript'/>
+        </Helmet>
        
     </div>
   )
 }
+
+
+
+const liker= ()=>{
+  console.log('button clicked..');
+}
+const like= document.getElementById('liker');
+console.log(like);
+// like.addEventListener('click',liker)
+{/* <ScriptTag type='text/javascript' src='domManipulation.js'/>  */}
+
+
+
 
 export default Home
