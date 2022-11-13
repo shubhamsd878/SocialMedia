@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import './user-profile.scss'
 import { Routes, Route, Link, useParams } from 'react-router-dom'
 
 import GridPost from './gridPost/GridPost'
-// import Cover from './cover/Cover'
-
-import coverImgg from './temp_userprofile/coverImg.JPG'
+import coverImg from './temp_userprofile/coverImg.JPG'
 import profileImg from './temp_userprofile/profile.jpg'
 
 import postImg1 from './temp_userprofile/post1.jpg'
@@ -15,19 +13,20 @@ import postImg4 from './temp_userprofile/post4.jpg'
 import postImg5 from './temp_userprofile/post5.jpg'
 import postImg6 from './temp_userprofile/post6.jpg'
 import Post_Item from './cardPost/Post_Item'
+import { useEffect } from 'react'
 
 
 const UserProfile = (props) => {
+
+    // const [profileEditable, setProfileEditable] = useState(false)
 
     const propsParams = useParams()
     console.warn('propsParams: ' + JSON.stringify(propsParams))
 
     const profileEditable = propsParams.id === localStorage.getItem('uid') ? true : false
-    const uid = propsParams.id
 
-    // ==================================Cover Methods====================================
 
-    // ---------------------Cover update---------------------------
+    // ---------------------Cover---------------------------
     const [coverChangeFile, setCoverChangeFile] = useState()
     const handleCoverChange = async (e) => {
         setCoverChangeFile(e.target.files[0])
@@ -51,39 +50,8 @@ const UserProfile = (props) => {
     }
     // ---------------------------------------------------
 
-    // ----------------Cover Fetch ---------------
 
-    const [coverImg, setCoverImg] = useState()
-    // fetching cover
-    useEffect(() => {
-
-        async function fetc() {
-
-            let response = await fetch('http://localhost:3001/userDetails/coverPic', {
-                method: 'GET',
-                headers: { uid: uid }
-            })
-
-            response = await response.json()
-
-            console.log('response coverImage:  ', response)
-
-            setCoverImg(response.response.coverPic)
-        }
-
-        fetc()
-    }, [])
-
-
-    // ======================================================================
-
-
-
-
-    // ==================================Profile Methods====================================
-
-
-    // ---------------------Update ProfileImg---------------------------
+    // ---------------------ProfileImg---------------------------
     const [profileChangeFile, setProfileChangeFile] = useState()
     const handleProfileChange = async (e) => {
         setProfileChangeFile(e.target.files[0])
@@ -108,7 +76,7 @@ const UserProfile = (props) => {
     // ---------------------------------------------------
 
 
-    // -----------------------Update Description---------------------
+    // -----------------------Description---------------------
     const [descriptionChange, setDescriptionChange] = useState()
     const handleDescriptionChange = async (e) => {
         setDescriptionChange(e.target.value)
@@ -133,167 +101,75 @@ const UserProfile = (props) => {
     // ---------------------------------------------------
 
 
-
-    // -----------------------Fetching profile Pic-----------------
-
-    const [fetchProfileImg, setFetchProfileImg] = useState()
-    // fetching cover
-    // const uid = localStorage.getItem('uid')
-    useEffect(() => {
-
-        async function fetc() {
-
-            let response = await fetch('http://localhost:3001/userDetails/profilePic', {
-                method: 'GET',
-                headers: { uid: uid }
-            })
-
-            response = await response.json()
-
-            console.log('response FetchProfileImg:  ', response)
-
-            setFetchProfileImg(response.response[0].profilePic)
-            // var coverImg = response.response.coverPic
-            // console.log(srcS)
-            // document.getElementById('coverImg').src = `data:image;base64,${srcS}`
-
-        }
-
-        fetc()
-    }, [])
-
-
-
-
-    // -----------------------Fetching description Pic-----------------
-
-    const [fetchDescription, setFetchDescription] = useState()
-    useEffect(() => {
-
-        async function fetc() {
-
-            let response = await fetch('http://localhost:3001/userDetails/description', {
-                method: 'GET',
-                headers: { uid: uid }
-            })
-
-            response = await response.json()
-
-            console.log('response fetchDescription:  ', response)
-
-            setFetchDescription(response.response.description)
-
-        }
-
-        fetc()
-    }, [])
-
-
-
-
-
     return (
         <div className='userProfile'>
             <div className="profileBackground">
 
-                <div>
+                {/* // ---------------------Cover--------------------------- */}
+                <img title='cover image' src={coverImg} alt='coverImage'>
+                </img>
+                {
+                    profileEditable && (
 
-                    {/* // ---------------------Cover--------------------------- */}
-
-                    {/* if fetchCoverImage then show, else default */}
-                    {coverImg ?
-                        <img title='cover image' src={`data:image;base64,${coverImg}`} alt='coverImage' />
-                        : <img title='cover image' src={coverImgg} alt='coverImage'>
-                        </img>
-                    }
-
-                    {
-                        profileEditable && (
-
-                            <span className="material-symbols-outlined"
-                                //  firing model  
-                                data-bs-toggle="modal" data-bs-target="#staticBackdropForCover">
-                                border_color
-                            </span>
-                        )
-                    }
-                    {/* --------------------------------------------- */}
-
-                </div>
-            </div>
-
-
-
-            <div className="profileDetails">
-
-                <div>
-                    {fetchProfileImg ?
-                        <img title='profile image' className='profileImage' src={`data:image;base64,${fetchProfileImg}`} alt='coverImage' />
-                        // <h1></h1>
-                        : <img title='profile image' className='profileImage' src={profileImg} alt='coverImage'>
-                        </img>
-                    }
-
-                    {profileEditable &&
-                        <span id='span_update' className="material-symbols-outlined"
-                            // firing modal
-                            data-bs-toggle="modal" data-bs-target="#staticBackdropForProfile"
-                        >
+                        <span className="material-symbols-outlined"
+                            //  firing model  
+                            data-bs-toggle="modal" data-bs-target="#staticBackdropForCover">
                             border_color
                         </span>
-                    }
+                    )
+                }
+                {/* --------------------------------------------- */}
 
-                    <h3 className='profileName'> <b>Shubham Dahiya </b> </h3>
-                    {/* <h3 className='profileName'>Shubham Dahiya </h3> */}
-                    <h6 className="x-followers">100 Followers **</h6>
+            </div>
 
-                    {!profileEditable &&
+            <div className="profileDetails">
+                {/* profileImage, Name, x-Followers, profileDescription */}
+                {/* <img className='profileImage'></img> */}
+                <img src={profileImg} className='profileImage' alt='userPrfile' />
 
-                        <div className="profileFunctions">
-                            {/* Follow, ( Message, Follow) */}
-                            <button className='message'>Message</button>
-                            <button className='follow'>Follow</button>
-                        </div>
-                    }
+                {profileEditable &&
+                    <span id='span_update' className="material-symbols-outlined"
+                        // firing modal
+                        data-bs-toggle="modal" data-bs-target="#staticBackdropForProfile"
+                    >
+                        border_color
+                    </span>
+                }
 
-                    {/* To be in Glass Morphism */}
-                    <div className="profileDescription">
+                <h3 className='profileName'> <b>Shubham Dahiya </b> {propsParams.id}</h3>
+                {/* <h3 className='profileName'>Shubham Dahiya </h3> */}
+                <h6 className="x-followers">100 Followers</h6>
 
+                {!profileEditable &&
 
-                        {/* <p ><u> To be in Glassmorphism</u> Lorem ipsum dolor sit elit. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam, veritatis! Lorem ipsum dolor sit amet consectetur, adipisicing elit. Illum, atque? Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor, quas? So, perspiciatis labore saepe. */}
-                        {fetchDescription ?
-                            <b><i>
-                                <p ><u> To be in Glassmorphism</u> {fetchDescription}
-                                </p>
-                            </i></b>
-                            :
-                            <b><i>
-                                <p ><u> To be in Glassmorphism</u> Lorem ipsum dolor sit elit. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam, veritatis! Lorem ipsum dolor sit amet consectetur, adipisicing elit. Illum, atque? Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor, quas? So, perspiciatis labore saepe.
-                                </p>
-                            </i></b>
-                        }
-
-
-                        {profileEditable &&
-
-                            <span className="material-symbols-outlined"
-                                // firing modal
-                                data-bs-toggle="modal" data-bs-target="#staticBackdropForDescription"
-                            >
-                                border_color
-                            </span>
-                        }
-
+                    <div className="profileFunctions">
+                        {/* Follow, ( Message, Follow) */}
+                        <button className='message'>Message</button>
+                        <button className='follow'>Follow</button>
                     </div>
+                }
 
+                {/* To be in Glass Morphism */}
+                <div className="profileDescription">
 
+                    <b>
+                        <p ><u> <i>To be in Glassmorphism</i></u> Lorem ipsum dolor sit elit. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam, veritatis! Lorem ipsum dolor sit amet consectetur, adipisicing elit. Illum, atque? Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor, quas? So, perspiciatis labore saepe.
+                            {profileEditable &&
 
-
+                                <span className="material-symbols-outlined"
+                                    // firing modal
+                                    data-bs-toggle="modal" data-bs-target="#staticBackdropForDescription"
+                                >
+                                    border_color
+                                </span>
+                            }
+                        </p>
+                    </b>
                 </div>
+
             </div>
 
 
-            {/*-------------------------- Post options -> card, grid, saved  ++ posts -----------------------  */}
             <div className="postOptions">
                 {/* gridView, cardView, savedPosts */}
                 {/* Note: the class link is common in the below link for css */}
@@ -330,14 +206,6 @@ const UserProfile = (props) => {
             </Routes>
 
 
-
-
-
-
-
-
-
-            {/* ********************************************************* */}
 
 
 
@@ -395,10 +263,9 @@ const UserProfile = (props) => {
             {/* ********************************************************* */}
 
 
-
             {/* ************************ Modal for profile upload ***************************** */}
-
-            {/* // --------------------- Profile--------------------------- */}
+            
+                {/* // ---------------------Cover--------------------------- */}
             <div
                 className="modal fade"
                 id="staticBackdropForProfile"
@@ -452,10 +319,8 @@ const UserProfile = (props) => {
             {/* ********************************************************* */}
 
 
-
-
-            {/* ************************ Modal for Description upload ***************************** */}
-
+            {/* ************************ Modal for profile upload ***************************** */}
+            
             <div
                 className="modal fade"
                 id="staticBackdropForDescription"
@@ -485,7 +350,8 @@ const UserProfile = (props) => {
 
                         {/* Main of Modal */}
                         <div className="modal-body">
-                            <textarea rows={'4'} defaultValue={fetchDescription} onChange={handleDescriptionChange} style={{ width: '100%' }} />
+                            {/* <input type={'textarea'}  onChange={''}></input> */}
+                            <textarea rows={'4'} onChange={handleDescriptionChange} style={{width:'100%'}}/>
                         </div>
 
 
@@ -507,6 +373,11 @@ const UserProfile = (props) => {
 
 
             {/* ********************************************************* */}
+
+
+
+            {/* ********************************************************* */}
+
 
 
         </div>

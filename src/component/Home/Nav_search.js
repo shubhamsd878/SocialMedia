@@ -1,8 +1,22 @@
-import React from 'react'
+import React, {useState} from 'react'
 import './Nav_search.css'
 import Nav_search_row from './Nav_search_row'
 
 const Nav_search = () => {
+
+    const [searchResults, setSearchResults] = useState()
+
+    const handleSearch= async(e)=>{
+        let result = await fetch('http://localhost:3001/search', {
+            headers: { query: e.target.value }
+        })
+
+        result = await result.json()
+        console.log('search result: ' + JSON.stringify(result))
+        setSearchResults( result.response)
+
+    }
+
     return (
         <div className='nav-search-container'>
             <div className="boxContainer">
@@ -10,7 +24,7 @@ const Nav_search = () => {
                     <tr>
                         <td>
                             <input type="text" placeholder="Search"
-                                className="search" />
+                                onChange={handleSearch} className="search" />
                         </td>
                         <td >
                             <a href="#"><i className="material-icons">search</i>
@@ -23,10 +37,23 @@ const Nav_search = () => {
             {/* ******************** code for search query items ********************* */}
         <div className='search-query-container'>
 
+            { searchResults ?
+                searchResults.map( (element)=> {
+                    return(
+                        <div key={element._id}>
+                            <Nav_search_row _id={element._id} name={element.name} email={element.email} />
+
+                        </div>
+                    )
+                })
+            :
+            <h6>loading..</h6>
+
+            }
+            {/* <Nav_search_row _id name email /> */}
+            {/* <Nav_search_row />
             <Nav_search_row />
-            <Nav_search_row />
-            <Nav_search_row />
-            <Nav_search_row />
+            <Nav_search_row /> */}
 
         </div>
             {/* ********************************************************************* */}
