@@ -26,7 +26,7 @@ const Post_Item = (props) => {
             {/* <img src={avatar} id='img' alt="Avatar" className='imgSrc' /> */}
             {/* user post file */}
             {/* <img src={`data:image/png;base64,${props.file}`} id='img' alt="Avatar" className='imgSrc' /> */}
-            <img src={props.src} id='img' alt="Avatar" className='imgSrc' />
+            <img src={`data:image;base64,${props.src}`} id='img' alt="Avatar" className='imgSrc' />
 
             <div className="post_item_header my-2">
                 <img className='mx-2 like' src={require('../../Home/icons/_like_icon.ico')} alt="Avatar" />

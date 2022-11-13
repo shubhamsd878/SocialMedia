@@ -4,7 +4,7 @@ import './GridPost.scss'
 const GridPost = (props) => {
   return (
     <div className='grid-item'>
-        <img src={props.src} className='post'></img>
+        <img src={`data:image;base64,${props.src}`} className='post'></img>
     </div>
   )
 }

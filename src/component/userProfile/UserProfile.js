@@ -1,19 +1,9 @@
+// check if user exist
 import React, { useState, useEffect } from 'react'
 import './user-profile.scss'
 import { Routes, Route, Link, useParams } from 'react-router-dom'
 
 import GridPost from './gridPost/GridPost'
-// import Cover from './cover/Cover'
-
-import coverImgg from './temp_userprofile/coverImg.JPG'
-import profileImg from './temp_userprofile/profile.jpg'
-
-import postImg1 from './temp_userprofile/post1.jpg'
-import postImg2 from './temp_userprofile/post2.jpg'
-import postImg3 from './temp_userprofile/post3.JPG'
-import postImg4 from './temp_userprofile/post4.jpg'
-import postImg5 from './temp_userprofile/post5.jpg'
-import postImg6 from './temp_userprofile/post6.jpg'
 import Post_Item from './cardPost/Post_Item'
 
 
@@ -24,6 +14,31 @@ const UserProfile = (props) => {
 
     const profileEditable = propsParams.id === localStorage.getItem('uid') ? true : false
     const uid = propsParams.id
+
+    const [isFriend, setIsFriend] = useState(false)
+
+    const [userPosts, setUserPosts] = useState()
+
+    // ---------------------------------isFriend-------------------------------
+    useEffect(() => {
+        async function fetc() {
+            let response = await fetch('http://localhost:3001/follow', {
+                headers: {
+                    authtoken: localStorage.getItem('authtoken'),
+                    targetuid: uid
+                }
+            })
+
+            response = await response.json()
+
+            if (response.isFollowing == true) {
+                setIsFriend(true)
+            }
+        }
+
+        fetc()
+    }, [])
+
 
     // ==================================Cover Methods====================================
 
@@ -190,22 +205,101 @@ const UserProfile = (props) => {
 
 
 
+    // ------------------------------- follow friend ------------------------------
+    async function follow() {
+        if (!localStorage.getItem('authtoken')) {
+            alert("To follow, first signIn!")
+            // return;
+        }
+
+        else {
+
+            const authtoken = localStorage.getItem('authtoken')
+
+            let response = await fetch('http://localhost:3001/follow', {
+                method: 'POST',
+                headers: {
+                    authtoken: authtoken,
+                    targetuid: uid
+                },
+                body: JSON.stringify({ targetUid: uid })
+            })
+
+            response = await response.json()
+
+            console.log('follow successfull: ', response)
+
+            if (response.status == 200) {
+                setIsFriend(true)
+            }
+        }
+
+
+        // fetc()
+    }
+
+
+
+    const unfollow = () => {
+        if (!localStorage.getItem('authtoken')) {
+            alert("To follow, first signIn!")
+            return
+        }
+
+        console.log(JSON.stringify({ targetUid: uid }))
+
+        async function fetc() {
+            let response = await fetch('http://localhost:3001/follow', {
+                method: 'DELETE',
+                headers: {
+                    authtoken: localStorage.getItem('authtoken'),
+                    targetUid: uid
+                },
+                // body: JSON.stringify({ targetUid: uid })
+            })
+
+            response = await response.json()
+
+            console.log('unfollow(): ', response)
+            if (response.status == 200) {
+                setIsFriend(false)
+            }
+        }
+
+
+        fetc()
+    }
+
+
+
+
+    // --------------------------------------- fetch post of current user ----------------------------
+    useEffect(() => {
+        async function fetc() {
+            let response = await fetch('http://localhost:3001/posts/fetchcurrent', {
+                headers: { uid: uid }
+            })
+
+            response = await response.json()
+            setUserPosts(response.result)
+            console.log('response fetch posts: ', response)
+        }
+
+        fetc()
+    }, [])
 
 
     return (
         <div className='userProfile'>
             <div className="profileBackground">
 
-                <div>
+                <div >
 
                     {/* // ---------------------Cover--------------------------- */}
 
                     {/* if fetchCoverImage then show, else default */}
-                    {coverImg ?
-                        <img title='cover image' src={`data:image;base64,${coverImg}`} alt='coverImage' />
-                        : <img title='cover image' src={coverImgg} alt='coverImage'>
-                        </img>
-                    }
+                    <img  className='skeleton-image' src={`data:image;base64,${coverImg}`}  />
+                    
 
                     {
                         profileEditable && (
@@ -227,13 +321,9 @@ const UserProfile = (props) => {
             <div className="profileDetails">
 
                 <div>
-                    {fetchProfileImg ?
-                        <img title='profile image' className='profileImage' src={`data:image;base64,${fetchProfileImg}`} alt='coverImage' />
-                        // <h1></h1>
-                        : <img title='profile image' className='profileImage' src={profileImg} alt='coverImage'>
-                        </img>
-                    }
 
+                    <img title='' className='profileImage skeleton-image' src={`data:image;base64,${fetchProfileImg}`} alt='' />
+                    
                     {profileEditable &&
                         <span id='span_update' className="material-symbols-outlined"
                             // firing modal
@@ -251,8 +341,13 @@ const UserProfile = (props) => {
 
                         <div className="profileFunctions">
                             {/* Follow, ( Message, Follow) */}
-                            <button className='message'>Message</button>
-                            <button className='follow'>Follow</button>
+                            <button className='message' onClick={() => alert("Not completed yet!")}>Message</button>
+
+                            {!isFriend ?
+                                <button className='follow' onClick={follow}>Follow</button>
+                                :
+                                <button className='unfollow' onClick={unfollow}>Following</button>
+                            }
                         </div>
                     }
 
@@ -267,10 +362,12 @@ const UserProfile = (props) => {
                                 </p>
                             </i></b>
                             :
-                            <b><i>
-                                <p ><u> To be in Glassmorphism</u> Lorem ipsum dolor sit elit. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam, veritatis! Lorem ipsum dolor sit amet consectetur, adipisicing elit. Illum, atque? Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor, quas? So, perspiciatis labore saepe.
-                                </p>
-                            </i></b>
+                            // for skeleton-text
+                            <div>
+                                <div className='skeleton-text'></div>
+                                <div className='skeleton-text'></div>
+                                <div className='skeleton-text'></div>
+                            </div>
                         }
 
 
@@ -305,28 +402,39 @@ const UserProfile = (props) => {
 
             <Routes>
                 <Route index element={(
+                    <div>
+                    {!userPosts && 
+                    <div className='posts'> 
 
-                    <div className="posts">
-                        <GridPost src={postImg1} className='' />
-                        <GridPost src={postImg2} className='' />
-                        <GridPost src={postImg3} className='' />
-                        <GridPost src={postImg4} className='' />
-                        <GridPost src={postImg5} className='' />
-                        <GridPost src={postImg6} className='' />
+                    <div className='grid-item-skeleton skeleton-image'>
+
+                    </div>
+                    <div className='grid-item-skeleton skeleton-image'>
+
+                    </div>
+                    <div className='grid-item-skeleton skeleton-image'>
+
+                    </div>
+                    </div>
+                     }
+
+
+                    <div className="posts" >
+                    {/* ------------------------ */}
+                        {userPosts && userPosts.map(element =>
+                            <GridPost key={element._id} _id={element._id} src={element.file} className='' />
+                        )}
+                    </div>
                     </div>
                 )} />
 
-                <Route path='cardView' element={
+                <Route path='cardView' element={(
                     <div className='cardView'>
-
-                        <Post_Item src={postImg1} className='' />
-                        <Post_Item src={postImg2} className='' />
-                        <Post_Item src={postImg3} className='' />
-                        <Post_Item src={postImg4} className='' />
-                        <Post_Item src={postImg5} className='' />
-                        <Post_Item src={postImg6} className='' />
+                        {userPosts && userPosts.map(element =>
+                            <Post_Item key={element._id} uid={element.uid} src={element.file} className='' />
+                        )}
                     </div>
-                } />
+                )} />
             </Routes>
 
 

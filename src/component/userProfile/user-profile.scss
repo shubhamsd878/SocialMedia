@@ -1,3 +1,49 @@
+// skeleton-image loading
+.skeleton-image{
+    animation: skeleton-loading 1s linear infinite alternate;
+}
+
+@keyframes skeleton-loading{
+    0%{
+        background-color: rgba(255, 255, 255, 0.904)
+    }
+    100%{
+        background-color: hsla(0, 0%, 18%, 0.301)
+    }
+}
+
+// skeleton-text loading
+.skeleton-text{
+    height:0.725rem;
+    margin-bottom: 0.325rem;
+    border-radius: 0.300rem;
+    animation: skeleton-loading 1s linear infinite alternate;
+}
+
+.skeleton-text:last-child{
+    width:60%;
+}
+
+
+// for posts 
+.grid-item-skeleton{
+    width: 19.5em;
+    height:21em;
+}
+
+
+@keyframes skeleton-loading{
+    0%{
+        background-color: rgba(255, 255, 255, 0.904)
+    }
+    100%{
+        background-color: hsla(0, 0%, 18%, 0.301)
+    }
+}
+
+
+// -------------------------------------------------------------
+
 .userProfile {
     display: flex;
     flex-direction: column;
@@ -126,6 +172,10 @@
             .follow {
                 color: white;
                 background-color: rgb(0, 162, 255);
+            }
+            .unfollow{
+                color: #ffffff;
+                background-color: rgb(23, 30, 36);
             }
 
         }
