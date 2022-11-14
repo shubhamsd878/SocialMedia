@@ -1,0 +1,18 @@
+.grid-item{
+    text-align: center;
+    // padding: 100%;
+    background-color: rgb(12, 12, 12);
+    height: 100%;
+    width: 100%;
+    transition: 1s;
+    cursor: pointer;
+    .post{
+        width: 19.5em;
+        // height:19.5em;
+        height:21em;
+        
+    }
+}
+.grid-item:hover{
+    background-color: rgb(58, 58, 58);
+}

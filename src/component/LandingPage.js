@@ -1,3 +1,4 @@
+// storing uid leads to bug
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom'
 import './LandingPage.css'
@@ -61,7 +62,9 @@ function LandingPage() {
     response= await response.json()
 
     if(response.status == 200){
-      localStorage.setItem('auth', response.token)
+      localStorage.setItem('authtoken', response.token)
+      // wrong logic, --> bug
+      localStorage.setItem('uid', response.uid)
       window.location.reload()
     }
     

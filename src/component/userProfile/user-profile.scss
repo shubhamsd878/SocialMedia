@@ -1,0 +1,200 @@
+.userProfile {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    min-height: 100vh;
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: rgb(0, 0, 0);
+
+    .profileBackground {
+        position: relative;
+        z-index: 1;
+
+        height: 13em;
+        // height: calc((100vw - 240px)/6.2 - 1px)
+        img {
+            width: 100%;
+            // height: needed to change with width of the window;
+            // height: 25em;
+            // height: 13em;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            // background-color: rgba(0, 255, 255, 0.479);
+            border-radius: 0rem 0rem 1rem 1rem;
+        }
+
+        span {
+            position: absolute;
+            right: 0.5em;
+            bottom: 0.5em;
+
+            color: #cccccc;
+            padding: 10px;
+            border-radius: 10px;
+            transition: .5s;
+            cursor: pointer;
+        }
+
+        span:hover {
+            color: black;
+            background-color: azure;
+        }
+    }
+
+    .profileDetails {
+        // display: flex;
+        // flex-direction: column;
+        // row-gap: 0.3rem;
+        z-index: 3;
+
+        position: relative;     // necessary for profile update icon (absolute)
+
+        .profileImage {
+            background-color: rgba(255, 255, 255, 0.2);
+            height: 10em;
+            width: 10em;
+            border-radius: 50%;
+
+            display: block;
+            margin-left: auto !important;
+            margin-right: auto;
+            margin-top: -12%;
+            padding: 2px;
+            border: 2px solid rgb(252, 128, 12);
+
+            object-fit: cover;
+        }
+
+        // particulary for element
+        #span_update{
+            position: absolute;
+            left:48%;
+            top: -5%;
+        }
+
+        // for 2 span_icons, profile + description
+        span{
+            
+            color: #cccccc;
+            padding: 10px;
+            border-radius: 10px;
+            transition: .5s;
+            cursor: pointer;
+        }
+
+        span:hover {
+            color: black;
+            background-color: azure;
+        }
+
+        .profileName {
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .x-followers {
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .profileFunctions {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            gap: 3em;
+
+            button {
+                border: none;
+                padding: 0.3rem 2rem;
+                border-radius: 1em;
+                text-align: center;
+                font-weight: 500;
+            }
+
+            .message {}
+
+            .follow {
+                color: white;
+                background-color: rgb(0, 162, 255);
+            }
+
+        }
+
+        .profileDescription {
+            
+            text-align: justify;
+            padding: 0.5em 0.5em 1.1em 0.5em;
+            margin: 0.6em 6em 0.3em 6em;
+            border-radius: 0.6em;
+            position: relative;     // necessary for profile update icon (absolute)
+            border: 1px solid white;
+
+            span{
+                position: absolute;
+                right: 3px;
+                bottom: 3px;
+
+            }
+        }
+
+    }
+
+    .postOptions {
+        display: flex;
+        flex-direction: row;
+
+        .link {
+            border: none;
+            background-color: rgb(216, 216, 216);
+            width: 100%;
+            // height: 3em;
+            padding: 0.6em;
+            font-size: 100%;
+            font-weight: 500;
+            border-right: 1px solid black;
+            transition: 1s;
+            text-decoration: none;
+            text-align: center;
+            color: black;
+        }
+
+        .link:hover {
+            // background-color: rgb(196, 196, 196);
+            background-color: rgb(184, 184, 184);
+
+        }
+
+        .link:first-child {
+            border-radius: 0.6em 0px 0px 0.6em;
+        }
+
+        .link:last-child {
+            border-radius: 0px 0.6em 0.6em 0px;
+        }
+    }
+
+    .posts {
+        padding-bottom: 100px;
+        display: grid;
+        grid-template-columns: auto auto auto;
+        grid-auto-rows: max-content;
+        justify-content: space-around;
+        align-content: space-around;
+        row-gap: 0.3em;
+
+        .post {
+            object-fit: contain;
+            background-color: transparent;
+        }
+    }
+
+    .cardView {
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
