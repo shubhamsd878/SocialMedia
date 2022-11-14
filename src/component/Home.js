@@ -38,7 +38,7 @@ const Home = () => {
       })
       response = await response.json()
 
-      console.log('response: ', response)
+      // console.log('response: ', response)
 
       if(response.status == 200){
         setPostdata( response.result )
@@ -64,13 +64,14 @@ const Home = () => {
           { !postLoading && postData.map( (element)=> {
             return (
               <div key={element.id}>
-                <Post_Item file={ element.file } name={element.uid.name} uid={element.uid}/>
+                <Post_Item file={ element.file } email={element.uid.email} name={element.uid.name} uid={element.uid._id}/>
               </div>
             )
           })}
 
         </div>
       </div>
+      
       <div className="column" >
         <div className='sticky-column' > hello world</div>
       </div>
