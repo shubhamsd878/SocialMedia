@@ -1,32 +1,48 @@
-import React, { useState } from 'react'
+// check if user exist
+import React, { useState, useEffect } from 'react'
 import './user-profile.scss'
 import { Routes, Route, Link, useParams } from 'react-router-dom'
 
 import GridPost from './gridPost/GridPost'
-import coverImg from './temp_userprofile/coverImg.JPG'
-import profileImg from './temp_userprofile/profile.jpg'
-
-import postImg1 from './temp_userprofile/post1.jpg'
-import postImg2 from './temp_userprofile/post2.jpg'
-import postImg3 from './temp_userprofile/post3.JPG'
-import postImg4 from './temp_userprofile/post4.jpg'
-import postImg5 from './temp_userprofile/post5.jpg'
-import postImg6 from './temp_userprofile/post6.jpg'
 import Post_Item from './cardPost/Post_Item'
-import { useEffect } from 'react'
 
-// import 'sass'
+
 const UserProfile = (props) => {
-
-    // const [profileEditable, setProfileEditable] = useState(false)
 
     const propsParams = useParams()
     console.warn('propsParams: ' + JSON.stringify(propsParams))
 
-    const profileEditable = propsParams.id == localStorage.getItem('uid') ? true : false
+    const profileEditable = propsParams.id === localStorage.getItem('uid') ? true : false
+    const uid = propsParams.id
+
+    const [isFriend, setIsFriend] = useState(false)
+
+    const [userPosts, setUserPosts] = useState()
+
+    // ---------------------------------isFriend-------------------------------
+    useEffect(() => {
+        async function fetc() {
+            let response = await fetch('http://localhost:3001/follow', {
+                headers: {
+                    authtoken: localStorage.getItem('authtoken'),
+                    targetuid: uid
+                }
+            })
+
+            response = await response.json()
+
+            if (response.isFollowing == true) {
+                setIsFriend(true)
+            }
+        }
+
+        fetc()
+    }, [])
 
 
-    // ---------------------Cover---------------------------
+    // ==================================Cover Methods====================================
+
+    // ---------------------Cover update---------------------------
     const [coverChangeFile, setCoverChangeFile] = useState()
     const handleCoverChange = async (e) => {
         setCoverChangeFile(e.target.files[0])
@@ -50,8 +66,39 @@ const UserProfile = (props) => {
     }
     // ---------------------------------------------------
 
+    // ----------------Cover Fetch ---------------
 
-    // ---------------------ProfileImg---------------------------
+    const [coverImg, setCoverImg] = useState()
+    // fetching cover
+    useEffect(() => {
+
+        async function fetc() {
+
+            let response = await fetch('http://localhost:3001/userDetails/coverPic', {
+                method: 'GET',
+                headers: { uid: uid }
+            })
+
+            response = await response.json()
+
+            console.log('response coverImage:  ', response)
+
+            setCoverImg(response.response.coverPic)
+        }
+
+        fetc()
+    }, [])
+
+
+    // ======================================================================
+
+
+
+
+    // ==================================Profile Methods====================================
+
+
+    // ---------------------Update ProfileImg---------------------------
     const [profileChangeFile, setProfileChangeFile] = useState()
     const handleProfileChange = async (e) => {
         setProfileChangeFile(e.target.files[0])
@@ -76,7 +123,7 @@ const UserProfile = (props) => {
     // ---------------------------------------------------
 
 
-    // -----------------------Description---------------------
+    // -----------------------Update Description---------------------
     const [descriptionChange, setDescriptionChange] = useState()
     const handleDescriptionChange = async (e) => {
         setDescriptionChange(e.target.value)
@@ -101,75 +148,249 @@ const UserProfile = (props) => {
     // ---------------------------------------------------
 
 
+
+    // -----------------------Fetching profile Pic-----------------
+
+    const [fetchProfileImg, setFetchProfileImg] = useState()
+    // fetching cover
+    // const uid = localStorage.getItem('uid')
+    useEffect(() => {
+
+        async function fetc() {
+
+            let response = await fetch('http://localhost:3001/userDetails/profilePic', {
+                method: 'GET',
+                headers: { uid: uid }
+            })
+
+            response = await response.json()
+
+            console.log('response FetchProfileImg:  ', response)
+
+            setFetchProfileImg(response.response[0].profilePic)
+            // var coverImg = response.response.coverPic
+            // console.log(srcS)
+            // document.getElementById('coverImg').src = `data:image;base64,${srcS}`
+
+        }
+
+        fetc()
+    }, [])
+
+
+
+
+    // -----------------------Fetching description Pic-----------------
+
+    const [fetchDescription, setFetchDescription] = useState()
+    useEffect(() => {
+
+        async function fetc() {
+
+            let response = await fetch('http://localhost:3001/userDetails/description', {
+                method: 'GET',
+                headers: { uid: uid }
+            })
+
+            response = await response.json()
+
+            console.log('response fetchDescription:  ', response)
+
+            setFetchDescription(response.response.description)
+
+        }
+
+        fetc()
+    }, [])
+
+
+
+    // ------------------------------- follow friend ------------------------------
+    async function follow() {
+        if (!localStorage.getItem('authtoken')) {
+            alert("To follow, first signIn!")
+            // return;
+        }
+
+        else {
+
+            const authtoken = localStorage.getItem('authtoken')
+
+            let response = await fetch('http://localhost:3001/follow', {
+                method: 'POST',
+                headers: {
+                    authtoken: authtoken,
+                    targetuid: uid
+                },
+                body: JSON.stringify({ targetUid: uid })
+            })
+
+            response = await response.json()
+
+            console.log('follow successfull: ', response)
+
+            if (response.status == 200) {
+                setIsFriend(true)
+            }
+        }
+
+
+        // fetc()
+    }
+
+
+
+    const unfollow = () => {
+        if (!localStorage.getItem('authtoken')) {
+            alert("To follow, first signIn!")
+            return
+        }
+
+        console.log(JSON.stringify({ targetUid: uid }))
+
+        async function fetc() {
+            let response = await fetch('http://localhost:3001/follow', {
+                method: 'DELETE',
+                headers: {
+                    authtoken: localStorage.getItem('authtoken'),
+                    targetUid: uid
+                },
+                // body: JSON.stringify({ targetUid: uid })
+            })
+
+            response = await response.json()
+
+            console.log('unfollow(): ', response)
+            if (response.status == 200) {
+                setIsFriend(false)
+            }
+        }
+
+
+        fetc()
+    }
+
+
+
+
+    // --------------------------------------- fetch post of current user ----------------------------
+    useEffect(() => {
+        async function fetc() {
+            let response = await fetch('http://localhost:3001/posts/fetchcurrent', {
+                headers: { uid: uid }
+            })
+
+            response = await response.json()
+            setUserPosts(response.result)
+            console.log('response fetch posts: ', response)
+        }
+
+        fetc()
+    }, [])
+
+
     return (
         <div className='userProfile'>
             <div className="profileBackground">
 
-                {/* // ---------------------Cover--------------------------- */}
-                <img title='cover image' src={coverImg} alt='coverImage'>
-                </img>
-                {
-                    profileEditable && (
+                <div >
 
-                        <span className="material-symbols-outlined"
-                            //  firing model  
-                            data-bs-toggle="modal" data-bs-target="#staticBackdropForCover">
-                            border_color
-                        </span>
-                    )
-                }
-                {/* --------------------------------------------- */}
+                    {/* // ---------------------Cover--------------------------- */}
 
+                    {/* if fetchCoverImage then show, else default */}
+                    <img  className='skeleton-image' src={`data:image;base64,${coverImg}`}  />
+                    
+
+                    {
+                        profileEditable && (
+
+                            <span className="material-symbols-outlined"
+                                //  firing model  
+                                data-bs-toggle="modal" data-bs-target="#staticBackdropForCover">
+                                border_color
+                            </span>
+                        )
+                    }
+                    {/* --------------------------------------------- */}
+
+                </div>
             </div>
+
+
 
             <div className="profileDetails">
-                {/* profileImage, Name, x-Followers, profileDescription */}
-                {/* <img className='profileImage'></img> */}
-                <img src={profileImg} className='profileImage' alt='userPrfile' />
 
-                {profileEditable &&
-                    <span id='span_update' className="material-symbols-outlined"
-                        // firing modal
-                        data-bs-toggle="modal" data-bs-target="#staticBackdropForProfile"
-                    >
-                        border_color
-                    </span>
-                }
+                <div>
 
-                <h3 className='profileName'> <b>Shubham Dahiya </b> {propsParams.id}</h3>
-                {/* <h3 className='profileName'>Shubham Dahiya </h3> */}
-                <h6 className="x-followers">100 Followers</h6>
+                    <img title='' className='profileImage skeleton-image' src={`data:image;base64,${fetchProfileImg}`} alt='' />
+                    
+                    {profileEditable &&
+                        <span id='span_update' className="material-symbols-outlined"
+                            // firing modal
+                            data-bs-toggle="modal" data-bs-target="#staticBackdropForProfile"
+                        >
+                            border_color
+                        </span>
+                    }
 
-                {!profileEditable &&
+                    <h3 className='profileName'> <b>Shubham Dahiya </b> </h3>
+                    {/* <h3 className='profileName'>Shubham Dahiya </h3> */}
+                    <h6 className="x-followers">100 Followers **</h6>
 
-                    <div className="profileFunctions">
-                        {/* Follow, ( Message, Follow) */}
-                        <button className='message'>Message</button>
-                        <button className='follow'>Follow</button>
-                    </div>
-                }
+                    {!profileEditable &&
 
-                {/* To be in Glass Morphism */}
-                <div className="profileDescription">
+                        <div className="profileFunctions">
+                            {/* Follow, ( Message, Follow) */}
+                            <button className='message' onClick={() => alert("Not completed yet!")}>Message</button>
 
-                    <b>
-                        <p ><u> <i>To be in Glassmorphism</i></u> Lorem ipsum dolor sit elit. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam, veritatis! Lorem ipsum dolor sit amet consectetur, adipisicing elit. Illum, atque? Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor, quas? So, perspiciatis labore saepe.
-                            {profileEditable &&
-
-                                <span className="material-symbols-outlined"
-                                    // firing modal
-                                    data-bs-toggle="modal" data-bs-target="#staticBackdropForDescription"
-                                >
-                                    border_color
-                                </span>
+                            {!isFriend ?
+                                <button className='follow' onClick={follow}>Follow</button>
+                                :
+                                <button className='unfollow' onClick={unfollow}>Following</button>
                             }
-                        </p>
-                    </b>
-                </div>
+                        </div>
+                    }
 
+                    {/* To be in Glass Morphism */}
+                    <div className="profileDescription">
+
+
+                        {/* <p ><u> To be in Glassmorphism</u> Lorem ipsum dolor sit elit. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam, veritatis! Lorem ipsum dolor sit amet consectetur, adipisicing elit. Illum, atque? Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor, quas? So, perspiciatis labore saepe. */}
+                        {fetchDescription ?
+                            <b><i>
+                                <p ><u> To be in Glassmorphism</u> {fetchDescription}
+                                </p>
+                            </i></b>
+                            :
+                            // for skeleton-text
+                            <div>
+                                <div className='skeleton-text'></div>
+                                <div className='skeleton-text'></div>
+                                <div className='skeleton-text'></div>
+                            </div>
+                        }
+
+
+                        {profileEditable &&
+
+                            <span className="material-symbols-outlined"
+                                // firing modal
+                                data-bs-toggle="modal" data-bs-target="#staticBackdropForDescription"
+                            >
+                                border_color
+                            </span>
+                        }
+
+                    </div>
+
+
+
+
+                </div>
             </div>
 
 
+            {/*-------------------------- Post options -> card, grid, saved  ++ posts -----------------------  */}
             <div className="postOptions">
                 {/* gridView, cardView, savedPosts */}
                 {/* Note: the class link is common in the below link for css */}
@@ -181,31 +402,50 @@ const UserProfile = (props) => {
 
             <Routes>
                 <Route index element={(
+                    <div>
+                    {!userPosts && 
+                    <div className='posts'> 
 
-                    <div className="posts">
-                        <GridPost src={postImg1} className='' />
-                        <GridPost src={postImg2} className='' />
-                        <GridPost src={postImg3} className='' />
-                        <GridPost src={postImg4} className='' />
-                        <GridPost src={postImg5} className='' />
-                        <GridPost src={postImg6} className='' />
+                    <div className='grid-item-skeleton skeleton-image'>
+
+                    </div>
+                    <div className='grid-item-skeleton skeleton-image'>
+
+                    </div>
+                    <div className='grid-item-skeleton skeleton-image'>
+
+                    </div>
+                    </div>
+                     }
+
+
+                    <div className="posts" >
+                    {/* ------------------------ */}
+                        {userPosts && userPosts.map(element =>
+                            <GridPost key={element._id} _id={element._id} src={element.file} className='' />
+                        )}
+                    </div>
                     </div>
                 )} />
 
-                <Route path='cardView' element={
+                <Route path='cardView' element={(
                     <div className='cardView'>
-
-                        <Post_Item src={postImg1} className='' />
-                        <Post_Item src={postImg2} className='' />
-                        <Post_Item src={postImg3} className='' />
-                        <Post_Item src={postImg4} className='' />
-                        <Post_Item src={postImg5} className='' />
-                        <Post_Item src={postImg6} className='' />
+                        {userPosts && userPosts.map(element =>
+                            <Post_Item key={element._id} uid={element.uid} src={element.file} className='' />
+                        )}
                     </div>
-                } />
+                )} />
             </Routes>
 
 
+
+
+
+
+
+
+
+            {/* ********************************************************* */}
 
 
 
@@ -263,9 +503,10 @@ const UserProfile = (props) => {
             {/* ********************************************************* */}
 
 
+
             {/* ************************ Modal for profile upload ***************************** */}
-            
-                {/* // ---------------------Cover--------------------------- */}
+
+            {/* // --------------------- Profile--------------------------- */}
             <div
                 className="modal fade"
                 id="staticBackdropForProfile"
@@ -319,8 +560,10 @@ const UserProfile = (props) => {
             {/* ********************************************************* */}
 
 
-            {/* ************************ Modal for profile upload ***************************** */}
-            
+
+
+            {/* ************************ Modal for Description upload ***************************** */}
+
             <div
                 className="modal fade"
                 id="staticBackdropForDescription"
@@ -350,8 +593,7 @@ const UserProfile = (props) => {
 
                         {/* Main of Modal */}
                         <div className="modal-body">
-                            {/* <input type={'textarea'}  onChange={''}></input> */}
-                            <textarea rows={'4'} onChange={handleDescriptionChange} style={{width:'100%'}}/>
+                            <textarea rows={'4'} defaultValue={fetchDescription} onChange={handleDescriptionChange} style={{ width: '100%' }} />
                         </div>
 
 
@@ -373,11 +615,6 @@ const UserProfile = (props) => {
 
 
             {/* ********************************************************* */}
-
-
-
-            {/* ********************************************************* */}
-
 
 
         </div>
