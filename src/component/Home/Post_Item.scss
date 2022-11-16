@@ -1,53 +1,68 @@
 .card {
-    /* Add shadows to create the "card" effect */
-    width: "36rem";
-    margin-top: 2rem;
-    background-color: rgba(0,0,0,0);
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-    transition: 0.3s;
-    border-radius: 5px; /* 5px rounded corners */
-  }
-  /* Add rounded corners to the top left and the top right corner of the image */
-img {
-    border-radius: 5px 5px 0 0;
-  }
-  
-  /* On mouse-over, add a deeper shadow */
-  .card:hover {
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-  }
-  
-  /* Add some padding inside the card container */
-  .container {
-    padding: 2px 16px;
-  }
-
-  /* Post Item Header */
-  .post_item_header{
-    display:flex;
-    flex-direction: row;
-    align-items: center;
-  }
-
-  .container > p{
-    margin-top: -2.4%;
-  }
-
-
-.location{
-  color: #adadad;
-  font-size: 80%;
-  margin:-10px 0px;
+  /* Add shadows to create the "card" effect */
+  width: "36rem";
+  margin-top: 2rem;
+  background-color: rgba(0, 0, 0, 0);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  border-radius: 5px;
+  /* 5px rounded corners */
 }
 
-.imgSrc{
+/* Add rounded corners to the top left and the top right corner of the image */
+img {
+  border-radius: 5px 5px 0 0;
+}
+
+/* On mouse-over, add a deeper shadow */
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+/* Add some padding inside the card container */
+.container {
+  padding: 2px 16px;
+}
+
+/* Post Item Header */
+.post_item_header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+
+.headerLink{
+  color:#ffffff;
+  text-decoration: none;
+  transition: 0.5s;
+}
+.headerLink:hover{
+  color:#d1d1d1;
+  text-decoration: none;
+}
+
+
+.container>p {
+  margin-top: -2.4%;
+}
+
+
+.location {
+  color: #adadad;
+  font-size: 80%;
+  margin: -10px 0px;
+}
+
+.imgSrc {
   width: 36rem;
 }
 
-.color{
+.color {
   color: black;
 }
-.userImage{
+
+.userImage {
   /* height: 3rem;
   width: 3rem; */
   height: 3em !important;
@@ -55,73 +70,84 @@ img {
   border-radius: 50% !important;
 }
 
-.like{
+.like {
   height: 2.1rem;
 }
-.comment{
+
+.comment {
   height: 2.3rem;
 }
-.share{
+
+.share {
   height: 2.1rem;
 }
 
 
 // flex for comments row
-.UserCommentRow{
-  display:flex;
+.UserCommentRow {
+  display: flex;
   align-items: center;
   column-gap: 0.200rem;
   margin-bottom: 1rem;
 
-  .commentBox{
+  .commentBox {
     flex-grow: 2;
     font-size: 0.9rem;
 
-    border-radius:1rem;
+    border-radius: 1rem;
     height: 2.4rem;
     padding: 1rem 0.5rem;
     border: none;
   }
-  .commentBox:focus{
+
+  .commentBox:focus {
     outline: none;
   }
 }
 
-.showCommentsButton{
+.showCommentsButton {
   margin-bottom: 0.1rem;
   margin-top: 2rem;
   cursor: pointer;
 }
 
-.comments-none{
+.comments-none {
   display: none;
 }
-.comments{
+
+.comments {
   max-width: 33rem;
-  
+
   text-align: justify;
-  
-  div{
+
+  div {
     display: flex;
     column-gap: 0.600rem;
-    div{
+
+    div {
       display: flex;
+      width: 100%;
       flex-direction: column;
     }
   }
-  h6{
+
+  h6 {
     margin-bottom: 0rem;
   }
-  p{
+
+  p {
+    width: 100%;
     margin-bottom: 0.20rem;
   }
-  .commentDate{
+
+  .commentDate {
     color: #696969;
     margin-bottom: 0px;
     font-size: 0.7rem;
     text-align: center;
   }
-  hr{
+
+  hr {
     // display: inline;
     margin-top: 0px;
   }

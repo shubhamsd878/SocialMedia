@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import './Nav_search.css'
+import './Nav_search.scss'
 import Nav_search_row from './Nav_search_row'
 
 const Nav_search = () => {
@@ -35,13 +35,13 @@ const Nav_search = () => {
             </div>
 
             {/* ******************** code for search query items ********************* */}
-        <div className='search-query-container'>
+        <div className='search-query-container '>
 
             { searchResults ?
                 searchResults.map( (element)=> {
                     return(
-                        <div key={element._id}>
-                            <Nav_search_row _id={element._id} name={element.name} email={element.email} />
+                        <div  className=''>
+                            <Nav_search_row key={element._id} _id={element._id} name={element.name} email={element.email} />
 
                         </div>
                     )

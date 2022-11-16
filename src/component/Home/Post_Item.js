@@ -1,13 +1,16 @@
+// don't know why body was not sending in fetch api
 import React, { useState, useEffect, useId } from 'react'
+import {Link} from 'react-router-dom'
 import './Post_Item.scss'
 import avatar from './img_avatar.png'
+import Comment_row from './Post_Item/Comment_row'
 
 const Post_Item = (props) => {
     const { pid, file, name, email, uid } = props
     const authtoken = localStorage.getItem('authtoken')
 
     //------------------- fetching profile  ----------------
-    const [fetchProfileImg, setFetchProfileImg] = useState()
+    const [fetchTargetProfileImg, setFetchTargetProfileImg] = useState()
 
     useEffect(() => {
         async function fetc() {
@@ -18,9 +21,9 @@ const Post_Item = (props) => {
             })
 
             response = await response.json()
-            console.log('response search FetchProfileImg:  ', response)
+            console.log('response search FetchTargetProfileImg:  ', response)
 
-            setFetchProfileImg(response.response[0].profilePic)
+            setFetchTargetProfileImg(response.response[0].profilePic)
 
         }
 
@@ -28,29 +31,52 @@ const Post_Item = (props) => {
     }, [])
 
 
-    //   ---------------fetching likes & checking if liked-------------------
-    const [totalLikes, setTotalLikes] = useState('...')
-    const [isLiked, setIsLiked] = useState(false)
+    // ----------------fetch current User-Profile Pic-----------------------
+    const [currUserProfilePic, setCurrUserProfilePic ] = useState()
 
     useEffect(() => {
         async function fetc() {
             // let result = fetch(''
+            let response = await fetch('http://localhost:3001/userDetails/profilePic', {
+                method: 'GET',
+                headers: { uid: localStorage.getItem('uid') }
+            })
+
+            response = await response.json()
+            console.log('response search currUserProfileImg:  ', response)
+
+            setCurrUserProfilePic(response.response[0].profilePic)
+
+        }
+
+        fetc()
+    }, [])
+
+
+
+    //   ---------------fetching likes & checking if liked-------------------
+    const [totalLikes, setTotalLikes] = useState('...')
+    const [isLiked, setIsLiked] = useState(false)
+
+
+
+    useEffect(() => {
+        async function fetc() {
+
             let response = await fetch('http://localhost:3001/likes', {
                 method: 'GET',
                 headers: { pid }
             })
 
             response = await response.json()
-            console.log('response search FetchProfileImg:  ', response)
+            console.log('response search FetchTargetProfileImg:  ', response)
 
             setTotalLikes(response.totalLikes)
 
             if (response.users.includes(localStorage.getItem('uid'))) {
                 setIsLiked(true)
             }
-            // console.log('fetchLike: ', fetchLike)
-            // setFetchLike(response)
-
+            
         }
 
         fetc()
@@ -66,6 +92,7 @@ const Post_Item = (props) => {
         })
 
         response = await response.json()
+        setIsLiked(true)
         console.log('like response: ', response)
     }
 
@@ -79,7 +106,8 @@ const Post_Item = (props) => {
         })
 
         response = await response.json()
-        console.log('unlike response: ', response)
+        setIsLiked(false)
+        // console.log('unlike response: ', response)
     }
 
 
@@ -101,7 +129,7 @@ const Post_Item = (props) => {
     }
 
     const sendComment = async () => {
-        console.log(yourComment)
+        if(!yourComment) return alert('please write something in comment box to submit')
 
         let response = await fetch('http://localhost:3001/comments', {
             method: 'POST',
@@ -111,6 +139,8 @@ const Post_Item = (props) => {
         })
 
         response =await response.json()
+
+        fetchComments()     // to reupdate the comments of post
     }
 
 
@@ -123,25 +153,20 @@ const Post_Item = (props) => {
 
     const [postComments, setPostComments] = useState()
     const fetchComments = async() => {
+
         let response = await fetch('http://localhost:3001/comments', {
             headers: {pid}
         })
 
         response = await response.json()
         setPostComments(response.response)
-        console.log('fetchComments: ', response)
 
     }
 
 
 
 
-
-
-
-
-
-
+// ======================================================================================================
     return (
         <div className='card'>
 
@@ -150,17 +175,21 @@ const Post_Item = (props) => {
                            </div> */}
 
             <div className='post_item_header my-2 mx-3'>
-                {fetchProfileImg ?
-                    <img src={`data:image;base64,${fetchProfileImg}`} alt="img" className="userImage" />
+                {fetchTargetProfileImg ?
+                    <img src={`data:image;base64,${fetchTargetProfileImg}`} alt="img" className="userImage" />
                     :
                     <img src={avatar} alt="img" className="userImage" />
                 }
                 
 
-                <div className="mx-2">
+                <Link to={`/userProfile/${uid}`} className="mx-2 headerLink">
                     <h6 className=''> {name} </h6>
                     <p className='location muted' ><i>{email}</i></p>
-                </div>
+                </Link>
+                {/* <div to={`/userProfile/${uid}`} className="mx-2">
+                    <h6 className=''> {name} </h6>
+                    <p className='location muted' ><i>{email}</i></p>
+                </div> */}
 
             </div>
 
@@ -177,39 +206,34 @@ const Post_Item = (props) => {
             <div className="container">
                 <p>{totalLikes} likes</p>
                 <p id='desc'>Description of the user..</p>
+
+                {/* flex for user to comment */}
                 <div className='UserCommentRow'>
-                    {fetchProfileImg ?
-                        <img src={`data:image;base64,${fetchProfileImg}`} alt="img" className="userImage" />
+                    {currUserProfilePic ?
+                        <img src={`data:image;base64,${currUserProfilePic}`} alt="img" className="userImage" />
                         :
                         <img src={avatar} alt="img" className="userImage" />
                     }
 
                     <input className='commentBox' type='text' name='comment' onChange={commentHandle} placeholder='Enter your comment here....' />
 
-                    <button type='submit' className='commentSubmit' onClick={sendComment} >Comment</button>
+                    <button type='submit' className='commentSubmit' onClick={sendComment} >Post</button>
 
                 </div>
+
                 <p className='showCommentsButton' onClick={ async () => { await toggleComments(); await fetchComments()}}>Comments....</p>
 
                  <div id={`${uniqueId}`} className='comments-none comments '>
 
-                    <div>
-                        {fetchProfileImg ?
-                            <img src={`data:image;base64,${fetchProfileImg}`} alt="img" className="userImage" />
-                            :
-                            <img src={avatar} alt="img" className="userImage" />
-                        }
+                    {/* if no comments then show 'be the first to comment ' */}
 
-                        <div>
-                            <h6><b>Shubham Dahiya</b></h6>
-                            <p>
-                                some comment Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias laboriosam harum, minima commodi adipisci aperiam unde quam quisquam labore odit?
-                            </p>
-                            <p className='commentDate'>20 Jan 2020 at 20:20</p>
-                            <hr></hr>
-                        </div>
-                    </div>
+                    {postComments && postComments.length > 0 ? postComments.map(element => 
+                            <Comment_row key={element._id} uid={element.uid._id} name={element.uid.name} comment={element.comment} date={element.date} />
+                        )
+                    : <h6 style={{textAlign:'center'}}> Be the First to Comment</h6>
+                    }
                 </div>
+
             </div>
 
         </div>

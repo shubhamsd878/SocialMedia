@@ -73,7 +73,6 @@ function LandingPage() {
   
   return (
     <>
-      {/* <div className="row row-cols-1 row-cols-md-2 mb-3 text-center "> */}
 
       {/* ********************* Upper ************************ */}
 

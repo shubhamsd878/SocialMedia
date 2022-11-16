@@ -1,4 +1,4 @@
-// skeleton-image loading
+// ----------------------------skeleton loading -----------------------------------------
 .skeleton-image{
     border: none;
     animation: skeleton-loading 1s linear infinite alternate;
@@ -42,12 +42,16 @@
     }
 }
 
-
-.profile-photo-zindex{
-    z-index: 3;
+.bg-profile-default{
+    background-color: #7e7e7e;
 }
 
-// -------------------------------------------------------------
+.bg-cover-default{
+    background-color: #9c9c9c;
+}
+
+
+// -------------------------------------------------------------------
 
 .userProfile {
     display: flex;
@@ -70,9 +74,7 @@
         // height: calc((100vw - 240px)/6.2 - 1px)
         img {
             width: 100%;
-            // height: needed to change with width of the window;
-            // height: 25em;
-            // height: 13em;
+            
             height: 100%;
             object-fit: cover;
             object-position: center;
@@ -80,11 +82,12 @@
             border-radius: 0rem 0rem 1rem 1rem;
         }
 
+        // update-icon
         span {
             position: absolute;
             right: 0.5em;
             bottom: 0.5em;
-
+        
             color: #cccccc;
             padding: 10px;
             border-radius: 10px;
@@ -92,11 +95,12 @@
             cursor: pointer;
             // z-index: 4;
         }
-
+        
         span:hover {
             color: black;
             background-color: azure;
         }
+        
     }
 
     .profileDetails {
@@ -106,33 +110,33 @@
         // z-index: 3;
 
         
-        .profileImage {
-            background-color: rgba(255, 255, 255, 0.2);
-            height: 10em;
-            width: 10em;
-            border-radius: 50%;
+        // .profileImage {
+        //     background-color: rgba(255, 255, 255, 0.2);
+        //     height: 10em;
+        //     width: 10em;
+        //     border-radius: 50%;
             
-            display: block;
-            margin-left: auto !important;
-            margin-right: auto;
-            margin-top: -12%;
-            padding: 2px;
-            border: 2px solid rgb(252, 128, 12);
+        //     display: block;
+        //     margin-left: auto !important;
+        //     margin-right: auto;
+        //     margin-top: -12%;
+        //     padding: 2px;
+        //     border: 2px solid rgb(252, 128, 12);
             
-        // z-index: 3;
+        // // z-index: 3;
 
-            object-fit: cover;
-        }
+        //     object-fit: cover;
+        // }
 
-        // particulary for element
-        #span_update{
-            position: absolute;
-            left:48%;
-            top: -5%;
+        // // particulary for element
+        // #span_update{
+        //     position: absolute;
+        //     left:48%;
+        //     top: -5%;
 
-        // z-index: 3;
+        // // z-index: 3;
 
-        }
+        // }
 
         // for 2 span_icons, profile + description
         span{
@@ -260,4 +264,55 @@
         margin-left: auto;
         margin-right: auto;
     }
+}
+
+
+
+// code here because z-index creating problem
+.profileImage {
+    background-color: rgba(255, 255, 255, 0.2);
+    height: 10em;
+    width: 10em;
+    border-radius: 50%;
+    
+    display: block;
+    margin-left: auto !important;
+    margin-right: auto;
+    margin-top: -12%;
+    padding: 2px;
+    border: 2px solid rgb(252, 128, 12);
+    
+    object-fit: cover;
+}
+
+// particulary for element
+#span_update{
+    position: absolute;
+    left:48%;
+    
+    bottom:20%;
+
+    z-index: 3;
+    // cursor:pointer;
+
+}
+
+.profileImgg{
+    position: relative;
+    z-index:3;
+}
+
+// --------------------------------- for edit profile
+#span_update {
+
+    color: #cccccc;
+    padding: 10px;
+    border-radius: 10px;
+    transition: .5s;
+    cursor: pointer;
+}
+
+#span_update:hover {
+    color: black;
+    background-color: azure;
 }

@@ -57,14 +57,15 @@
     background-color: white;
     color:black;
     width:23em;
-    /* height: 100%; */
-    /* left:-4em */
+    
     margin-left: -4em;
 }
 
-/* .search:focus .search-query-container{ */
-/* input.search:focus .search-query-container{ */
-    /* .nav-search-container:hover .search-query-container{ */
+
+
+
+
+
 .nav-search-container:focus-within .search-query-container{
     display: block;
     position:fixed;
@@ -105,6 +106,25 @@
 .search_user_name{
     color:black;
     text-decoration: none;
+
+    margin: 0px;
 }
 
-.search_userDetails{}
+.search_userDetails{
+    h6{
+        margin: 0px;
+        padding-top: 0.200rem;
+    }
+    p{
+        margin: 0px;
+    }
+}
+
+// .post_item_header:first-child{
+//     margin-top: 0rem;
+// }
+.post_item_header{
+    padding-top: 0.3em;
+    padding-bottom: 0.3em;
+    border-bottom: 0.4px solid rgba(0, 0, 0, 0.149);
+}
