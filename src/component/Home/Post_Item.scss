@@ -64,3 +64,65 @@ img {
 .share{
   height: 2.1rem;
 }
+
+
+// flex for comments row
+.UserCommentRow{
+  display:flex;
+  align-items: center;
+  column-gap: 0.200rem;
+  margin-bottom: 1rem;
+
+  .commentBox{
+    flex-grow: 2;
+    font-size: 0.9rem;
+
+    border-radius:1rem;
+    height: 2.4rem;
+    padding: 1rem 0.5rem;
+    border: none;
+  }
+  .commentBox:focus{
+    outline: none;
+  }
+}
+
+.showCommentsButton{
+  margin-bottom: 0.1rem;
+  margin-top: 2rem;
+  cursor: pointer;
+}
+
+.comments-none{
+  display: none;
+}
+.comments{
+  max-width: 33rem;
+  
+  text-align: justify;
+  
+  div{
+    display: flex;
+    column-gap: 0.600rem;
+    div{
+      display: flex;
+      flex-direction: column;
+    }
+  }
+  h6{
+    margin-bottom: 0rem;
+  }
+  p{
+    margin-bottom: 0.20rem;
+  }
+  .commentDate{
+    color: #696969;
+    margin-bottom: 0px;
+    font-size: 0.7rem;
+    text-align: center;
+  }
+  hr{
+    // display: inline;
+    margin-top: 0px;
+  }
+}

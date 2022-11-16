@@ -63,8 +63,8 @@ const Home = () => {
           
           { !postLoading && postData.map( (element)=> {
             return (
-              <div key={element.id}>
-                <Post_Item file={ element.file } email={element.uid.email} name={element.uid.name} uid={element.uid._id}/>
+              <div key={element._id}>
+                <Post_Item pid={element._id} file={ element.file } email={element.uid.email} name={element.uid.name} uid={element.uid._id}/>
               </div>
             )
           })}
