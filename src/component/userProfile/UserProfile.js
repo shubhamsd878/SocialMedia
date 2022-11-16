@@ -180,7 +180,7 @@ const UserProfile = (props) => {
 
 
 
-    // -----------------------Fetching description Pic-----------------
+    // -----------------------Fetching description -----------------
 
     const [fetchDescription, setFetchDescription] = useState()
     useEffect(() => {
@@ -202,6 +202,33 @@ const UserProfile = (props) => {
 
         fetc()
     }, [])
+
+
+
+
+    // ------------------------------- fetching name ------------------------------
+    const [userName, setUserName] = useState()
+    useEffect(() => {
+
+        async function fetc() {
+
+            let response = await fetch('http://localhost:3001/userDetails/name', {
+                method: 'GET',
+                headers: { uid: uid }
+            })
+
+            response = await response.json()
+            console.log('response userName: ', response)
+
+            setUserName(response.result.name)
+        }
+
+        fetc()
+    }, [])
+
+
+
+
 
 
 
@@ -298,7 +325,11 @@ const UserProfile = (props) => {
                     {/* // ---------------------Cover--------------------------- */}
 
                     {/* if fetchCoverImage then show, else default */}
-                    <img  className='skeleton-image' src={`data:image;base64,${coverImg}`}  />
+                    { coverImg?
+                    <img  className='skeleton-image' src={`data:image;base64,${coverImg}`} alt='' />
+                    :<div className='skeleton-image' style={{borderRadius:'0rem 0rem 1rem 1rem'}} />
+                    }
+                    {/* <img  className='skeleton-image' src={`data:image;base64,${coverImg}`} alt='' /> */}
                     
 
                     {
@@ -321,8 +352,14 @@ const UserProfile = (props) => {
             <div className="profileDetails">
 
                 <div>
+                    <div className="profile-photo-zindex" >
 
-                    <img title='' className='profileImage skeleton-image' src={`data:image;base64,${fetchProfileImg}`} alt='' />
+                    {fetchProfileImg ?
+                        <img title='' className='profileImage skeleton-image' src={`data:image;base64,${fetchProfileImg}`} alt='' />
+                    :
+                        <div className='profileImage skeleton-image' />
+                    }
+                    {/* <img title='' className='profileImage skeleton-image' src={`data:image;base64,${fetchProfileImg}`} alt='' /> */}
                     
                     {profileEditable &&
                         <span id='span_update' className="material-symbols-outlined"
@@ -332,9 +369,13 @@ const UserProfile = (props) => {
                             border_color
                         </span>
                     }
+                    </div>
 
-                    <h3 className='profileName'> <b>Shubham Dahiya </b> </h3>
-                    {/* <h3 className='profileName'>Shubham Dahiya </h3> */}
+                    {/* <h3 className='profileName'> <b>Shubham Dahiya </b> </h3> */}
+                    {userName ?
+                        <h3 className='profileName'> <b> {userName}</b> </h3>
+                    :   <h3 className='profileName skeleton-text' style={{width:'20%', height:'1.700rem', marginTop:'0.435rem'}}></h3>
+                    }
                     <h6 className="x-followers">100 Followers **</h6>
 
                     {!profileEditable &&

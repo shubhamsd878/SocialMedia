@@ -5,7 +5,30 @@ const Nav_search_row = (props) => {
 
   const {_id, name, email} = props
 
-  // const [userImg, setUserImg] = useState()
+  const [isFriend, setIsFriend] = useState(false)
+
+    // ---------------------------------isFriend-------------------------------
+    useEffect(() => {
+      async function fetc() {
+          let response = await fetch('http://localhost:3001/follow', {
+              headers: {
+                  authtoken: localStorage.getItem('authtoken'),
+                  targetuid: _id
+              }
+          })
+
+          response = await response.json()
+
+          if (response.isFollowing == true) {
+              setIsFriend(true)
+          }
+      }
+
+      fetc()
+  }, [])
+
+//   --------------------- fetch image ------------------------
+
   const [fetchProfileImg, setFetchProfileImg] = useState()
 
   useEffect( ()=> {
@@ -17,15 +40,81 @@ const Nav_search_row = (props) => {
     })
 
     response = await response.json()
-
-    console.log('response search FetchProfileImg:  ', response)
+    // console.log('response search FetchProfileImg:  ', response)
 
     setFetchProfileImg(response.response[0].profilePic)
-
     }
 
     fetc()
   }, [])
+
+
+
+      // ------------------------------- follow friend ------------------------------
+      async function follow() {
+        if (!localStorage.getItem('authtoken')) {
+            alert("To follow, first signIn!")
+            // return;
+        }
+
+        else {
+
+            const authtoken = localStorage.getItem('authtoken')
+
+            let response = await fetch('http://localhost:3001/follow', {
+                method: 'POST',
+                headers: {
+                    authtoken: authtoken,
+                    targetuid: _id
+                },
+                // body: JSON.stringify({ targetUid: uid })
+            })
+
+            response = await response.json()
+
+            console.log('follow successfull: ', response)
+
+            if (response.status == 200) {
+                setIsFriend(true)
+            }
+        }
+
+
+        // fetc()
+    }
+
+
+
+    const unfollow = () => {
+        if (!localStorage.getItem('authtoken')) {
+            alert("To follow, first signIn!")
+            return
+        }
+
+        console.log(JSON.stringify({ targetUid: _id }))
+
+        async function fetc() {
+            let response = await fetch('http://localhost:3001/follow', {
+                method: 'DELETE',
+                headers: {
+                    authtoken: localStorage.getItem('authtoken'),
+                    targetUid: _id
+                },
+                // body: JSON.stringify({ targetUid: uid })
+            })
+
+            response = await response.json()
+
+            console.log('unfollow(): ', response)
+            if (response.status == 200) {
+                setIsFriend(false)
+            }
+        }
+
+
+        fetc()
+    }
+
 
   
   return (
@@ -37,8 +126,6 @@ const Nav_search_row = (props) => {
                       <img src={`data:image;base64,${fetchProfileImg}`} alt="img" className="userImage" />
                       :
                       <img src={require('./img_avatar.png')} alt="img" className="userImage" />
-
-
                     }
 
                     {/* <h6 className='mx-2'> user_name </h6> */}
@@ -50,7 +137,12 @@ const Nav_search_row = (props) => {
 
                         {/* <i><p>{email}</p></i> */}
                     </div>
-                    <button className='search-follow-btn' >Follow</button>
+                    {!isFriend ?
+                                <button className='follow search-follow-btn' onClick={follow}>Follow</button>
+                                :
+                                <button className='unfollow search-unfollow-btn' onClick={unfollow}>Following</button>
+                            }
+                    {/* <button className='search-follow-btn' >Follow</button> */}
                     
                 </div>
 

@@ -1,5 +1,6 @@
 // skeleton-image loading
 .skeleton-image{
+    border: none;
     animation: skeleton-loading 1s linear infinite alternate;
 }
 
@@ -41,6 +42,10 @@
     }
 }
 
+
+.profile-photo-zindex{
+    z-index: 3;
+}
 
 // -------------------------------------------------------------
 
@@ -95,13 +100,11 @@
     }
 
     .profileDetails {
-        // display: flex;
-        // flex-direction: column;
-        // row-gap: 0.3rem;
         
         position: relative;     // necessary for profile update icon (absolute)
         
-        z-index: 3;
+        // z-index: 3;
+
         
         .profileImage {
             background-color: rgba(255, 255, 255, 0.2);
@@ -116,6 +119,8 @@
             padding: 2px;
             border: 2px solid rgb(252, 128, 12);
             
+        // z-index: 3;
+
             object-fit: cover;
         }
 
@@ -124,6 +129,9 @@
             position: absolute;
             left:48%;
             top: -5%;
+
+        // z-index: 3;
+
         }
 
         // for 2 span_icons, profile + description
