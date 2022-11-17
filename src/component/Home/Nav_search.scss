@@ -57,6 +57,8 @@
     background-color: white;
     color:black;
     width:23em;
+
+    border-radius: 0em 0em 0.3em 0.3em;
     
     margin-left: -4em;
 }
@@ -70,6 +72,11 @@
     display: block;
     position:fixed;
     
+    // -----------------------glass morphism effect----------------
+    backdrop-filter: blur(0.5rem);
+    box-shadow: .3em .3em .7em rgba(255, 255, 255, 0.2);
+    background-color: rgba(255, 255, 255, 0.342);
+    // background-color: rgba(225, 225, 225, 0.2);
 }
 
 
@@ -104,10 +111,18 @@
 
 
 .search_user_name{
-    color:black;
+    color:white;
     text-decoration: none;
 
     margin: 0px;
+    transition: .5s;
+}
+.search_user_name:hover{
+    color:rgb(226, 226, 226);
+}
+
+.searchEmail{
+    color: rgb(218, 218, 218);
 }
 
 .search_userDetails{
@@ -120,11 +135,14 @@
     }
 }
 
-// .post_item_header:first-child{
-//     margin-top: 0rem;
-// }
+
 .post_item_header{
     padding-top: 0.3em;
     padding-bottom: 0.3em;
     border-bottom: 0.4px solid rgba(0, 0, 0, 0.149);
+    // transition: .5s;
 }
+
+// .post_item_header:hover{
+//     color:#bababa
+// }

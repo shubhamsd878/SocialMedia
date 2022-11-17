@@ -318,15 +318,20 @@ const UserProfile = (props) => {
 
     setTimeout(() => {
 
-        // remove cover        
-        const d = document.getElementById('coverSkeleton')
-        d.classList.remove('skeleton-image')
-        d.classList.add('bg-cover-default')
-        // d.innerHTML = `<img src=${avatar} className='profileImage' />`
+        // remove cover    
+        if(!coverImg){
 
-        const e = document.getElementById('profileSkeleton')
-        e.classList.remove('skeleton-image')
-        e.classList.add('bg-grey')
+            const d = document.getElementById('coverSkeleton')
+            d.classList.remove('skeleton-image')
+            d.classList.add('bg-cover-default')
+            // d.innerHTML = `<img src=${avatar} className='profileImage' />`
+        }    
+
+        if(!fetchProfileImg){
+            const e = document.getElementById('profileSkeleton')
+            e.classList.remove('skeleton-image')
+            e.classList.add('bg-grey')
+        }
 
 
         // ---------------------------
@@ -339,6 +344,8 @@ const UserProfile = (props) => {
 
         if (!fetchDescription)
             setFetchDescription('Available')
+
+        console.log('fetchDescription: ', fetchDescription)
 
 
     }, 6000);
@@ -423,7 +430,8 @@ const UserProfile = (props) => {
 
                     {fetchDescription ?
                         <b><i>
-                            <p ><u> To be in Glassmorphism</u> {fetchDescription}
+                            <p >
+                                {fetchDescription}
                             </p>
                         </i></b>
                         :
