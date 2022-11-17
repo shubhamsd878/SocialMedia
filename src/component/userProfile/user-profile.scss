@@ -1,53 +1,59 @@
-// skeleton-image loading
-.skeleton-image{
+// ----------------------------skeleton loading -----------------------------------------
+.skeleton-image {
     border: none;
     animation: skeleton-loading 1s linear infinite alternate;
 }
 
-@keyframes skeleton-loading{
-    0%{
+@keyframes skeleton-loading {
+    0% {
         background-color: rgba(255, 255, 255, 0.904)
     }
-    100%{
+
+    100% {
         background-color: hsla(0, 0%, 18%, 0.301)
     }
 }
 
 // skeleton-text loading
-.skeleton-text{
-    height:0.725rem;
+.skeleton-text {
+    height: 0.725rem;
     margin-bottom: 0.325rem;
     border-radius: 0.300rem;
     animation: skeleton-loading 1s linear infinite alternate;
 }
 
-.skeleton-text:last-child{
-    width:60%;
+.skeleton-text:last-child {
+    width: 60%;
 }
 
 
 // for posts 
-.grid-item-skeleton{
+.grid-item-skeleton {
     width: 19.5em;
-    height:21em;
+    height: 21em;
 }
 
 
-@keyframes skeleton-loading{
-    0%{
+@keyframes skeleton-loading {
+    0% {
         background-color: rgba(255, 255, 255, 0.904)
     }
-    100%{
+
+    100% {
         background-color: hsla(0, 0%, 18%, 0.301)
     }
 }
 
-
-.profile-photo-zindex{
-    z-index: 3;
+.bg-profile-default {
+    background-color: #7e7e7e;
 }
 
-// -------------------------------------------------------------
+.bg-cover-default {
+    background-color: #9c9c9c;
+}
+
+
+// -------------------------------------------------------------------
 
 .userProfile {
     display: flex;
@@ -63,16 +69,15 @@
         position: relative;
         z-index: 1;
 
-        div{
+        div {
 
             height: 13em;
         }
+
         // height: calc((100vw - 240px)/6.2 - 1px)
         img {
             width: 100%;
-            // height: needed to change with width of the window;
-            // height: 25em;
-            // height: 13em;
+
             height: 100%;
             object-fit: cover;
             object-position: center;
@@ -80,6 +85,7 @@
             border-radius: 0rem 0rem 1rem 1rem;
         }
 
+        // update-icon
         span {
             position: absolute;
             right: 0.5em;
@@ -97,46 +103,47 @@
             color: black;
             background-color: azure;
         }
+
     }
 
     .profileDetails {
-        
-        position: relative;     // necessary for profile update icon (absolute)
-        
-        // z-index: 3;
 
-        
-        .profileImage {
-            background-color: rgba(255, 255, 255, 0.2);
-            height: 10em;
-            width: 10em;
-            border-radius: 50%;
-            
-            display: block;
-            margin-left: auto !important;
-            margin-right: auto;
-            margin-top: -12%;
-            padding: 2px;
-            border: 2px solid rgb(252, 128, 12);
-            
-        // z-index: 3;
-
-            object-fit: cover;
-        }
-
-        // particulary for element
-        #span_update{
-            position: absolute;
-            left:48%;
-            top: -5%;
+        position: relative; // necessary for profile update icon (absolute)
 
         // z-index: 3;
 
-        }
+
+        // .profileImage {
+        //     background-color: rgba(255, 255, 255, 0.2);
+        //     height: 10em;
+        //     width: 10em;
+        //     border-radius: 50%;
+
+        //     display: block;
+        //     margin-left: auto !important;
+        //     margin-right: auto;
+        //     margin-top: -12%;
+        //     padding: 2px;
+        //     border: 2px solid rgb(252, 128, 12);
+
+        // // z-index: 3;
+
+        //     object-fit: cover;
+        // }
+
+        // // particulary for element
+        // #span_update{
+        //     position: absolute;
+        //     left:48%;
+        //     top: -5%;
+
+        // // z-index: 3;
+
+        // }
 
         // for 2 span_icons, profile + description
-        span{
-            
+        span {
+
             color: #cccccc;
             padding: 10px;
             border-radius: 10px;
@@ -181,7 +188,8 @@
                 color: white;
                 background-color: rgb(0, 162, 255);
             }
-            .unfollow{
+
+            .unfollow {
                 color: #ffffff;
                 background-color: rgb(23, 30, 36);
             }
@@ -189,20 +197,33 @@
         }
 
         .profileDescription {
-            
+
             text-align: justify;
-            padding: 0.5em 0.5em 1.1em 0.5em;
+            text-align-last: center;
+            padding: 0.5em 1.5em 1.1em 1.5em;
             margin: 0.6em 6em 0.3em 6em;
             border-radius: 0.6em;
-            position: relative;     // necessary for profile update icon (absolute)
-            border: 1px solid white;
+            position: relative; // necessary for profile update icon (absolute)
+            // border: 0.1px solid white;
+            // padding: 0.2em;
 
-            span{
+
+            // -----------------------glass morphism effect----------------
+            backdrop-filter: blur(0.5rem);
+            box-shadow: .3em .3em .7em rgba(255, 255, 255, 0.2);
+            background-color: rgba(225, 225, 225, 0.1);
+
+            span {
                 position: absolute;
                 right: 3px;
                 bottom: 3px;
 
             }
+        }
+
+        .profileDescription:hover {
+            background-color: rgba(225, 225, 225, 0.12);
+            cursor: pointer;
         }
 
     }
@@ -260,4 +281,55 @@
         margin-left: auto;
         margin-right: auto;
     }
+}
+
+
+
+// code here because z-index creating problem
+.profileImage {
+    background-color: rgba(255, 255, 255, 0.2);
+    height: 10em;
+    width: 10em;
+    border-radius: 50%;
+
+    display: block;
+    margin-left: auto !important;
+    margin-right: auto;
+    margin-top: -12%;
+    padding: 2px;
+    border: 2px solid rgb(252, 128, 12);
+
+    object-fit: cover;
+}
+
+// particulary for element
+#span_update {
+    position: absolute;
+    left: 48%;
+
+    bottom: 20%;
+
+    z-index: 3;
+    // cursor:pointer;
+
+}
+
+.profileImgg {
+    position: relative;
+    z-index: 3;
+}
+
+// --------------------------------- for edit profile
+#span_update {
+
+    color: #cccccc;
+    padding: 10px;
+    border-radius: 10px;
+    transition: .5s;
+    cursor: pointer;
+}
+
+#span_update:hover {
+    color: black;
+    background-color: azure;
 }

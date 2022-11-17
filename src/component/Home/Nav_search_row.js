@@ -118,7 +118,7 @@ const Nav_search_row = (props) => {
 
   
   return (
-    <div className='my-1'>
+    <div className='search-row'>
             
                 <div className='post_item_header mx-3'>
                     {/* <img src={avatar} alt="Avatar" className="userImage" /> */}
@@ -131,8 +131,8 @@ const Nav_search_row = (props) => {
                     {/* <h6 className='mx-2'> user_name </h6> */}
                     <div className="mx-1 search_userDetails">
                         <Link to={`userProfile/${_id}`} className='search_user_name'>
-                          <h6 className=''> {name} </h6>
-                          <p><i>{email}</i></p>
+                          <h6 className='searchName'> {name} </h6>
+                          <p className='searchEmail'><i>{email}</i></p>
                         </Link>
 
                         {/* <i><p>{email}</p></i> */}

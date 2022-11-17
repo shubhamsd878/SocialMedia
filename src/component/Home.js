@@ -5,16 +5,8 @@ import Helmet from 'react-helmet'
 import './Home.css'
 import Post_Item from './Home/Post_Item'
 import { useState, useEffect } from 'react'
-// import Navbar from './Home/Navbar_Home_Page'
-// import avatar from './Home/img_avatar.png'
-// var reverse = require("buffer-reverse")
-// const likeicon = require('./Home/icons/_like_icon.ico')
-// const commenticon = require('./Home/icons/_comment_icon.png')
-// const shareicon = require('./Home/icons/_share_icon.png')
-
 
 const Home = () => {
-
 
   let response
   const [postLoading, setPostLoading] = useState(true)
@@ -59,14 +51,14 @@ const Home = () => {
           {/* <Post_Item /> */}
 
 
-          {postLoading && (
+          { !postLoading || !postData && (
             <h1> loading posts....</h1>
           )}
           
-          { !postLoading && postData.map( (element)=> {
+          { !postLoading && postData && postData.map( (element)=> {
             return (
-              <div key={element.id}>
-                <Post_Item file={ element.file } email={element.uid.email} name={element.uid.name} uid={element.uid._id}/>
+              <div key={element._id}>
+                <Post_Item pid={element._id} file={ element.file } email={element.uid.email} name={element.uid.name} uid={element.uid._id}/>
               </div>
             )
           })}

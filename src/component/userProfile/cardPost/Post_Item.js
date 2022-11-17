@@ -29,9 +29,9 @@ const Post_Item = (props) => {
             <img src={`data:image;base64,${props.src}`} id='img' alt="Avatar" className='imgSrc' />
 
             <div className="post_item_header my-2">
-                <img className='mx-2 like' src={require('../../Home/icons/_like_icon.ico')} alt="Avatar" />
-                <img className='mx-2 comment' src={require('../../Home/icons/_comment_icon.png')} alt="Avatar" />
-                <img className='mx-2 share' src={require('../../Home/icons/_share_icon.png')} alt="Avatar" />
+                <img className='mx-2 like' src={require('../../../icons/_like_icon.png')} alt="Avatar" />
+                <img className='mx-2 comment' src={require('../../../icons/_comment_icon.png')} alt="Avatar" />
+                <img className='mx-2 share' src={require('../../../icons/_share_icon.png')} alt="Avatar" />
             </div>
             <div className="container">
                 <p>100 likes</p>
