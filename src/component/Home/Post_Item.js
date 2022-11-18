@@ -21,7 +21,7 @@ const Post_Item = (props) => {
             })
 
             response = await response.json()
-            console.log('response search FetchTargetProfileImg:  ', response)
+            // console.log('response search FetchTargetProfileImg:  ', response)
 
             setFetchTargetProfileImg(response.response[0].profilePic)
 
@@ -43,7 +43,7 @@ const Post_Item = (props) => {
             })
 
             response = await response.json()
-            console.log('response search currUserProfileImg:  ', response)
+            // console.log('response search currUserProfileImg:  ', response)
 
             setCurrUserProfilePic(response.response[0].profilePic)
 
@@ -69,7 +69,7 @@ const Post_Item = (props) => {
             })
 
             response = await response.json()
-            console.log('response search FetchTargetProfileImg:  ', response)
+            // console.log('response search FetchTargetProfileImg:  ', response)
 
             setTotalLikes(response.totalLikes)
 
@@ -93,7 +93,7 @@ const Post_Item = (props) => {
 
         response = await response.json()
         setIsLiked(true)
-        console.log('like response: ', response)
+        // console.log('like response: ', response)
     }
 
 
