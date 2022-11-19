@@ -513,6 +513,7 @@ const UserProfile = (props) => {
 
 
                             { userPosts.length != 0 && 
+                            
                             // {/* ------------- Infinity Scroll Component ----------- */}
                             <InfiniteScroll
                             dataLength={userPosts.length}

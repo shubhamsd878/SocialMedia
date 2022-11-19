@@ -46,7 +46,9 @@ function App() {
         loading
         />)
       }
-      <Route path='/userProfile/:id/*' element={<UserProfile />}  loading />
+      <Route path='/userProfile/:id/*' element={
+       <div className="home"> <Navbar_Home_Page /> <UserProfile /> </div>}
+        loading />
       {/* // route for userProfile page */}
     </Routes>
   </BrowserRouter>

@@ -1,8 +1,8 @@
 // import { Container } from "react-bootstrap";
-// import etrack from "./etrack_night2.png";
+// import nav_logo from "./etrack_night2.png";
 import { useState } from "react";
 import {Link} from 'react-router-dom'
-import etrack from "../Logo.png";
+import nav_logo from "../Logo.png";
 import './Navbar_Home_Page.css'
 import Nav_search from "./Nav_search";
 function Navbar_Home_Page(props) {
@@ -46,74 +46,54 @@ function Navbar_Home_Page(props) {
     <div>
 
       <header>
-        {/* <div className="d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom"> */}
+      
         <div
-          className="d-flex flex-column flex-md-row align-items-center pb-3 mb-4 "
-          style={{
-            background:
-              "linear-gradient(to bottom, rgba(0,0,0,0.5), rgba(0,0,0, 0.1) )",
-          }}
+          className="nav_home"
+          
         >
-          <a
-            href="/"
+          <Link
+            to="/"
             className="d-flex align-items-center text-dark text-decoration-none"
           >
             <img
-              src={etrack}
-              width="20%"
-              style={{
-                paddingLeft: "3rem",
-                marginTop: "1%",
-                width: "24%",
-                marginLeft: '4.3rem',
-                marginBottom: "-2.5%",
-              }}
+              src={nav_logo}
+              // width="20%"
+              className='nav_logo'
             ></img>
 
-          </a>
+          </Link>
+
+
           {/* ******************** search users *************************/}
           <Nav_search />
-          {/* <div class="boxContainer">
-            <table class="elementsContainer">
-              <tr>
-                <td>
-                  <input type="text" placeholder="Search"
-                    class="search"/>
-                </td>
-                <td >
-                  <a href="#"><i class="material-icons">search</i>
-                  </a>
-                </td>
-              </tr>
-            </table>
-          </div> */}
 
 
           {/* ******************************************************* */}
           <nav
-            className="d-inline-flex mt-4 mt-md-0 ms-md-auto"
+            className="d-inline-flex "
             // style={{ marginTop: "2rem", marginRight:'4.2rem'}}
-            style={{ marginTop: "2rem", marginRight: '8.2rem' }}
+            // style={{ marginTop: "2rem", marginRight: '8.2rem' }}
           >
-            <a
+            <Link
               className="me-5 py-2 text-decoration-none top-nav-link"
-              href="#"
-              style={{ marginTop: "1rem", cursor: 'pointer' }}
+              to="/"
+              style={{ cursor: 'pointer' }}
             >
               <img className='nav_icon' src={require('../../Nav_icons/home.png')} />
-            </a>
+            </Link>
             <a
               className="me-5 py-2 text-decoration-none top-nav-link"
-              href={props.link}
-              style={{ marginTop: "1rem", cursor: 'pointer' }}
+              // to='/'
+              onClick={ () =>alert('Sorry! still working on it.')}
+              style={{cursor: 'pointer' }}
             >
               <img className='nav_icon' src={require('../../Nav_icons/chatting.png')} />
             </a>
 
             <a
               className="me-5 py-2 text-decoration-none top-nav-link"
-              href={props.link}
-              style={{ marginTop: "1rem", cursor: 'pointer' }}
+              // to={props.link}
+              style={{ cursor: 'pointer' }}
               // firing modal
               data-bs-toggle="modal" data-bs-target="#staticBackdrop"
             >

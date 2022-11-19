@@ -3,5 +3,11 @@
     float: left;
 }
 .post_column{
-    margin-left: 15rem;
+    margin-left: 20vw;
+}
+
+@media (max-width:780px) {
+    .post_column{
+        margin-left: 0px;
+    }
 }

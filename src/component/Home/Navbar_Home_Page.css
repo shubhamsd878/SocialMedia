@@ -7,5 +7,20 @@
     filter: invert(61%) sepia(64%) saturate(2331%) hue-rotate(0deg) brightness(102%) contrast(104%);
 }
 
-
 /* ********************************************* */
+
+.nav_home{
+    display:flex;
+    width: 100vw;
+    padding: 2vh 0%;
+    align-items: center;
+    justify-content: space-around;
+
+    /* background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.1)); */
+}
+
+.nav_logo{
+    /* padding-left: 3rem; */
+    min-width: 140px;
+    max-width: 200px;
+}

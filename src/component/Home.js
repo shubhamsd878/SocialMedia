@@ -87,7 +87,10 @@ const Home = () => {
             <h6 style={{ textAlign: "center", marginBottom:'10vh', marignTop:'3vh' }}>
               <b>Yay! You have all catched up.  </b>
             </h6>
+
           }
+          // for blur to be visble of post-card on right
+          style={{overflow:'visible'}}
         >
 
           { postData.map( (element)=> {

@@ -16,12 +16,6 @@ function LandingPage() {
     navigate(path)
   }
 
-  const ShowSignUp = () => {
-    console.log("hello world")
-    const c = document.getElementById("id")
-    console.log(c.classList.toggle("vipul"))
-    console.log(c.classList)
-  }
 
   const [signUpForm, setSignUpForm] = useState({})
   const [signInForm, setSignInForm] = useState({})
@@ -87,45 +81,28 @@ function LandingPage() {
       <div className="pricing-header p-1 pb-md-4 mx-auto text-center" style={{ marginTop: '2.5rem' }}>
         {/* <h1 className="montserrat display-4 fw-normal" >Track Your Document</h1> */}
         {/* <p className="fs-5 text-muted"> An integrated system for tracking Goverment Document of different department. </p> */}
-        <h1 className="montserrat display-4 fw-normal" >Connect to Explore!</h1>
+        <h1 className="text-gradient montserrat display-4 fw-normal" >Connect to Explore!</h1>
         <p className="fs-5 text-muted"> A system for conneting to the world at your fingertips connect To experience/ </p>
       </div>
 
       {/* ********************* Upper ************************ */}
-
-      {/* ==================================================== */}
-      {/* ==================================================== */}
-
-
+      
       {/* ********************* Card ************************* */}
       <div
-        className="card mb-3 rounded-3 shadow-sm  card-blur-dark"
-        style={{
-          border: "10px solid transparent",
-          backdropFilter: "blur(0.5rem)",
-          boxShadow: "1.3rem 1.3rem 1.3rem rgba(255, 255, 255, 0.5)",
-          backgroundColor: "rgba(225, 225, 225, 0.1)",
-          position: "fixed",
-          right: "8rem",
-          top: "16rem",
-          // top: "1rem",
-          width: '40%',
-          height:'53%',
-          overflow:'hidden'
-          // overflowWrap: 'normal'
-        }}
+        // className="auth_landingpage_card card mb-3 rounded-3 shadow-sm  card-blur-dark"        
+        className="auth_landingpage_card mb-3 rounded-3 shadow-sm  card-blur-dark"        
       >
 
-        <div id="id" className="toggler" style={{width:'200%'}}>
+        {/* <div id="id" className="toggler" style={{width:'200%'}}> */}
 
-          {/* SignIn Form */}
+          {/* -------------- SignIn Form -------------- */}
           <div className='float-left' style={{width:'32rem'}}>
 
-            <h3 className="card-heading bold-text display-8">
+            <h3 className="card-heading text-center bold-text display-8">
               Login
             </h3>
 
-            <hr className="card-hr" noshade />
+            <hr className="card-hr auth-hr" noshade />
 
             <div className="card-body" >
               <form >
@@ -149,7 +126,7 @@ function LandingPage() {
                   onChange={handleSignIn}
                 />
                 <br />
-                <a onClick={ShowSignUp} style={{ marginTop: '-1rem', display:'block', textAlign:'end', color: 'red', cursor: 'pointer' }}> <i>Create a new Account! </i></a>
+                {/* <a onClick={ShowSignUp} style={{ marginTop: '-1rem', display:'block', textAlign:'end', color: 'red', cursor: 'pointer' }}> <i>Create a new Account! </i></a> */}
                 {/* <br/> */}
                 <button className="btn btn-outline-success" width='4rem' onClick={signIn} >
                   Login In
@@ -161,18 +138,17 @@ function LandingPage() {
 
             {/* ******* SignUp ******** */}
           <div className='float-left' style={{width:'32rem'}}>
-             <h3 className="card-heading bold-text display-8">
+             <h3 className="card-heading bold-text text-center display-8">
               Sign Up
             </h3>
 
-            <hr className="card-hr" noshade />
+            <hr className="card-hr auth-hr" noshade />
 
             <div className="card-body" >
               <form >
                 <input
                   className="form-control me-2 float-left"
                   type="text"
-                  // name="first_name"
                   name="name"
                   placeholder="First Name"
                   style={{ width: 'auto' }}
@@ -220,7 +196,7 @@ function LandingPage() {
 
 
                 <br />
-                <a onClick={ShowSignUp} style={{ marginTop: '-1rem', display:'block', textAlign:'end', color: 'red', cursor: 'pointer' }}> <i>Already have an Account! </i></a>
+                {/* <a onClick={ShowSignUp} style={{ marginTop: '-1rem', display:'block', textAlign:'end', color: 'red', cursor: 'pointer' }}> <i>Already have an Account! </i></a> */}
                 {/* <br/> */}
                 <button className="btn btn-outline-success" width='4rem' onClick={signUp} >
                   Sign Up
@@ -228,7 +204,7 @@ function LandingPage() {
               </form>
             </div>
           </div>
-        </div>
+        {/* </div> */}
       </div>
 
 
