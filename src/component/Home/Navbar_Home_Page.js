@@ -29,14 +29,21 @@ function Navbar_Home_Page(props) {
   const post = async (e) => {
     e.preventDefault()
 
+
     formData.append('file', file_post)
+    formData.append("location",document.getElementById("location").value)
+    formData.append("description",document.getElementById("desc").value)
+    console.log(formData);
     console.log('formData: ' + JSON.stringify(formData))
     await fetch('http://localhost:3001/posts/add', {
       method: 'POST',
       headers: {
+        // 'Content-type':'application/json',
         'authtoken': localStorage.getItem('authtoken')
       },
-      body: formData
+      body:
+        formData
+
     })
       .then((response) => { return response.json() })
       .then((response) => {
@@ -47,6 +54,8 @@ function Navbar_Home_Page(props) {
         }
         else{
           alert("Post successfully posted.")
+          window.location.reload()
+
         }
 
        })
@@ -160,8 +169,10 @@ function Navbar_Home_Page(props) {
             </div>
 
             {/* Main of Modal */}
-            <div className="modal-body">
+            <div className="modal-body flex">
               <input type='file' onChange={handler_post}></input>
+              <input type='text' id="location" className='my-3'placeholder='Location'></input>
+              <textarea rows={10} className='my-3' id="desc" placeholder="Post Description here.........."></textarea>
             </div>
 
 

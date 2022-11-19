@@ -24,3 +24,11 @@
     min-width: 140px;
     max-width: 200px;
 }
+.flex{
+    display: flex;
+    flex-direction: column;
+    background-color: aliceblue;
+}
+.flex input,textarea{
+    border-radius: 12px;
+}
