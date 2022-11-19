@@ -131,16 +131,18 @@ const Post_Item = (props) => {
     const sendComment = async () => {
         if(!yourComment) return alert('please write something in comment box to submit')
 
-        let response = await fetch('http://localhost:3001/comments', {
+      await fetch('http://localhost:3001/comments', {
             method: 'POST',
             headers: {authtoken: localStorage.getItem('authtoken'), pid, comment: yourComment},
             body: {"comment":yourComment}
-            // body: JSON.stringify({comment:yourComment})
+        }).then((response)=>{
+            return response.json();
+        }).then((data)=>{
+            console.log(data);
+            fetchComments()   
         })
 
-        response =await response.json()
-
-        fetchComments()     // to reupdate the comments of post
+      
     }
 
 
