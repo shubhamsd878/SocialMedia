@@ -5,6 +5,9 @@ const Nav_search_row = (props) => {
 
   const {_id, name, email} = props
 
+  const isThisUser = _id == localStorage.getItem('uid') ? true : false
+
+
   const [isFriend, setIsFriend] = useState(false)
 
     // ---------------------------------isFriend-------------------------------
@@ -137,12 +140,13 @@ const Nav_search_row = (props) => {
 
                         {/* <i><p>{email}</p></i> */}
                     </div>
-                    {!isFriend ?
+                    
+                    {!isThisUser && (!isFriend ?
                                 <button className='follow search-follow-btn' onClick={follow}>Follow</button>
                                 :
                                 <button className='unfollow search-unfollow-btn' onClick={unfollow}>Following</button>
+                                )
                             }
-                    {/* <button className='search-follow-btn' >Follow</button> */}
                     
                 </div>
 

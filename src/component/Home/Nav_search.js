@@ -27,7 +27,7 @@ const Nav_search = () => {
                                 onChange={handleSearch} className="search" />
                         </td>
                         <td >
-                            <a href="#"><i className="material-icons">search</i>
+                            <a ><i className="material-icons">search</i>
                             </a>
                         </td>
                     </tr>
