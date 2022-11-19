@@ -124,7 +124,8 @@ const Post_Item = (props) => {
 
     const [yourComment, setYourComment] = useState()
     
-    const commentHandle = (e) => {
+    const commentHandle = async (e) => {
+
         setYourComment(e.target.value)
     }
 
@@ -137,9 +138,9 @@ const Post_Item = (props) => {
             body: {"comment":yourComment}
         }).then((response)=>{
             return response.json();
-        }).then((data)=>{
+        }).then(async(data)=>{
             console.log(data);
-            fetchComments()   
+            await fetchComments()   
         })
 
       
@@ -217,7 +218,7 @@ const Post_Item = (props) => {
                         <img src={avatar} alt="img" className="userImage" />
                     }
 
-                    <input className='commentBox' type='text' name='comment' onChange={commentHandle} placeholder='Enter your comment here....' />
+                    <input className='commentBox' type='text' name='comment' onFocus={async ()=>{ await toggleComments(); await fetchComments();}} onChange={commentHandle} placeholder='Enter your comment here....' />
 
                     <button type='submit' className='commentSubmit' onClick={sendComment} >Post</button>
 
