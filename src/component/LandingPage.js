@@ -2,8 +2,12 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom'
 import './LandingPage.css'
+// for top loading bar
+import { useLoadingContext } from "react-router-loading";
 
 function LandingPage() {
+    // for top loading bar
+    const loadingContext = useLoadingContext(); // and is called just before return
 
   const navigate = useNavigate();
 
@@ -71,6 +75,10 @@ function LandingPage() {
     console.log(response)
   }
   
+
+  // topbar
+  loadingContext.done();
+
   return (
     <>
 

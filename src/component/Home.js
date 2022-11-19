@@ -4,9 +4,12 @@ import './Home.css'
 import Post_Item from './Home/Post_Item'
 import { useState, useEffect } from 'react'
 import InfiniteScroll from "react-infinite-scroll-component";
-
+// for top loading bar
+import { useLoadingContext } from "react-router-loading";
 
 const Home = () => {
+  // for top loading bar
+  const loadingContext = useLoadingContext(); // and is called just before return
 
   let response
   const [postLoading, setPostLoading] = useState(true)
@@ -31,10 +34,10 @@ const Home = () => {
   const fetchdata = async () => {
 
     // setPostLoading(true)
-    console.log('loading start')
+    // console.log('loading start')
 
     setSkip( skip + limit)
-    console.log('skip: ' + skip)
+    // console.log('skip: ' + skip)
 
     response =  await fetch('http://localhost:3001/posts/fetch', {
       headers:{
@@ -50,13 +53,10 @@ const Home = () => {
     console.log('home fetchResponse: ', response)
 
     if(response.status == 200){
-      // totalResults = response.totalResult
       setTotalResults(response.totalResult)
-      console.log('totalResults: ', totalResults)
 
       setPostdata(postData.concat(response.result))
 
-      console.log('loading success')
     }
     console.log('loading end')
 
@@ -69,20 +69,22 @@ const Home = () => {
     fetchdata()
   }, [] )
 
+  // topbar
+  loadingContext.done();
 
   return (
     <div>
       <div className='column'>
         <div className='post_column'>
 
-          {console.log(totalResults == postData.length )}
+
         <InfiniteScroll
           dataLength={postData.length}
           next={fetchdata}
           hasMore= {totalResults > postData.length}
-          loader={<h4>Loading...</h4>}
+          loader={<h4 style={{marginBottom:'10vh'}}>Loading...</h4>}
           endMessage={
-            <h6 style={{ textAlign: "center" }}>
+            <h6 style={{ textAlign: "center", marginBottom:'10vh', marignTop:'3vh' }}>
               <b>Yay! You have all catched up.  </b>
             </h6>
           }
