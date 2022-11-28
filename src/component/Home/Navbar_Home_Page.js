@@ -1,28 +1,22 @@
 // import { Container } from "react-bootstrap";
 // import nav_logo from "./etrack_night2.png";
-import { useState } from "react";
-import {Link} from 'react-router-dom'
+import { useState, useEffect } from "react";
+import { Link } from 'react-router-dom'
 import nav_logo from "../Logo.png";
-import './Navbar_Home_Page.css'
+import './Navbar_Home_Page.scss'
 import Nav_search from "./Nav_search";
+import avatar from '../../assets/img_avatar.png'
+
 function Navbar_Home_Page(props) {
 
-// ******************************* css for search ************************
+  // ***********************************************************************
 
-
-
-
-// ***********************************************************************
-
-// const [postForm, setPostForm] = useState({})
   const [file_post, setFile_post] = useState()
 
   const formData = new FormData();
 
   const handler_post = (e) => {
-    // setPostForm({ ...postForm, [e.target.name]: e.target.file})
     setFile_post(e.target.files[0])
-    // console.log('file: ', JSON.stringify(postForm))
     console.log('file: ', e.target.files[0])
   }
 
@@ -41,15 +35,53 @@ function Navbar_Home_Page(props) {
       .then((response) => { return response.json() })
       .then((response) => { console.log(response) })
   }
+
+
+  const signOut = (e) => {
+    e.preventDefault()
+    localStorage.removeItem('authtoken')
+    localStorage.removeItem('uid')
+    console.log('-=--=-=-=')
+    window.location.assign('/')
+  }
+
+
+  // ---------------------  DOM function for clickable dropdown -----------------------
+  const profileDropDown = () => {
+    const d = document.getElementById('dropdown-content')
+    d.classList.toggle('show')
+  }
+
+
+  // -----------------------Fetching profile Pic-----------------
+
+  const [fetchProfileImg, setFetchProfileImg] = useState()
+
+  useEffect(() => {
+    async function fetc() {
+      let response = await fetch('http://localhost:3001/userDetails/profilePic', {
+        method: 'GET',
+        headers: { uid: localStorage.getItem('uid') }
+      })
+      response = await response.json()
+
+      setFetchProfileImg(response.response[0].profilePic)
+    }
+
+    fetc()
+  }, [])
+
+
+  // ===================================================
   return (
     // <Container>
     <div>
 
       <header>
-      
+
         <div
           className="nav_home"
-          
+
         >
           <Link
             to="/"
@@ -71,8 +103,7 @@ function Navbar_Home_Page(props) {
           {/* ******************************************************* */}
           <nav
             className="d-inline-flex "
-            // style={{ marginTop: "2rem", marginRight:'4.2rem'}}
-            // style={{ marginTop: "2rem", marginRight: '8.2rem' }}
+            style={{ alignItems: 'center' }}
           >
             <Link
               className="me-5 py-2 text-decoration-none top-nav-link"
@@ -84,8 +115,8 @@ function Navbar_Home_Page(props) {
             <a
               className="me-5 py-2 text-decoration-none top-nav-link"
               // to='/'
-              onClick={ () =>alert('Sorry! still working on it.')}
-              style={{cursor: 'pointer' }}
+              onClick={() => alert('Sorry! still working on it.')}
+              style={{ cursor: 'pointer' }}
             >
               <img className='nav_icon' src={require('../../Nav_icons/chatting.png')} />
             </a>
@@ -100,12 +131,30 @@ function Navbar_Home_Page(props) {
               <img className='nav_icon' src={require('../../Nav_icons/add_post.png')} />
             </a>
 
-            <button onClick={() => {
-              localStorage.removeItem('authtoken')
-              window.location.reload()
-            }}>Logout</button>
 
-            <Link to={`/userProfile/${localStorage.getItem('uid')}`}> userProfile</Link>
+
+            {/* -------------- userProfile dropdown --------------*/}
+            <div className="dropdown">
+              {fetchProfileImg ?
+                <img title='' className='default-user-imagee' onClick={profileDropDown} src={`data:image;base64,${fetchProfileImg}`} alt='' />
+                :
+                <img className="default-user-imagee" onClick={profileDropDown} src={avatar} alt='sss' />
+              }
+              {/* <button className="default-user-image" >HII</button> */}
+              <div id='dropdown-content' className="dropdown-content">
+                <Link to={`/userProfile/${localStorage.getItem('uid')}`}  style={{display:'flex', columnGap:'10px'}}>
+                  <span class="material-symbols-outlined ">account_circle</span>Profile
+                </Link>
+
+                <a href="" onClick={signOut} style={{display:'flex', columnGap:'10px'}}>
+                  <span class="material-symbols-outlined">
+                    logout
+                  </span>Sign Out
+                </a>
+              </div>
+            </div>
+
+
 
           </nav>
         </div>

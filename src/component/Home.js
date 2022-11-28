@@ -105,12 +105,13 @@ const Home = () => {
 
 
         </div>
-        <button onClick={fetchdata}>fetch more</button>
       </div>
       
-      <div className="column" >
+
+      {/* ------------------- for right side content -------------- */}
+      {/* <div className="column" >
         <div className='sticky-column' > hello world</div>
-      </div>
+      </div> */}
 
     </div>
   )

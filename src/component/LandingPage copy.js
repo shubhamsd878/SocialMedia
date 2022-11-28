@@ -96,7 +96,7 @@ function LandingPage() {
         {/* <div id="id" className="toggler" style={{width:'200%'}}> */}
 
           {/* -------------- SignIn Form -------------- */}
-          <div className='float-left singIn' style={{width:'32rem'}}>
+          <div className='float-left' style={{width:'32rem'}}>
 
             <h3 className="card-heading text-center bold-text display-8">
               Login

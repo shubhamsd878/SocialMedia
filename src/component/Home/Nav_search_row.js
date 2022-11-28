@@ -133,7 +133,7 @@ const Nav_search_row = (props) => {
 
                     {/* <h6 className='mx-2'> user_name </h6> */}
                     <div className="mx-1 search_userDetails">
-                        <Link to={`userProfile/${_id}`} className='search_user_name'>
+                        <Link to={`/userProfile/${_id}`} className='search_user_name'>
                           <h6 className='searchName'> {name} </h6>
                           <p className='searchEmail'><i>{email}</i></p>
                         </Link>

@@ -9,9 +9,8 @@ import './user-profile.scss'
 import avatar from '../../assets/img_avatar.png'
 
 import GridPost from './gridPost/GridPost'
-// import Post_Item from './cardPost/Post_Item'
 import Post_Item from '../Home/Post_Item'
-
+import SavedPosts from './savedPosts/SavedPosts'
 
 
 const UserProfile = (props) => {
@@ -52,6 +51,28 @@ const UserProfile = (props) => {
         }
 
         fetc()
+    }, [])
+
+
+    // --------------------------- totalFollowers -------------------------
+    const [totalFollowers, setTotalFollowers] = useState(0)
+    useEffect(()=> {
+        async function fetc() {
+            let response = await fetch('http://localhost:3001/follow/totalFollowers', {
+                headers: {
+                    uid
+                }
+            })
+
+            response = await response.json()
+
+            if(response.message === true)
+            setTotalFollowers(response.totalFollowers)
+            
+        }
+
+        fetc()
+
     }, [])
 
 
@@ -167,8 +188,7 @@ const UserProfile = (props) => {
     // -----------------------Fetching profile Pic-----------------
 
     const [fetchProfileImg, setFetchProfileImg] = useState()
-    // fetching cover
-    // const uid = localStorage.getItem('uid')
+
     useEffect(() => {
 
         async function fetc() {
@@ -180,12 +200,7 @@ const UserProfile = (props) => {
 
             response = await response.json()
 
-            // console.log('response FetchProfileImg:  ', response)
-
             setFetchProfileImg(response.response[0].profilePic)
-            // var coverImg = response.response.coverPic
-            // console.log(srcS)
-            // document.getElementById('coverImg').src = `data:image;base64,${srcS}`
 
         }
 
@@ -273,6 +288,7 @@ const UserProfile = (props) => {
 
             if (response.status == 200) {
                 setIsFriend(true)
+                setTotalFollowers(prevCount => prevCount + 1)
             }
         }
 
@@ -305,6 +321,8 @@ const UserProfile = (props) => {
             // console.log('unfollow(): ', response)
             if (response.status == 200) {
                 setIsFriend(false)
+                setTotalFollowers(prevCount => prevCount - 1)
+
             }
         }
 
@@ -428,7 +446,7 @@ const UserProfile = (props) => {
                     <h3 className='profileName'> <b> {userName}</b> </h3>
                     : <h3 className='profileName skeleton-text' style={{ width: '20%', height: '1.700rem', marginTop: '0.435rem' }}></h3>
                 }
-                <h6 className="x-followers">100 Followers **</h6>
+                <h6 className="x-followers">{totalFollowers} Followers</h6>
 
                 {!profileEditable &&
 
@@ -444,7 +462,7 @@ const UserProfile = (props) => {
                     </div>
                 }
 
-                {/*-------------- To be in Glass Morphism -----------------*/}
+                {/*-------------- Profile Description -----------------*/}
                 <div className="profileDescription">
 
 
@@ -489,7 +507,10 @@ const UserProfile = (props) => {
                 {/* Note: the class link is common in the below link for css */}
                 <Link to={`/userprofile/${propsParams.id}`} className="link"> Grid View</Link>
                 <Link to={`/userprofile/${propsParams.id}/cardView`} className="link">Card View</Link>
-                <Link to='' className="savedPost link">Saved Post</Link>
+                {/* Note: if current user profile then show saved posts else not */}
+                {profileEditable &&
+                    <Link to={`/userprofile/${propsParams.id}/savedPosts`} className="savedPost link">Saved Post</Link>
+                }
 
             </div>
 
@@ -560,6 +581,11 @@ const UserProfile = (props) => {
                         </div>
                     </InfiniteScroll>
                 )} loading />
+
+                {/* ----------------- route for savedPosts */}
+                <Route path='savedPosts' element={(
+                    <SavedPosts />
+                )} />
             </Routes>
 
 
