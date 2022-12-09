@@ -39,8 +39,24 @@ function LandingPage() {
   }
 
   // loginPath
+
+  function isEmpty(signUpForm) {
+    return Object.keys(signUpForm).length===0;
+  
+}
   const signUp = async (e) => {
-    console.log(JSON.stringify(signUpForm))
+
+   if(Object.keys(signUpForm).length==5)
+   {
+   
+    if(signUpForm.password == signUpForm.cpassword)
+    {
+      
+    
+      
+      console.log(JSON.stringify(signUpForm))
+
+
     e.preventDefault()
     var response = await fetch(`${backend}/authentication/signup`,{
       method:'POST',
@@ -48,11 +64,25 @@ function LandingPage() {
       body: JSON.stringify(signUpForm)
     })
     response= await response.json()
-
-    console.log(response)
+    
+    if(response.message==true)
+    {
+      alert("signUp successfully")
+    }
+  }
+  else{
+    alert("enter both  password  and confirm password same.");
+    return;
+  }
+  }
+  
+    
   }
 
   const signIn = async (e) => {
+    if(Object.keys(signInForm).length==2)
+    {
+   
     e.preventDefault()
     console.log(signInForm)
     var response = await fetch(`${backend}/authentication/login`,{
@@ -68,8 +98,15 @@ function LandingPage() {
       localStorage.setItem('uid', response.uid)
       window.location.reload()
     }
+    else{
+      alert("enter valid email and password")
+    }
     
-    console.log(response)
+  }
+else{
+  alert("please enter email and password")
+  return;
+}
   }
   
 
@@ -85,13 +122,13 @@ function LandingPage() {
         {/* <h1 className="montserrat display-4 fw-normal" >Track Your Document</h1> */}
         {/* <p className="fs-5 text-muted"> An integrated system for tracking Goverment Document of different department. </p> */}
         <h1 className="text-gradient montserrat display-4 fw-normal" >Connect to Explore!</h1>
-        <p className="fs-5 text-muted"> A system for conneting to the world at your fingertips connect To experience/ </p>
+        <p className="fs-5 text-muted"> A system for conneting to the world at your fingertips connect To experience. </p>
       </div>
 
       {/* ********************* Upper ************************ */}
       
       {/* ********************* Card ************************* */}
-      <div
+      <div 
         // className="auth_landingpage_card card mb-3 rounded-3 shadow-sm  card-blur-dark"        
         className="auth_landingpage_card mb-3 rounded-3 shadow-sm  card-blur-dark"        
       >
@@ -99,7 +136,7 @@ function LandingPage() {
         {/* <div id="id" className="toggler" style={{width:'200%'}}> */}
 
           {/* -------------- SignIn Form -------------- */}
-          <div className='float-left singIn' style={{width:'32rem'}}>
+          <div className='float-left signIn' >
 
             <h3 className="card-heading text-center bold-text display-8">
               Login
@@ -108,27 +145,25 @@ function LandingPage() {
             <hr className="card-hr auth-hr" noshade />
 
             <div className="card-body" >
-              <form >
+              <form id='signInForm' >
                 <input
                   className="form-control me-2"
                   type="text"
                   name="email"
                   placeholder="email"
-                  style={{ width: 'auto' }}
+                  style={{}}
                   onChange={handleSignIn}
 
                 />
-                <br />
                 <input
                   className="form-control me-2"
                   type="password"
                   name="password"
                   placeholder="password"
                   aria-label="password"
-                  style={{ width: '50%' }}
+                  style={{ }}
                   onChange={handleSignIn}
                 />
-                <br />
                 {/* <a onClick={ShowSignUp} style={{ marginTop: '-1rem', display:'block', textAlign:'end', color: 'red', cursor: 'pointer' }}> <i>Create a new Account! </i></a> */}
                 {/* <br/> */}
                 <button className="btn btn-outline-success" width='4rem' onClick={signIn} >
@@ -140,7 +175,7 @@ function LandingPage() {
           </div>
 
             {/* ******* SignUp ******** */}
-          <div className='float-left' style={{width:'32rem'}}>
+          <div className='float-left signup'>
              <h3 className="card-heading bold-text text-center display-8">
               Sign Up
             </h3>
@@ -148,57 +183,63 @@ function LandingPage() {
             <hr className="card-hr auth-hr" noshade />
 
             <div className="card-body" >
-              <form >
+              <form id='signUpForm' className='signUpForm' >
+                <div style={{display:'flex', justifyContent:'center'}}>
                 <input
                   className="form-control me-2 float-left"
-                  type="text"
-                  name="name"
+                  type="text" required
+                  name="name" id='name'
                   placeholder="First Name"
-                  style={{ width: 'auto' }}
+                  style={{  }}
                   onChange={handleSignUp}
                 />
                 <input
-                  className="form-control me-2"
-                  type="text"
+                  className="form-control me-2 " 
+                  type="text" required id='lastname'
                   name="last_name"
                   placeholder="Last Name"
-                  style={{ width: 'auto' }}
+                  style={{}}
                   onChange={handleSignUp}
-
                 />
-                <br />
+                </div>
 
                 <input
-                  className="form-control me-2"
-                  type="email"
+                  className="form-control me-2 "
+                  type="email" required
                   name="email"
                   placeholder="email"
-                  style={{ width: '50%' }}
+                  // style={{ width:'87%'}}
                   onChange={handleSignUp}
 
                 />
 
+                <div style={{display:'flex', justifyContent:'center'}}>
+
                 <input
-                  className="form-control me-2 my-4 float-left "
-                  type="password"
+                  className="form-control me-2 float-left  "
+                  type="password" required id='password'
                   name="password"
                   placeholder="password"
                   aria-label="password"
-                  style={{ width: '45%' }}
+                  style={{}}
                   onChange={handleSignUp}
 
                 />
                 <input
-                  className="form-control me-2 my-4"
+                  className="form-control me-2" required
                   type="password"
-                  placeholder="Confirm Password"
+                  name='cpassword' id='cpassword'
+                  placeholder="Confirm Password" 
+                  onChange={handleSignUp}
+
                   aria-label="password"
-                  style={{ width: '45%' }}
+                  style={{ }}
 
                 />
+                </div>
 
+                <br/>
 
-                <br />
                 {/* <a onClick={ShowSignUp} style={{ marginTop: '-1rem', display:'block', textAlign:'end', color: 'red', cursor: 'pointer' }}> <i>Already have an Account! </i></a> */}
                 {/* <br/> */}
                 <button className="btn btn-outline-success" width='4rem' onClick={signUp} >

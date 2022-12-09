@@ -100,7 +100,7 @@ const Home = () => {
           { postData.map( (element)=> {
             return (
               <div key={element._id}>
-                <Post_Item pid={element._id} file={ element.file } email={element.uid.email} name={element.uid.name} uid={element.uid._id}/>
+                <Post_Item pid={element._id} file={ element.file } description={element.desc} location={element.location} name={element.uid.name} uid={element.uid._id}/>
               </div>
             )
           })}

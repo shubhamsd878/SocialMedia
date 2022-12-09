@@ -6,7 +6,7 @@ import avatar from './img_avatar.png'
 import Comment_row from './Post_Item/Comment_row'
 
 const Post_Item = (props) => {
-    const { pid, file, name, email, uid } = props
+    const { pid, file, name, location, uid, description } = props
     const backend = process.env.REACT_APP_BACKEND
 
     const authtoken = localStorage.getItem('authtoken')
@@ -238,7 +238,7 @@ const unSavePost = async () => {
 
                 <Link to={`/userProfile/${uid}`} className="mx-2 headerLink">
                     <h6 className=''> {name} </h6>
-                    <p className='location muted' ><i>{email}</i></p>
+                    <p className='location muted' ><i>{location}</i></p>
                 </Link>
                 
 
@@ -262,7 +262,7 @@ const unSavePost = async () => {
             </div>
             <div className="container">
                 <p>{totalLikes} likes</p>
-                <p id='desc'>Description of the user..</p>
+                <p id='desc'>{description}</p>
 
                 {/* flex for user to comment */}
                 <div className='UserCommentRow'>
