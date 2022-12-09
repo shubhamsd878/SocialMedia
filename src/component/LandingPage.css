@@ -1,6 +1,13 @@
-
+*{
+    margin:0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
 .float-left{
     float: left;
+}
+.float-right{
+    float:right;
 }
 
 .text-gradient{
@@ -22,9 +29,11 @@ background-size: cover;
         overflow:auto; 
 
         margin: auto auto;
-        width: fit-content;
+        width: 80vw;
         
         height: fit-content;
+
+        
 }
 
 .auth-hr{
@@ -35,5 +44,65 @@ background-size: cover;
 /* ------------------------------------------ */
 
 .signIn{
-    background-color: rgb(255, 196, 0);
+    width:50%;
+    display:flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+#signInForm{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#signInForm input{
+    width: 90%;
+    margin:7px;
+}
+#signInForm button{
+    margin-top:10px;
+    margin-left:9px;
+}
+
+.signup{
+    width: 50%;
+    display:flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;
+}
+.signUpForm input{
+    margin:8px 0px;
+    width: 70%;
+}
+
+#name, #lastname,#password,#cpassword{
+    width: 44%;
+    color:blue;
+}
+
+#lastname,#cpassword{
+    margin-top:8px;
+    display: inline;
+}
+@media  screen and (max-width:700px) {
+    .signIn{
+        width: 100%;
+    }
+    .signup{
+        width: 90vw;
+    }
+#name, #lastname,#password,#cpassword{
+    width:40%;
+
+}
+.signUpForm input{
+    width: 60%;
+}
+#lastname,#cpassword{
+    margin-left:19px;
+}
 }

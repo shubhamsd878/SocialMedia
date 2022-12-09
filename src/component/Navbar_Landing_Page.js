@@ -39,14 +39,14 @@ function Navbar_Landing_Page(props) {
             href="#"
             style={{ marginTop: "1rem" }}
           >
-            About SwinGram
+            About SwagZinn
           </a>
           <a
             className="me-5 py-2 text-decoration-none top-nav-link"
             href={props.link}
             style={{ marginTop: "1rem"}}
           >
-            Report
+            Contact
           </a>
         </nav>
       </div>

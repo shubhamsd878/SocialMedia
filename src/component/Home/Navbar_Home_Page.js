@@ -20,21 +20,58 @@ function Navbar_Home_Page(props) {
     console.log('file: ', e.target.files[0])
   }
 
+
+  // const post = async (e) => {
+  //   e.preventDefault()
+
+  //   formData.append('file', file_post)
+  //   console.log('formData: ' + JSON.stringify(formData))
+  //   await fetch('http://localhost:3001/posts/add', {
+  //     method: 'POST',
+  //     headers: {
+  //       'authtoken': localStorage.getItem('authtoken')
+  //     },
+  //     body: formData
+  //   })
+  //     .then((response) => { return response.json() })
+  //     .then((response) => { console.log(response) })
+  // }
+
   const post = async (e) => {
     e.preventDefault()
 
+
     formData.append('file', file_post)
+    formData.append("location",document.getElementById("location").value)
+    formData.append("description",document.getElementById("desc").value)
+    console.log(formData);
     console.log('formData: ' + JSON.stringify(formData))
     await fetch('http://localhost:3001/posts/add', {
       method: 'POST',
       headers: {
+        // 'Content-type':'application/json',
         'authtoken': localStorage.getItem('authtoken')
       },
-      body: formData
+      body:
+        formData
+
     })
       .then((response) => { return response.json() })
-      .then((response) => { console.log(response) })
+      .then((response) => {
+        console.log(response);
+        if(response.message==false)
+        {
+          alert("Please select file to upload")
+        }
+        else{
+          alert("Post successfully posted.")
+          window.location.reload()
+
+        }
+
+       })
   }
+
 
 
   const signOut = (e) => {
@@ -169,56 +206,58 @@ function Navbar_Home_Page(props) {
 
       {/* Modal */}
 
-
-      {/* Modal for file upload*/}
-      <div
-        className="modal fade"
-        id="staticBackdrop"
-        data-bs-backdrop="static"
-        data-bs-keyboard="false"
-        tabIndex={-1}
-        aria-labelledby="staticBackdropLabel"
-        aria-hidden="true"
-
-        // custom
-        style={{ color: 'black' }}
-      >
-        <div className="modal-dialog modal-dialog-centered">
-          <div className="modal-content">
-
-            <div className="modal-header">
-              <h1 className="modal-title fs-5" id="staticBackdropLabel">
-                Upload File
-              </h1>
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              />
-            </div>
-
-            {/* Main of Modal */}
-            <div className="modal-body">
-              <input type='file' onChange={handler_post}></input>
-            </div>
-
-
-            <div className="modal-footer">
-              <button
-                type="button"
-                className="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Cancel
-              </button>
-              <button type="button" className="btn btn-primary" onClick={post}>
-                Upload File
-              </button>
+        {/* Modal for file upload*/}
+        <div
+          className="modal fade"
+          id="staticBackdrop"
+          data-bs-backdrop="static"
+          data-bs-keyboard="false"
+          tabIndex={-1}
+          aria-labelledby="staticBackdropLabel"
+          aria-hidden="true"
+  
+          // custom
+          style={{ color: 'black' }}
+        >
+          <div className="modal-dialog modal-dialog-centered">
+            <div className="modal-content">
+  
+              <div className="modal-header">
+                <h1 className="modal-title fs-5" id="staticBackdropLabel">
+                  Upload File
+                </h1>
+                <button
+                  type="button"
+                  className="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                />
+              </div>
+  
+              {/* Main of Modal */}
+              <div className="modal-body flex1">
+                <input type='file' className="form-control" onChange={handler_post}></input>
+                <input type='text'  id="location" className=' form-control my-2  'placeholder='Location'></input>
+                <textarea rows={10} className='form-control my-2' id="desc" placeholder="Write something for post  "></textarea>
+              </div>
+  
+  
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Cancel
+                </button>
+                <button type="button" className="btn btn-primary" onClick={post}>
+                  Upload File
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+  
 
 
 
