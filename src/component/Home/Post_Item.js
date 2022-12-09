@@ -6,7 +6,7 @@ import avatar from './img_avatar.png'
 import Comment_row from './Post_Item/Comment_row'
 
 const Post_Item = (props) => {
-    const { pid, file, name, email, uid } = props
+    const { pid, file, name, location, uid, description } = props
     const authtoken = localStorage.getItem('authtoken')
 
     //------------------- fetching profile  ----------------
@@ -177,23 +177,26 @@ const unSavePost = async () => {
 
     const [yourComment, setYourComment] = useState()
     
-    const commentHandle = (e) => {
+    const commentHandle = async (e) => {
+
         setYourComment(e.target.value)
     }
 
     const sendComment = async () => {
         if(!yourComment) return alert('please write something in comment box to submit')
 
-        let response = await fetch('http://localhost:3001/comments', {
+      await fetch('http://localhost:3001/comments', {
             method: 'POST',
             headers: {authtoken: localStorage.getItem('authtoken'), pid, comment: yourComment},
             body: {"comment":yourComment}
-            // body: JSON.stringify({comment:yourComment})
+        }).then((response)=>{
+            return response.json();
+        }).then(async(data)=>{
+            console.log(data);
+            await fetchComments()   
         })
 
-        response =await response.json()
-
-        fetchComments()     // to reupdate the comments of post
+      
     }
 
 
@@ -233,7 +236,7 @@ const unSavePost = async () => {
 
                 <Link to={`/userProfile/${uid}`} className="mx-2 headerLink">
                     <h6 className=''> {name} </h6>
-                    <p className='location muted' ><i>{email}</i></p>
+                    <p className='location muted' ><i>{location}</i></p>
                 </Link>
                 
 
@@ -257,7 +260,7 @@ const unSavePost = async () => {
             </div>
             <div className="container">
                 <p>{totalLikes} likes</p>
-                <p id='desc'>Description of the user..</p>
+                <p id='desc'>{description}</p>
 
                 {/* flex for user to comment */}
                 <div className='UserCommentRow'>
@@ -267,7 +270,7 @@ const unSavePost = async () => {
                         <img src={avatar} alt="img" className="userImage" />
                     }
 
-                    <input className='commentBox' type='text' name='comment' onChange={commentHandle} placeholder='Enter your comment here....' />
+                    <input className='commentBox' type='text' name='comment' onFocus={async ()=>{ await toggleComments(); await fetchComments();}} onChange={commentHandle} placeholder='Enter your comment here....' />
 
                     <button type='submit' className='commentSubmit' onClick={sendComment} >Post</button>
 

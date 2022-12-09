@@ -1,5 +1,7 @@
 
 import React from 'react'
+import Helmet from 'react-helmet'
+
 import './Home.css'
 import Post_Item from './Home/Post_Item'
 import { useState, useEffect } from 'react'
@@ -96,7 +98,7 @@ const Home = () => {
           { postData.map( (element)=> {
             return (
               <div key={element._id}>
-                <Post_Item pid={element._id} file={ element.file } email={element.uid.email} name={element.uid.name} uid={element.uid._id}/>
+                <Post_Item pid={element._id} file={ element.file } description={element.desc} location={element.location} name={element.uid.name} uid={element.uid._id}/>
               </div>
             )
           })}
@@ -116,5 +118,18 @@ const Home = () => {
     </div>
   )
 }
+
+
+
+const liker= ()=>{
+  console.log('button clicked..');
+}
+const like= document.getElementById('liker');
+console.log(like);
+// like.addEventListener('click',liker)
+{/* <ScriptTag type='text/javascript' src='domManipulation.js'/>  */}
+
+
+
 
 export default Home
