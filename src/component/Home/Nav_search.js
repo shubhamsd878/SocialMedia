@@ -3,11 +3,12 @@ import './Nav_search.scss'
 import Nav_search_row from './Nav_search_row'
 
 const Nav_search = () => {
+    const backend = process.env.REACT_APP_BACKEND
 
     const [searchResults, setSearchResults] = useState()
 
     const handleSearch= async(e)=>{
-        let result = await fetch('http://localhost:3001/search', {
+        let result = await fetch(`${backend}/search`, {
             headers: { query: e.target.value }
         })
 

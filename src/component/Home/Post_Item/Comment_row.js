@@ -4,14 +4,14 @@ import avatar from '../img_avatar.png'
 
 const Comment_row = (props) => {
     const {uid,name, comment, date} = props
-
+    const backend = process.env.REACT_APP_BACKEND
 
     // -------- fetching profile of commentor --------
     const [cmtProfileImg, setCmtProfileImg] = useState()
     useEffect(() => {
         async function fetc() {
             // let result = fetch(''
-            let response = await fetch('http://localhost:3001/userDetails/profilePic', {
+            let response = await fetch(`${backend}/userDetails/profilePic`, {
                 method: 'GET',
                 headers: { uid }
             })

@@ -8,6 +8,9 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { useLoadingContext } from "react-router-loading";
 
 const Home = () => {
+
+  const backend = process.env.REACT_APP_BACKEND
+
   // for top loading bar
   const loadingContext = useLoadingContext(); // and is called just before return
 
@@ -39,7 +42,7 @@ const Home = () => {
     setSkip( skip + limit)
     // console.log('skip: ' + skip)
 
-    response =  await fetch('http://localhost:3001/posts/fetch', {
+    response =  await fetch(`${backend}/posts/fetch`, {
       headers:{
         authtoken: localStorage.getItem('authtoken'),
         skip,

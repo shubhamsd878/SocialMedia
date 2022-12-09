@@ -4,6 +4,8 @@ import { Routes, Route, Link, useParams } from 'react-router-dom'
 import InfiniteScroll from "react-infinite-scroll-component";
 // for top loading bar
 import { useLoadingContext } from "react-router-loading";
+// for image compression
+import * as imageConversion from 'image-conversion';
 
 import './user-profile.scss'
 import avatar from '../../assets/img_avatar.png'
@@ -14,9 +16,13 @@ import SavedPosts from './savedPosts/SavedPosts'
 
 
 const UserProfile = (props) => {
+
+    const backend = process.env.REACT_APP_BACKEND
     // for top loading bar
     const loadingContext = useLoadingContext(); // and is called just before return
 
+    // image conversion to kb constants
+    
 
     // --- for infinity scroll ---
     const limit = 3
@@ -36,7 +42,7 @@ const UserProfile = (props) => {
     // ---------------------------------isFriend-------------------------------
     useEffect(() => {
         async function fetc() {
-            let response = await fetch('http://localhost:3001/follow', {
+            let response = await fetch(`${backend}/follow`, {
                 headers: {
                     authtoken: localStorage.getItem('authtoken'),
                     targetuid: uid
@@ -58,7 +64,7 @@ const UserProfile = (props) => {
     const [totalFollowers, setTotalFollowers] = useState(0)
     useEffect(()=> {
         async function fetc() {
-            let response = await fetch('http://localhost:3001/follow/totalFollowers', {
+            let response = await fetch(`${backend}/follow/totalFollowers`, {
                 headers: {
                     uid
                 }
@@ -81,8 +87,15 @@ const UserProfile = (props) => {
     // ---------------------Cover update---------------------------
     const [coverChangeFile, setCoverChangeFile] = useState()
     const handleCoverChange = async (e) => {
-        setCoverChangeFile(e.target.files[0])
-        // console.log('setCoverChangeFile: ' + coverChangeFile)
+        let file = e.target.files[0]
+        
+        imageConversion.compressAccurately(file,600).then(res=>{
+          // converting blob to file
+          res = new File([res], "file_name");
+          
+          setCoverChangeFile(res)
+        })
+
     }
 
     const coverChangeForm = new FormData()
@@ -90,7 +103,7 @@ const UserProfile = (props) => {
     const handleCoverSubmit = async () => {
 
         coverChangeForm.append('coverPic', coverChangeFile)
-        let response = await fetch('http://localhost:3001/userdetails/coverPic', {
+        let response = await fetch(`${backend}/userdetails/coverPic`, {
             method: 'PUT',
             headers: {
                 'authtoken': localStorage.getItem('authtoken')
@@ -110,7 +123,7 @@ const UserProfile = (props) => {
 
         async function fetc() {
 
-            let response = await fetch('http://localhost:3001/userDetails/coverPic', {
+            let response = await fetch(`${backend}/userDetails/coverPic`, {
                 method: 'GET',
                 headers: { uid: uid }
             })
@@ -136,9 +149,16 @@ const UserProfile = (props) => {
 
     // ---------------------Update ProfileImg---------------------------
     const [profileChangeFile, setProfileChangeFile] = useState()
+
     const handleProfileChange = async (e) => {
-        setProfileChangeFile(e.target.files[0])
-        // console.log('setProfileChangeFile: ' + profileChangeFile)
+        let file = e.target.files[0]
+        
+        imageConversion.compressAccurately(file,250).then(res=>{
+          // converting blob to file
+          res = new File([res], "file_name");
+
+          setProfileChangeFile(res)
+        })
     }
 
     const profileChangeForm = new FormData()
@@ -146,7 +166,7 @@ const UserProfile = (props) => {
     const handleProfileSubmit = async () => {
 
         profileChangeForm.append('profilePic', profileChangeFile)
-        let response = await fetch('http://localhost:3001/userdetails/profilepic', {
+        let response = await fetch(`${backend}/userdetails/profilepic`, {
             method: 'PUT',
             headers: {
                 'authtoken': localStorage.getItem('authtoken')
@@ -171,7 +191,7 @@ const UserProfile = (props) => {
     const handleDescriptionSubmit = async () => {
 
         DescriptionChangeForm.append('description', descriptionChange)
-        let response = await fetch('http://localhost:3001/userdetails/description', {
+        let response = await fetch(`${backend}/userdetails/description`, {
             method: 'PUT',
             headers: {
                 'authtoken': localStorage.getItem('authtoken')
@@ -193,7 +213,7 @@ const UserProfile = (props) => {
 
         async function fetc() {
 
-            let response = await fetch('http://localhost:3001/userDetails/profilePic', {
+            let response = await fetch(`${backend}/userDetails/profilePic`, {
                 method: 'GET',
                 headers: { uid: uid }
             })
@@ -217,7 +237,7 @@ const UserProfile = (props) => {
 
         async function fetc() {
 
-            let response = await fetch('http://localhost:3001/userDetails/description', {
+            let response = await fetch(`${backend}/userDetails/description`, {
                 method: 'GET',
                 headers: { uid: uid }
             })
@@ -242,7 +262,7 @@ const UserProfile = (props) => {
 
         async function fetc() {
 
-            let response = await fetch('http://localhost:3001/userDetails/name', {
+            let response = await fetch(`${backend}/userDetails/name`, {
                 method: 'GET',
                 headers: { uid: uid }
             })
@@ -273,7 +293,7 @@ const UserProfile = (props) => {
 
             const authtoken = localStorage.getItem('authtoken')
 
-            let response = await fetch('http://localhost:3001/follow', {
+            let response = await fetch(`${backend}:3001/follow`, {
                 method: 'POST',
                 headers: {
                     authtoken: authtoken,
@@ -307,7 +327,7 @@ const UserProfile = (props) => {
         // console.log(JSON.stringify({ targetUid: uid }))
 
         async function fetc() {
-            let response = await fetch('http://localhost:3001/follow', {
+            let response = await fetch(`${backend}/follow`, {
                 method: 'DELETE',
                 headers: {
                     authtoken: localStorage.getItem('authtoken'),
@@ -339,7 +359,7 @@ const UserProfile = (props) => {
         setSkip(skip + limit)
         // console.log('skip and limit: ', skip, " ", limit)
 
-        let response = await fetch('http://localhost:3001/posts/fetchcurrent', {
+        let response = await fetch(`${backend}/posts/fetchcurrent`, {
             headers: {
                 uid: uid,
                 skip,

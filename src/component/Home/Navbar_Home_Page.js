@@ -6,9 +6,12 @@ import nav_logo from "../Logo.png";
 import './Navbar_Home_Page.scss'
 import Nav_search from "./Nav_search";
 import avatar from '../../assets/img_avatar.png'
+import * as imageConversion from 'image-conversion';
+
 
 function Navbar_Home_Page(props) {
 
+  const backend = process.env.REACT_APP_BACKEND
   // ***********************************************************************
 
   const [file_post, setFile_post] = useState()
@@ -16,8 +19,13 @@ function Navbar_Home_Page(props) {
   const formData = new FormData();
 
   const handler_post = (e) => {
-    setFile_post(e.target.files[0])
-    console.log('file: ', e.target.files[0])
+
+    let file = e.target.files[0]
+    imageConversion.compressAccurately(file, 1500).then(res => {
+      // converting blob to file
+      res = new File([res], "file_name");
+      setFile_post(res)
+    })
   }
 
   const post = async (e) => {
@@ -25,7 +33,7 @@ function Navbar_Home_Page(props) {
 
     formData.append('file', file_post)
     console.log('formData: ' + JSON.stringify(formData))
-    await fetch('http://localhost:3001/posts/add', {
+    await fetch(`${backend}/posts/add`, {
       method: 'POST',
       headers: {
         'authtoken': localStorage.getItem('authtoken')
@@ -59,7 +67,7 @@ function Navbar_Home_Page(props) {
 
   useEffect(() => {
     async function fetc() {
-      let response = await fetch('http://localhost:3001/userDetails/profilePic', {
+      let response = await fetch(`${backend}/userDetails/profilePic`, {
         method: 'GET',
         headers: { uid: localStorage.getItem('uid') }
       })
@@ -70,6 +78,46 @@ function Navbar_Home_Page(props) {
 
     fetc()
   }, [])
+
+
+  // ---- update Passwrod ----
+  const changePassword = async (e) => {
+    e.preventDefault()
+
+    let newPassword = prompt("Please enter new Password:", "");
+    if (newPassword == null || newPassword == "") {
+      alert('Failed to Set New passwort')
+    } else {
+
+      let response = await fetch(`${backend}/authentication/updatePassword`, {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+          authtoken: localStorage.getItem('authtoken')
+        },
+        body: JSON.stringify({ newPassword })
+      })
+
+      response = await response.json()
+      console.log(response)
+
+      if (response.message === false) {
+        alert('Failed to set new password')
+      }
+      else {
+        alert('Success! Updated Password Successfully')
+        // signOut(e)  // --> not working
+        {
+
+          localStorage.removeItem('authtoken')
+          localStorage.removeItem('uid')
+          console.log('-=--=-=-=')
+          window.location.assign('/')
+        }
+      }
+
+    }
+  }
 
 
   // ===================================================
@@ -142,11 +190,17 @@ function Navbar_Home_Page(props) {
               }
               {/* <button className="default-user-image" >HII</button> */}
               <div id='dropdown-content' className="dropdown-content">
-                <Link to={`/userProfile/${localStorage.getItem('uid')}`}  style={{display:'flex', columnGap:'10px'}}>
+                <Link to={`/userProfile/${localStorage.getItem('uid')}`} style={{ display: 'flex', columnGap: '10px' }}>
                   <span class="material-symbols-outlined ">account_circle</span>Profile
                 </Link>
 
-                <a href="" onClick={signOut} style={{display:'flex', columnGap:'10px'}}>
+                <a href="" onClick={changePassword} style={{ display: 'flex', columnGap: '10px', alignItems: 'center' }}>
+                  <span class="material-symbols-outlined">
+                    password
+                  </span>Change Password
+                </a>
+
+                <a href="" onClick={signOut} style={{ display: 'flex', columnGap: '10px' }}>
                   <span class="material-symbols-outlined">
                     logout
                   </span>Sign Out

@@ -7,6 +7,8 @@ import Comment_row from './Post_Item/Comment_row'
 
 const Post_Item = (props) => {
     const { pid, file, name, email, uid } = props
+    const backend = process.env.REACT_APP_BACKEND
+
     const authtoken = localStorage.getItem('authtoken')
 
     //------------------- fetching profile  ----------------
@@ -15,7 +17,7 @@ const Post_Item = (props) => {
     useEffect(() => {
         async function fetc() {
             // let result = fetch(''
-            let response = await fetch('http://localhost:3001/userDetails/profilePic', {
+            let response = await fetch(`${backend}/userDetails/profilePic`, {
                 method: 'GET',
                 headers: { uid: uid }
             })
@@ -37,7 +39,7 @@ const Post_Item = (props) => {
     useEffect(() => {
         async function fetc() {
             // let result = fetch(''
-            let response = await fetch('http://localhost:3001/userDetails/profilePic', {
+            let response = await fetch(`${backend}/userDetails/profilePic`, {
                 method: 'GET',
                 headers: { uid: localStorage.getItem('uid') }
             })
@@ -63,7 +65,7 @@ const Post_Item = (props) => {
     useEffect(() => {
         async function fetc() {
 
-            let response = await fetch('http://localhost:3001/likes', {
+            let response = await fetch(`${backend}/likes`, {
                 method: 'GET',
                 headers: { pid }
             })
@@ -86,7 +88,7 @@ const Post_Item = (props) => {
     //   -------------------liking the post----------------------
     const likePost = async () => {
         setTotalLikes(s => s + 1)
-        let response = await fetch('http://localhost:3001/likes', {
+        let response = await fetch(`${backend}/likes`, {
             method: 'POST',
             headers: { authtoken, pid }
         })
@@ -100,7 +102,7 @@ const Post_Item = (props) => {
     //   -------------------unlike the post----------------------
     const unlikePost = async () => {
         setTotalLikes(s => s - 1)
-        let response = await fetch('http://localhost:3001/likes', {
+        let response = await fetch(`${backend}:3001/likes`, {
             method: 'DELETE',
             headers: { authtoken, pid }
         })
@@ -116,7 +118,7 @@ const [isSaved, setIsSaved] = useState(false)
 
 useEffect(() => {
    async function fetc() {
-    let response = await fetch('http://localhost:3001/saved/isSaved', {
+    let response = await fetch(`${backend}/saved/isSaved`, {
         headers:{ authtoken, pid}
     })
     response = await response.json()
@@ -132,7 +134,7 @@ useEffect(() => {
 // ------------------ saving Post -----------------------------
 
 const savePost = async () => {
-    let response = await fetch('http://localhost:3001/saved', {
+    let response = await fetch(`${backend}/saved`, {
         method: 'POST',
         headers:{authtoken, pid}
     })
@@ -147,7 +149,7 @@ const savePost = async () => {
 // ------------------ saving Post -----------------------------
 
 const unSavePost = async () => {
-    let response = await fetch('http://localhost:3001/saved', {
+    let response = await fetch(`${backend}/saved`, {
         method: 'DELETE',
         headers:{authtoken, pid}
     })
@@ -184,7 +186,7 @@ const unSavePost = async () => {
     const sendComment = async () => {
         if(!yourComment) return alert('please write something in comment box to submit')
 
-        let response = await fetch('http://localhost:3001/comments', {
+        let response = await fetch(`${backend}/comments`, {
             method: 'POST',
             headers: {authtoken: localStorage.getItem('authtoken'), pid, comment: yourComment},
             body: {"comment":yourComment}
@@ -207,7 +209,7 @@ const unSavePost = async () => {
     const [postComments, setPostComments] = useState()
     const fetchComments = async() => {
 
-        let response = await fetch('http://localhost:3001/comments', {
+        let response = await fetch(`${backend}/comments`, {
             headers: {pid}
         })
 

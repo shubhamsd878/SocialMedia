@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom'
 const Nav_search_row = (props) => {
 
   const {_id, name, email} = props
+  const backend = process.env.REACT_APP_BACKEND
 
   const isThisUser = _id == localStorage.getItem('uid') ? true : false
 
@@ -13,7 +14,7 @@ const Nav_search_row = (props) => {
     // ---------------------------------isFriend-------------------------------
     useEffect(() => {
       async function fetc() {
-          let response = await fetch('http://localhost:3001/follow', {
+          let response = await fetch(`${backend}/follow`, {
               headers: {
                   authtoken: localStorage.getItem('authtoken'),
                   targetuid: _id
@@ -37,7 +38,7 @@ const Nav_search_row = (props) => {
   useEffect( ()=> {
     async function fetc(){
       // let result = fetch('')
-      let response = await fetch('http://localhost:3001/userDetails/profilePic', {
+      let response = await fetch(`${backend}/userDetails/profilePic`, {
         method: 'GET',
         headers: { uid: _id }
     })
@@ -64,7 +65,7 @@ const Nav_search_row = (props) => {
 
             const authtoken = localStorage.getItem('authtoken')
 
-            let response = await fetch('http://localhost:3001/follow', {
+            let response = await fetch(`${backend}/follow`, {
                 method: 'POST',
                 headers: {
                     authtoken: authtoken,
@@ -97,7 +98,7 @@ const Nav_search_row = (props) => {
         console.log(JSON.stringify({ targetUid: _id }))
 
         async function fetc() {
-            let response = await fetch('http://localhost:3001/follow', {
+            let response = await fetch(`${backend}/follow`, {
                 method: 'DELETE',
                 headers: {
                     authtoken: localStorage.getItem('authtoken'),

@@ -4,12 +4,13 @@ import InfiniteScroll from "react-infinite-scroll-component";
 
 
 const SavedPosts = () => {
+    const backend = process.env.REACT_APP_BACKEND
 
     const messageCSS = {
         textAlign: "center",
         marginBottom: '10vh',
         marignTop: '3vh',
-        width: '10em'
+        minWidth: '10em'
     }
 
 
@@ -24,7 +25,7 @@ const SavedPosts = () => {
     async function fetchPosts() {
         setSkip(skip + limit)
 
-        let response = await fetch('http://localhost:3001/saved', {
+        let response = await fetch(`${backend}/saved`, {
             headers: { authtoken, skip, limit }
         })
 

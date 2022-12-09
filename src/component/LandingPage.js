@@ -6,6 +6,9 @@ import './LandingPage.css'
 import { useLoadingContext } from "react-router-loading";
 
 function LandingPage() {
+
+  const backend = process.env.REACT_APP_BACKEND
+
     // for top loading bar
     const loadingContext = useLoadingContext(); // and is called just before return
 
@@ -39,7 +42,7 @@ function LandingPage() {
   const signUp = async (e) => {
     console.log(JSON.stringify(signUpForm))
     e.preventDefault()
-    var response = await fetch('http://localhost:3001/authentication/signup',{
+    var response = await fetch(`${backend}/authentication/signup`,{
       method:'POST',
       headers:{'Content-type': 'application/json'},
       body: JSON.stringify(signUpForm)
@@ -52,7 +55,7 @@ function LandingPage() {
   const signIn = async (e) => {
     e.preventDefault()
     console.log(signInForm)
-    var response = await fetch('http://localhost:3001/authentication/login',{
+    var response = await fetch(`${backend}/authentication/login`,{
       method:'POST',
       headers:{ 'Content-Type':'application/json' },
       body: JSON.stringify(signInForm)
