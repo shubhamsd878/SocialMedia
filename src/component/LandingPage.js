@@ -119,7 +119,7 @@ else{
         {/* <h1 className="montserrat display-4 fw-normal" >Track Your Document</h1> */}
         {/* <p className="fs-5 text-muted"> An integrated system for tracking Goverment Document of different department. </p> */}
         <h1 className="text-gradient montserrat display-4 fw-normal" >Connect to Explore!</h1>
-        <p className="fs-5 text-muted"> A system for conneting to the world at your fingertips connect To experience/ </p>
+        <p className="fs-5 text-muted"> A system for conneting to the world at your fingertips connect To experience. </p>
       </div>
 
       {/* ********************* Upper ************************ */}
@@ -181,6 +181,7 @@ else{
 
             <div className="card-body" >
               <form id='signUpForm' className='signUpForm' >
+                <div style={{display:'flex', justifyContent:'center'}}>
                 <input
                   className="form-control me-2 float-left"
                   type="text" required
@@ -196,18 +197,20 @@ else{
                   placeholder="Last Name"
                   style={{}}
                   onChange={handleSignUp}
-
                 />
+                </div>
 
                 <input
                   className="form-control me-2 "
                   type="email" required
                   name="email"
                   placeholder="email"
-                  style={{ }}
+                  // style={{ width:'87%'}}
                   onChange={handleSignUp}
 
                 />
+
+                <div style={{display:'flex', justifyContent:'center'}}>
 
                 <input
                   className="form-control me-2 float-left  "
@@ -230,6 +233,7 @@ else{
                   style={{ }}
 
                 />
+                </div>
 
                 <br/>
 

@@ -1,108 +1,140 @@
-*{
-    margin:0px;
+* {
+    margin: 0px;
     padding: 0px;
     box-sizing: border-box;
 }
-.float-left{
+
+.float-left {
     float: left;
 }
-.float-right{
-    float:right;
+
+
+.text-gradient {
+
+    background: linear-gradient(90deg, rgb(107, 253, 255) 45%, rgb(255, 108, 186) 55%);
+    background-size: cover;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
-.text-gradient{
-    
-background: linear-gradient(90deg,rgb(107, 253, 255) 45%, rgb(255, 108, 186) 55%);
-background-size: cover;
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
+
+.auth_landingpage_card {
+    border: 10px solid transparent;
+    backdrop-filter: blur(0.5rem);
+    box-shadow: 1.3rem 1.3rem 1.3rem rgba(255, 255, 255, 0.5);
+    background-color: rgba(225, 225, 225, 0.1);
+
+    /* blur not working without it*/
+    overflow: auto;
+
+    margin: auto auto;
+    width: 80vw;
+
+    height: fit-content;
+
+
 }
 
-
-.auth_landingpage_card{
-        border: 10px solid transparent;
-        backdrop-filter: blur(0.5rem);
-        box-shadow: 1.3rem 1.3rem 1.3rem rgba(255, 255, 255, 0.5);
-        background-color: rgba(225, 225, 225, 0.1);
-        
-        /* blur not working without it*/
-        overflow:auto; 
-
-        margin: auto auto;
-        width: 80vw;
-        
-        height: fit-content;
-
-        
-}
-
-.auth-hr{
+.auth-hr {
     margin-bottom: 1.2vh !important;
     margin-left: 0px !important;
 }
 
 /* ------------------------------------------ */
 
-.signIn{
-    width:50%;
-    display:flex;
+.signIn {
+    width: 50%;
+    display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: center;
 }
 
-#signInForm{
+#signInForm {
     width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
-#signInForm input{
+
+#signInForm input {
     width: 90%;
-    margin:7px;
-}
-#signInForm button{
-    margin-top:10px;
-    margin-left:9px;
+    margin: 7px;
 }
 
-.signup{
+#signInForm button {
+    margin-top: 10px;
+    margin-left: 9px;
+}
+
+.signup {
     width: 50%;
-    display:flex;
-    flex-direction:column;
+    display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
-.signUpForm input{
-    margin:8px 0px;
-    width: 70%;
+
+.signUpForm {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
 }
 
-#name, #lastname,#password,#cpassword{
+.signUpForm input {
+    margin: 8px 0px;
+    width: 90%;
+}
+
+#name,
+#lastname,
+#password,
+#cpassword {
     width: 44%;
-    color:blue;
+    color: blue;
 }
 
-#lastname,#cpassword{
-    margin-top:8px;
+#lastname,
+#cpassword {
+    margin-top: 8px;
     display: inline;
 }
-@media  screen and (max-width:700px) {
-    .signIn{
+
+@media screen and (max-width:700px) {
+    .signIn {
         width: 100%;
     }
-    .signup{
-        width: 90vw;
-    }
-#name, #lastname,#password,#cpassword{
-    width:40%;
 
-}
-.signUpForm input{
-    width: 60%;
-}
-#lastname,#cpassword{
-    margin-left:19px;
-}
+    #signInForm input {
+        width: 144%;
+        margin: 7px;
+    }
+
+    .signup {
+        /* width: 90vw; */
+        width: 100%;
+        margin-left: auto;
+        /* margin-left:auto; */
+    }
+    .signUpForm input {
+        margin: 8px 0px;
+        width: 87%;
+    }
+    
+
+    #name,
+    #lastname,
+    #password,
+    #cpassword {
+        width: 40%;
+
+    }
+
+
+    #lastname,
+    #cpassword {
+        margin-left: 19px;
+    }
 }

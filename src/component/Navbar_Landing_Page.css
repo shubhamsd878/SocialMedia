@@ -1,0 +1,31 @@
+.logo {
+    padding-left: 3rem;
+    margin-top: 1%;
+    max-width: 24%;
+    margin-left: 4.3rem;
+    cursor: pointer;
+}
+
+.landing_nav{
+    display:flex;
+    justify-content:space-between;
+    align-items: center;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.5), rgba(0,0,0, 0.1) );
+}
+
+.right_nav_link{
+    margin-right:1vw;
+}
+
+@media screen and (max-width:700px) {
+    .logo{
+        margin-left: -1rem;
+        margin-top: 1rem;
+        min-width: 170px;
+    }
+
+    .right_nav_link{
+        margin-right:-2vw;
+        font-size: small;
+    }
+}
