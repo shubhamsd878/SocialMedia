@@ -111,6 +111,59 @@ const Post_Item = (props) => {
     }
 
 
+// -----------------------check isSaved Post--------------------------
+const [isSaved, setIsSaved] = useState(false)
+
+useEffect(() => {
+   async function fetc() {
+    let response = await fetch('http://localhost:3001/saved/isSaved', {
+        headers:{ authtoken, pid}
+    })
+    response = await response.json()
+
+    if(response.result )
+        setIsSaved(response.result)
+  }
+  
+  fetc()
+}, [])
+
+
+// ------------------ saving Post -----------------------------
+
+const savePost = async () => {
+    let response = await fetch('http://localhost:3001/saved', {
+        method: 'POST',
+        headers:{authtoken, pid}
+    })
+
+    response = await response.json()
+
+    console.log('saving post response: ', JSON.stringify(response))
+    if(response.result == true) 
+        setIsSaved(true)
+}
+
+// ------------------ saving Post -----------------------------
+
+const unSavePost = async () => {
+    let response = await fetch('http://localhost:3001/saved', {
+        method: 'DELETE',
+        headers:{authtoken, pid}
+    })
+
+    response = await response.json()
+
+    if(response.result == true) 
+        setIsSaved(false)
+}
+
+
+
+
+
+
+
     // ------------------- toggle comments -----------------------
     const uniqueId = useId()
     const toggleComments = () => {
@@ -173,10 +226,6 @@ const Post_Item = (props) => {
     return (
         <div className='card'>
 
-
-            {/* <div id='mainContainer' className="card color" >
-                           </div> */}
-
             <div className='post_item_header my-2 mx-3'>
                 {fetchTargetProfileImg ?
                     <img src={`data:image;base64,${fetchTargetProfileImg}`} alt="img" className="userImage" />
@@ -189,22 +238,25 @@ const Post_Item = (props) => {
                     <h6 className=''> {name} </h6>
                     <p className='location muted' ><i>{location}</i></p>
                 </Link>
-                {/* <div to={`/userProfile/${uid}`} className="mx-2">
-                    <h6 className=''> {name} </h6>
-                    <p className='location muted' ><i>{location}</i></p>
-                </div> */}
+                
 
             </div>
 
-            <img src={`data:image/png;base64,${file}`} id='img' alt="Avatar" className='imgSrc' />
+            <img src={`data:image/png;base64,${file}`}   onDoubleClick={ isLiked == false ? likePost : unlikePost }   id='img' alt="Avatar" className='imgSrc' />
 
             <div className="post_item_header my-2">
                 {isLiked ?
                     <img className='mx-2 like' onClick={unlikePost} src={require('../../icons/_liked_icon.png')} alt="Avatar" />
                     : <img className='mx-2 like' onClick={likePost} src={require('../../icons/_like_icon.png')} alt="Avatar" />
                 }
-                <img className='mx-2 comment' src={require('../../icons/_comment_icon.png')} alt="Avatar" />
-                <img className='mx-2 share' src={require('../../icons/_share_icon.png')} alt="Avatar" />
+                <img className='mx-2 comment' src={require('../../icons/_comment_icon.png')} alt="comment" onClick={ async () => { await toggleComments(); await fetchComments()}} />
+                <img className='mx-2 share' src={require('../../icons/_share_icon.png')} alt="share" />
+
+                {isSaved ?
+                    <img className='save share' onClick={unSavePost} src={require('../../icons/saved.png')} alt="save" />
+                :
+                    <img className='save share' onClick={savePost} src={require('../../icons/save.png')} alt="save" />
+                }
             </div>
             <div className="container">
                 <p>{totalLikes} likes</p>

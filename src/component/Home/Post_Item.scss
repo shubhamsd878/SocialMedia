@@ -64,6 +64,8 @@ img {
 
 .imgSrc {
   width: 36rem;
+  max-height: 80vh;
+  object-fit: contain;
 }
 
 .color {
@@ -80,14 +82,27 @@ img {
 
 .like {
   height: 2.1rem;
+  cursor: pointer;
 }
 
 .comment {
   height: 2.3rem;
+  cursor: pointer;
+
 }
 
 .share {
   height: 2.1rem;
+  cursor: pointer;
+
+}
+
+.save{
+  height: 1.6em;
+  margin-left: auto;
+  margin-right: 0.6em;
+  cursor: pointer;
+
 }
 
 

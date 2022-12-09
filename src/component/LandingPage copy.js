@@ -36,52 +36,22 @@ function LandingPage() {
   }
 
   // loginPath
-
-  function isEmpty(signUpForm) {
-    return Object.keys(signUpForm).length===0;
-  
-}
   const signUp = async (e) => {
-
-   if(Object.keys(signUpForm).length==5)
-   {
-   
-    if(signUpForm.password == signUpForm.cpassword)
-    {
-      
-    
-      
-      console.log(JSON.stringify(signUpForm))
-
-
+    console.log(JSON.stringify(signUpForm))
     e.preventDefault()
-
     var response = await fetch('http://localhost:3001/authentication/signup',{
       method:'POST',
       headers:{'Content-type': 'application/json'},
       body: JSON.stringify(signUpForm)
     })
     response= await response.json()
-    
-    if(response.message==true)
-    {
-      alert("signUp successfully")
-    }
-  }
-  else{
-    alert("enter both  password  and confirm password same.");
-    return;
-  }
-  }
-  
-    
+
+    console.log(response)
   }
 
   const signIn = async (e) => {
-    if(Object.keys(signInForm).length==2)
-    {
-   
     e.preventDefault()
+    console.log(signInForm)
     var response = await fetch('http://localhost:3001/authentication/login',{
       method:'POST',
       headers:{ 'Content-Type':'application/json' },
@@ -95,15 +65,8 @@ function LandingPage() {
       localStorage.setItem('uid', response.uid)
       window.location.reload()
     }
-    else{
-      alert("enter valid email and password")
-    }
     
-  }
-else{
-  alert("please enter email and password")
-  return;
-}
+    console.log(response)
   }
   
 
@@ -125,7 +88,7 @@ else{
       {/* ********************* Upper ************************ */}
       
       {/* ********************* Card ************************* */}
-      <div 
+      <div
         // className="auth_landingpage_card card mb-3 rounded-3 shadow-sm  card-blur-dark"        
         className="auth_landingpage_card mb-3 rounded-3 shadow-sm  card-blur-dark"        
       >
@@ -133,7 +96,7 @@ else{
         {/* <div id="id" className="toggler" style={{width:'200%'}}> */}
 
           {/* -------------- SignIn Form -------------- */}
-          <div className='float-left signIn' >
+          <div className='float-left' style={{width:'32rem'}}>
 
             <h3 className="card-heading text-center bold-text display-8">
               Login
@@ -142,25 +105,27 @@ else{
             <hr className="card-hr auth-hr" noshade />
 
             <div className="card-body" >
-              <form id='signInForm' >
+              <form >
                 <input
                   className="form-control me-2"
                   type="text"
                   name="email"
                   placeholder="email"
-                  style={{}}
+                  style={{ width: 'auto' }}
                   onChange={handleSignIn}
 
                 />
+                <br />
                 <input
                   className="form-control me-2"
                   type="password"
                   name="password"
                   placeholder="password"
                   aria-label="password"
-                  style={{ }}
+                  style={{ width: '50%' }}
                   onChange={handleSignIn}
                 />
+                <br />
                 {/* <a onClick={ShowSignUp} style={{ marginTop: '-1rem', display:'block', textAlign:'end', color: 'red', cursor: 'pointer' }}> <i>Create a new Account! </i></a> */}
                 {/* <br/> */}
                 <button className="btn btn-outline-success" width='4rem' onClick={signIn} >
@@ -172,7 +137,7 @@ else{
           </div>
 
             {/* ******* SignUp ******** */}
-          <div className='float-left signup'>
+          <div className='float-left' style={{width:'32rem'}}>
              <h3 className="card-heading bold-text text-center display-8">
               Sign Up
             </h3>
@@ -180,59 +145,57 @@ else{
             <hr className="card-hr auth-hr" noshade />
 
             <div className="card-body" >
-              <form id='signUpForm' className='signUpForm' >
+              <form >
                 <input
                   className="form-control me-2 float-left"
-                  type="text" required
-                  name="name" id='name'
+                  type="text"
+                  name="name"
                   placeholder="First Name"
-                  style={{  }}
+                  style={{ width: 'auto' }}
                   onChange={handleSignUp}
                 />
                 <input
-                  className="form-control me-2 " 
-                  type="text" required id='lastname'
+                  className="form-control me-2"
+                  type="text"
                   name="last_name"
                   placeholder="Last Name"
-                  style={{}}
+                  style={{ width: 'auto' }}
                   onChange={handleSignUp}
 
                 />
+                <br />
 
                 <input
-                  className="form-control me-2 "
-                  type="email" required
+                  className="form-control me-2"
+                  type="email"
                   name="email"
                   placeholder="email"
-                  style={{ }}
+                  style={{ width: '50%' }}
                   onChange={handleSignUp}
 
                 />
 
                 <input
-                  className="form-control me-2 float-left  "
-                  type="password" required id='password'
+                  className="form-control me-2 my-4 float-left "
+                  type="password"
                   name="password"
                   placeholder="password"
                   aria-label="password"
-                  style={{}}
+                  style={{ width: '45%' }}
                   onChange={handleSignUp}
 
                 />
                 <input
-                  className="form-control me-2" required
+                  className="form-control me-2 my-4"
                   type="password"
-                  name='cpassword' id='cpassword'
-                  placeholder="Confirm Password" 
-                  onChange={handleSignUp}
-
+                  placeholder="Confirm Password"
                   aria-label="password"
-                  style={{ }}
+                  style={{ width: '45%' }}
 
                 />
 
-                <br/>
 
+                <br />
                 {/* <a onClick={ShowSignUp} style={{ marginTop: '-1rem', display:'block', textAlign:'end', color: 'red', cursor: 'pointer' }}> <i>Already have an Account! </i></a> */}
                 {/* <br/> */}
                 <button className="btn btn-outline-success" width='4rem' onClick={signUp} >
