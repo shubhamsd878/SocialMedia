@@ -41,7 +41,17 @@ function Navbar_Home_Page(props) {
       body: formData
     })
       .then((response) => { return response.json() })
-      .then((response) => { console.log(response) })
+      .then((response) => {
+        console.log(response);
+        if(response.message==false)
+        {
+          alert("Please select file to upload")
+        }
+        else{
+          alert("Post successfully posted.")
+        }
+
+       })
   }
 
 

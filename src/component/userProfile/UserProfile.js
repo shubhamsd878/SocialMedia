@@ -271,6 +271,7 @@ const UserProfile = (props) => {
             // console.log('response userName: ', response)
 
             setUserName(response.result.name)
+            console.log('userName:', userName)
         }
 
         fetc()

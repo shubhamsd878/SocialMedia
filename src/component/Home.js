@@ -1,5 +1,6 @@
 
 import React from 'react'
+
 import './Home.css'
 import Post_Item from './Home/Post_Item'
 import { useState, useEffect } from 'react'
@@ -119,5 +120,18 @@ const Home = () => {
     </div>
   )
 }
+
+
+
+const liker= ()=>{
+  console.log('button clicked..');
+}
+const like= document.getElementById('liker');
+console.log(like);
+// like.addEventListener('click',liker)
+{/* <ScriptTag type='text/javascript' src='domManipulation.js'/>  */}
+
+
+
 
 export default Home

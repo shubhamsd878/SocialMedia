@@ -179,7 +179,8 @@ const unSavePost = async () => {
 
     const [yourComment, setYourComment] = useState()
     
-    const commentHandle = (e) => {
+    const commentHandle = async (e) => {
+
         setYourComment(e.target.value)
     }
 
@@ -190,12 +191,14 @@ const unSavePost = async () => {
             method: 'POST',
             headers: {authtoken: localStorage.getItem('authtoken'), pid, comment: yourComment},
             body: {"comment":yourComment}
-            // body: JSON.stringify({comment:yourComment})
+        }).then((response)=>{
+            return response.json();
+        }).then(async(data)=>{
+            console.log(data);
+            await fetchComments()   
         })
 
-        response =await response.json()
-
-        fetchComments()     // to reupdate the comments of post
+      
     }
 
 
@@ -269,7 +272,7 @@ const unSavePost = async () => {
                         <img src={avatar} alt="img" className="userImage" />
                     }
 
-                    <input className='commentBox' type='text' name='comment' onChange={commentHandle} placeholder='Enter your comment here....' />
+                    <input className='commentBox' type='text' name='comment' onFocus={async ()=>{ await toggleComments(); await fetchComments();}} onChange={commentHandle} placeholder='Enter your comment here....' />
 
                     <button type='submit' className='commentSubmit' onClick={sendComment} >Post</button>
 
