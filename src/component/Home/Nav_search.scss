@@ -1,14 +1,14 @@
 /* ********************** code for search-box ********************** */
 .boxContainer {
     /* margin: auto; */
-    margin-top: 5%;
-    margin-left: -20%;
+    // margin-top: 5%;
+    // margin-left: -20%;
     position: relative;
-    /* width: 300px; */
-    width: 25em;
-    height: 42px;
+    
+    width: 28vw;
+    height: 6vh;
     border: 1px solid #adadad;
-    padding: 0px 10px;
+    padding: 0px 1vw;
     border-radius: 50px;
 }
 
@@ -118,11 +118,11 @@
     transition: .5s;
 }
 .search_user_name:hover{
-    color:rgb(226, 226, 226);
+    color:rgb(206, 227, 255);
 }
 
 .searchEmail{
-    color: rgb(218, 218, 218);
+    color: rgb(199, 199, 199);
 }
 
 .search_userDetails{

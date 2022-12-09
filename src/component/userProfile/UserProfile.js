@@ -1,14 +1,29 @@
 // check if user exist
 import React, { useState, useEffect } from 'react'
-import './user-profile.scss'
 import { Routes, Route, Link, useParams } from 'react-router-dom'
+import InfiniteScroll from "react-infinite-scroll-component";
+// for top loading bar
+import { useLoadingContext } from "react-router-loading";
+
+import './user-profile.scss'
 import avatar from '../../assets/img_avatar.png'
 
 import GridPost from './gridPost/GridPost'
-import Post_Item from './cardPost/Post_Item'
+// import Post_Item from './cardPost/Post_Item'
+import Post_Item from '../Home/Post_Item'
+
 
 
 const UserProfile = (props) => {
+    // for top loading bar
+    const loadingContext = useLoadingContext(); // and is called just before return
+
+
+    // --- for infinity scroll ---
+    const limit = 3
+    const [skip, setSkip] = useState(0)
+    const [totalResults, setTotalResults] = useState(3)
+
 
     const propsParams = useParams()
 
@@ -17,7 +32,7 @@ const UserProfile = (props) => {
 
     const [isFriend, setIsFriend] = useState(false)
 
-    const [userPosts, setUserPosts] = useState()
+    const [userPosts, setUserPosts] = useState([])
 
     // ---------------------------------isFriend-------------------------------
     useEffect(() => {
@@ -102,7 +117,7 @@ const UserProfile = (props) => {
     const [profileChangeFile, setProfileChangeFile] = useState()
     const handleProfileChange = async (e) => {
         setProfileChangeFile(e.target.files[0])
-        console.log('setProfileChangeFile: ' + profileChangeFile)
+        // console.log('setProfileChangeFile: ' + profileChangeFile)
     }
 
     const profileChangeForm = new FormData()
@@ -255,7 +270,7 @@ const UserProfile = (props) => {
 
             response = await response.json()
 
-            console.log('follow successfull: ', response)
+            // console.log('follow successfull: ', response)
 
             if (response.status == 200) {
                 setIsFriend(true)
@@ -274,7 +289,7 @@ const UserProfile = (props) => {
             return
         }
 
-        console.log(JSON.stringify({ targetUid: uid }))
+        // console.log(JSON.stringify({ targetUid: uid }))
 
         async function fetc() {
             let response = await fetch('http://localhost:3001/follow', {
@@ -302,55 +317,60 @@ const UserProfile = (props) => {
 
 
     // --------------------------------------- fetch post of current user ----------------------------
+    async function fetchPosts() {
+
+        setSkip(skip + limit)
+        // console.log('skip and limit: ', skip, " ", limit)
+
+        let response = await fetch('http://localhost:3001/posts/fetchcurrent', {
+            headers: {
+                uid: uid,
+                skip,
+                limit
+            }
+        })
+
+        response = await response.json()
+        
+        setTotalResults(response.totalResult)
+        // setUserPosts( response.result)
+        setUserPosts( userPosts.concat(response.result))
+
+    }
+
+
     useEffect(() => {
-        async function fetc() {
-            let response = await fetch('http://localhost:3001/posts/fetchcurrent', {
-                headers: { uid: uid }
-            })
 
-            response = await response.json()
-            setUserPosts(response.result)
-            // console.log('response fetch posts: ', response)
-        }
-
-        fetc()
+        fetchPosts()
     }, [])
 
 
     setTimeout(() => {
 
         // remove cover    
-        if(!coverImg){
+        if (!coverImg) {
 
             const d = document.getElementById('coverSkeleton')
             d.classList.remove('skeleton-image')
             d.classList.add('bg-cover-default')
             // d.innerHTML = `<img src=${avatar} className='profileImage' />`
-        }    
+        }
 
-        if(!fetchProfileImg){
+        if (!fetchProfileImg) {
             const e = document.getElementById('profileSkeleton')
             e.classList.remove('skeleton-image')
             e.classList.add('bg-grey')
         }
 
 
-        // ---------------------------
-        // if(!fetchProfileImg)
-        // setFetchProfileImg(avatar)
-
-        // if(!coverImg)
-        // setCoverImg(avatar)
-
-
         if (!fetchDescription)
             setFetchDescription('Available')
 
-        console.log('fetchDescription: ', fetchDescription)
-
-
     }, 6000);
 
+
+    // topbar
+    loadingContext.done();
 
     return (
         <div className='userProfile'>
@@ -385,20 +405,20 @@ const UserProfile = (props) => {
 
             <span className="profileImgg">
 
-            {fetchProfileImg ?
-                <img title='' className='profileImage' style={{ zIndex: '2' }} src={`data:image;base64,${fetchProfileImg}`} alt='' />
-                :
-                <div id='profileSkeleton' className='profileImage skeleton-image' ></div>
-            }
+                {fetchProfileImg ?
+                    <img title='' className='profileImage' style={{ zIndex: '2' }} src={`data:image;base64,${fetchProfileImg}`} alt='' />
+                    :
+                    <div id='profileSkeleton' className='profileImage skeleton-image' ></div>
+                }
 
-            {profileEditable &&
-                <span id='span_update' className="material-symbols-outlined"
-                // firing modal
-                data-bs-toggle="modal" data-bs-target="#staticBackdropForProfile"
-                >
-                    border_color
-                </span>
-            }
+                {profileEditable &&
+                    <span id='span_update' className="material-symbols-outlined"
+                        // firing modal
+                        data-bs-toggle="modal" data-bs-target="#staticBackdropForProfile"
+                    >
+                        border_color
+                    </span>
+                }
             </span>
 
 
@@ -468,8 +488,8 @@ const UserProfile = (props) => {
             <div className="postOptions">
                 {/* gridView, cardView, savedPosts */}
                 {/* Note: the class link is common in the below link for css */}
-                <Link to={`/userprofile/${propsParams.id}`} className="gridView link"> Grid View</Link>
-                <Link to={`/userprofile/${propsParams.id}/cardView`} className="cardView link">Card View</Link>
+                <Link to={`/userprofile/${propsParams.id}`} className="link"> Grid View</Link>
+                <Link to={`/userprofile/${propsParams.id}/cardView`} className="link">Card View</Link>
                 <Link to='' className="savedPost link">Saved Post</Link>
 
             </div>
@@ -477,7 +497,7 @@ const UserProfile = (props) => {
             <Routes>
                 <Route index element={(
                     <div>
-                        {!userPosts &&
+                        {userPosts.length == 0 &&
                             <div className='posts'>
 
                                 <div className='grid-item-skeleton skeleton-image'>
@@ -493,22 +513,54 @@ const UserProfile = (props) => {
                         }
 
 
-                        <div className="posts" >
-                            {/* ------------------------ */}
+                            { userPosts.length != 0 && 
+                            
+                            // {/* ------------- Infinity Scroll Component ----------- */}
+                            <InfiniteScroll
+                            dataLength={userPosts.length}
+                            next={fetchPosts}
+                            hasMore= {totalResults > userPosts.length}
+                            loader={<h4 style={{marginBottom:'10vh'}}>Loading...</h4>}
+                            endMessage={
+                                <h6 style={{ textAlign: "center", marginBottom:'10vh', marignTop:'3vh' }}>
+                                <b>Yay! You have all catched up.  </b>
+                                </h6>
+                            }
+                            >
+
+                            <div className="posts" >
+
+
                             {userPosts && userPosts.map(element =>
                                 <GridPost key={element._id} _id={element._id} src={element.file} className='' />
-                            )}
+                                )}
                         </div>
+                                </InfiniteScroll>
+                            }
+                                
                     </div>
                 )} />
 
                 <Route path='cardView' element={(
-                    <div className='cardView'>
-                        {userPosts && userPosts.map(element =>
-                            <Post_Item key={element._id} uid={element.uid} src={element.file} className='' />
-                        )}
-                    </div>
-                )} />
+                    // ------------- Infinity Scroll Component ----------- 
+                    <InfiniteScroll
+                    dataLength={userPosts.length}
+                    next={fetchPosts}
+                    hasMore= {totalResults > userPosts.length}
+                    loader={<h4 style={{marginBottom:'10vh'}}>Loading...</h4>}
+                    endMessage={
+                        <h6 style={{ textAlign: "center", marginBottom:'10vh', marignTop:'3vh' }}>
+                        <b>Yay! You have all catched up.  </b>
+                        </h6>
+                    }
+                    >
+                        <div className='cardView'>
+                            {userPosts && userPosts.map(element =>
+                                <Post_Item pid={element._id} file={element.file} email={element.uid.email} name={element.uid.name} uid={element.uid._id} />
+                            )}
+                        </div>
+                    </InfiniteScroll>
+                )} loading />
             </Routes>
 
 
@@ -693,5 +745,7 @@ const UserProfile = (props) => {
 
         </div>
     )
+
+
 }
 export default UserProfile
