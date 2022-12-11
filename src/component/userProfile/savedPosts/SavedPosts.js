@@ -30,7 +30,6 @@ const SavedPosts = () => {
         })
 
         response = await response.json();
-        console.log(JSON.stringify(response))
 
         setTotalPosts(response.totalPosts)
         setSavedPosts(prevPosts => prevPosts.concat(response.posts))
@@ -57,7 +56,7 @@ const SavedPosts = () => {
                 >
 
                     {savedPosts.length > 0 && savedPosts.map(element =>
-                        <Post_Item pid={element.pid._id} file={element.pid.file} email={element.pid.uid.email} name={element.pid.uid.name} uid={element.pid.uid._id} />
+                        <Post_Item pid={element.pid._id} file={element.pid.file} email={element.pid.uid.email} description={element.pid.desc} location={element.pid.location} name={element.pid.uid.name} uid={element.pid.uid._id} />
                     )}
 
                 </InfiniteScroll>

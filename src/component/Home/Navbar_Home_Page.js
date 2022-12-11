@@ -110,6 +110,7 @@ function Navbar_Home_Page(props) {
       })
       response = await response.json()
 
+      if(response.response[0])
       setFetchProfileImg(response.response[0].profilePic)
     }
 
@@ -181,6 +182,34 @@ function Navbar_Home_Page(props) {
           </Link>
 
 
+            {/* -------------- userProfile dropdown --------------*/}
+            <div className="dropdown resp-1">
+              {fetchProfileImg ?
+                <img title='' className='default-user-imagee' onClick={profileDropDown} src={`data:image;base64,${fetchProfileImg}`} alt='' />
+                :
+                <img className="default-user-imagee" onClick={profileDropDown} src={avatar} alt='sss' />
+              }
+              {/* <button className="default-user-image" >HII</button> */}
+              <div id='dropdown-content' className="dropdown-content">
+                <Link to={`/userProfile/${localStorage.getItem('uid')}`} style={{ display: 'flex', columnGap: '10px' }}>
+                  <span class="material-symbols-outlined ">account_circle</span>Profile
+                </Link>
+
+                <a href="" onClick={changePassword} style={{ display: 'flex', columnGap: '10px', alignItems: 'center' }}>
+                  <span class="material-symbols-outlined">
+                    password
+                  </span>Change Password
+                </a>
+
+                <a href="" onClick={signOut} style={{ display: 'flex', columnGap: '10px' }}>
+                  <span class="material-symbols-outlined">
+                    logout
+                  </span>Sign Out
+                </a>
+              </div>
+            </div>
+
+
           {/* ******************** search users *************************/}
           <Nav_search />
 
@@ -219,7 +248,7 @@ function Navbar_Home_Page(props) {
 
 
             {/* -------------- userProfile dropdown --------------*/}
-            <div className="dropdown">
+            <div className="dropdown resp-2">
               {fetchProfileImg ?
                 <img title='' className='default-user-imagee' onClick={profileDropDown} src={`data:image;base64,${fetchProfileImg}`} alt='' />
                 :
@@ -244,7 +273,6 @@ function Navbar_Home_Page(props) {
                 </a>
               </div>
             </div>
-
 
 
           </nav>

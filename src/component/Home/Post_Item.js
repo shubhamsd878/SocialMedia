@@ -24,7 +24,7 @@ const Post_Item = (props) => {
 
             response = await response.json()
             // console.log('response search FetchTargetProfileImg:  ', response)
-
+            if(response.response[0])
             setFetchTargetProfileImg(response.response[0].profilePic)
 
         }
@@ -46,7 +46,7 @@ const Post_Item = (props) => {
 
             response = await response.json()
             // console.log('response search currUserProfileImg:  ', response)
-
+            if(response.response[0])
             setCurrUserProfilePic(response.response[0].profilePic)
 
         }
@@ -88,13 +88,14 @@ const Post_Item = (props) => {
     //   -------------------liking the post----------------------
     const likePost = async () => {
         setTotalLikes(s => s + 1)
+        setIsLiked(true)
         let response = await fetch(`${backend}/likes`, {
             method: 'POST',
             headers: { authtoken, pid }
         })
 
-        response = await response.json()
-        setIsLiked(true)
+        if( response.status !== 200)
+        setIsLiked(false)
         // console.log('like response: ', response)
     }
 
@@ -102,14 +103,15 @@ const Post_Item = (props) => {
     //   -------------------unlike the post----------------------
     const unlikePost = async () => {
         setTotalLikes(s => s - 1)
-        let response = await fetch(`${backend}:3001/likes`, {
+        setIsLiked(false)
+        let response = await fetch(`${backend}/likes`, {
             method: 'DELETE',
             headers: { authtoken, pid }
         })
 
-        response = await response.json()
-        setIsLiked(false)
-        // console.log('unlike response: ', response)
+        if( response.status !== 200)
+        setIsLiked(true)
+        console.log('unlike response: ', response)
     }
 
 

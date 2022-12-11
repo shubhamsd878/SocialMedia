@@ -378,7 +378,7 @@ const UserProfile = (props) => {
 
 
     useEffect(() => {
-
+        setSkip(0)
         fetchPosts()
     }, [])
 
@@ -446,7 +446,7 @@ const UserProfile = (props) => {
                 {fetchProfileImg ?
                     <img title='' className='profileImage' style={{ zIndex: '2' }} src={`data:image;base64,${fetchProfileImg}`} alt='' />
                     :
-                    <div id='profileSkeleton' className='profileImage skeleton-image' ></div>
+                    <div id='profileSkeleton' className='profileImage skeleton-image empty' ></div>
                 }
 
                 {profileEditable &&
@@ -526,11 +526,11 @@ const UserProfile = (props) => {
             <div className="postOptions">
                 {/* gridView, cardView, savedPosts */}
                 {/* Note: the class link is common in the below link for css */}
-                <Link to={`/userprofile/${propsParams.id}`} className="link"> Grid View</Link>
-                <Link to={`/userprofile/${propsParams.id}/cardView`} className="link">Card View</Link>
+                <Link to={``} className="link"> Grid View</Link>
+                <Link onClick={() => {setSkip(0)}} to={`cardView`} className="link">Card View</Link>
                 {/* Note: if current user profile then show saved posts else not */}
                 {profileEditable &&
-                    <Link to={`/userprofile/${propsParams.id}/savedPosts`} className="savedPost link">Saved Post</Link>
+                    <Link to={`savedPosts`} className="savedPost link">Saved Post</Link>
                 }
 
             </div>
@@ -597,7 +597,7 @@ const UserProfile = (props) => {
                     >
                         <div className='cardView'>
                             {userPosts && userPosts.map(element =>
-                                <Post_Item pid={element._id} file={element.file} email={element.uid.email} name={element.uid.name} uid={element.uid._id} />
+                                <Post_Item pid={element._id} file={element.file} email={element.uid.email} name={element.uid.name} uid={element.uid._id} description={element.desc} location={element.location} />
                             )}
                         </div>
                     </InfiniteScroll>

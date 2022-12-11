@@ -13,6 +13,9 @@
 .nav_home {
   z-index: 1;
   display: flex;
+  flex-wrap: wrap;
+  row-gap: 1rem;
+
   width: 100vw;
   padding: 2vh 0%;
   align-items: center;
@@ -79,4 +82,17 @@
   flex-direction: column;
   background-color: rgb(245, 248, 250);
 
+}
+
+.resp-1{
+  display:none;
+}
+
+@media (max-width: 566px){
+  .resp-1{
+    display: block;
+  }
+  .resp-2{
+    display: none;
+  }
 }
