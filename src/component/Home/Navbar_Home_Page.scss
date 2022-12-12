@@ -84,15 +84,36 @@
 
 }
 
-.resp-1{
-  display:none;
+.resp-1, .resp-1-bottom-nav{
+  display:none !important;
 }
 
 @media (max-width: 566px){
   .resp-1{
-    display: block;
+    display: block !important;
   }
   .resp-2{
-    display: none;
+    display: none !important;
+  }
+
+  .resp-1-bottom-nav{
+    position:fixed !important;
+    bottom: 0;
+    z-index: 10;
+    left:0vw;
+    right: 0vw;
+    // width: 100vh;
+    padding: 10px 100px;
+    left: 0;
+
+    display:flex !important;
+    justify-content: space-around;
+    // -----------------------glass morphism effect----------------
+    backdrop-filter: blur(0.5rem);
+    box-shadow: .3em .3em .7em rgba(255, 255, 255, 0.2);
+    background-color: rgb(95 95 95 / 34%);
+
   }
 }
+
+@media(max-width: 400px){}

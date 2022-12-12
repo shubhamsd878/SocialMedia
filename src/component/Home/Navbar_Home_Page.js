@@ -50,8 +50,8 @@ function Navbar_Home_Page(props) {
 
 
     formData.append('file', file_post)
-    formData.append("location",document.getElementById("location").value)
-    formData.append("description",document.getElementById("desc").value)
+    formData.append("location", document.getElementById("location").value)
+    formData.append("description", document.getElementById("desc").value)
     console.log(formData);
     console.log('formData: ' + JSON.stringify(formData))
     await fetch(`${backend}/posts/add`, {
@@ -67,17 +67,16 @@ function Navbar_Home_Page(props) {
       .then((response) => { return response.json() })
       .then((response) => {
         console.log(response);
-        if(response.message==false)
-        {
+        if (response.message == false) {
           alert("Please select file to upload")
         }
-        else{
+        else {
           alert("Post successfully posted.")
           window.location.reload()
 
         }
 
-       })
+      })
   }
 
 
@@ -96,6 +95,10 @@ function Navbar_Home_Page(props) {
     const d = document.getElementById('dropdown-content')
     d.classList.toggle('show')
   }
+  const profileDropDown2 = () => {
+    const d = document.getElementById('dropdown-content2')
+    d.classList.toggle('show')
+  }
 
 
   // -----------------------Fetching profile Pic-----------------
@@ -110,8 +113,8 @@ function Navbar_Home_Page(props) {
       })
       response = await response.json()
 
-      if(response.response[0])
-      setFetchProfileImg(response.response[0].profilePic)
+      if (response.response[0])
+        setFetchProfileImg(response.response[0].profilePic)
     }
 
     fetc()
@@ -182,32 +185,32 @@ function Navbar_Home_Page(props) {
           </Link>
 
 
-            {/* -------------- userProfile dropdown --------------*/}
-            <div className="dropdown resp-1">
-              {fetchProfileImg ?
-                <img title='' className='default-user-imagee' onClick={profileDropDown} src={`data:image;base64,${fetchProfileImg}`} alt='' />
-                :
-                <img className="default-user-imagee" onClick={profileDropDown} src={avatar} alt='sss' />
-              }
-              {/* <button className="default-user-image" >HII</button> */}
-              <div id='dropdown-content' className="dropdown-content">
-                <Link to={`/userProfile/${localStorage.getItem('uid')}`} style={{ display: 'flex', columnGap: '10px' }}>
-                  <span class="material-symbols-outlined ">account_circle</span>Profile
-                </Link>
+          {/* -------------- userProfile dropdown for responsiveness --------------*/}
+          <div className="dropdown resp-1">
+            {fetchProfileImg ?
+              <img title='' className='default-user-imagee' onClick={profileDropDown} src={`data:image;base64,${fetchProfileImg}`} alt='' />
+              :
+              <img className="default-user-imagee" onClick={profileDropDown} src={avatar} alt='sss' />
+            }
+            {/* <button className="default-user-image" >HII</button> */}
+            <div id='dropdown-content' className="dropdown-content">
+              <Link to={`/userProfile/${localStorage.getItem('uid')}`} style={{ display: 'flex', columnGap: '10px' }}>
+                <span class="material-symbols-outlined ">account_circle</span>Profile
+              </Link>
 
-                <a href="" onClick={changePassword} style={{ display: 'flex', columnGap: '10px', alignItems: 'center' }}>
-                  <span class="material-symbols-outlined">
-                    password
-                  </span>Change Password
-                </a>
+              <a href="" onClick={changePassword} style={{ display: 'flex', columnGap: '10px', alignItems: 'center' }}>
+                <span class="material-symbols-outlined">
+                  password
+                </span>Change Password
+              </a>
 
-                <a href="" onClick={signOut} style={{ display: 'flex', columnGap: '10px' }}>
-                  <span class="material-symbols-outlined">
-                    logout
-                  </span>Sign Out
-                </a>
-              </div>
+              <a href="" onClick={signOut} style={{ display: 'flex', columnGap: '10px' }}>
+                <span class="material-symbols-outlined">
+                  logout
+                </span>Sign Out
+              </a>
             </div>
+          </div>
 
 
           {/* ******************** search users *************************/}
@@ -216,7 +219,7 @@ function Navbar_Home_Page(props) {
 
           {/* ******************************************************* */}
           <nav
-            className="d-inline-flex "
+            className="d-inline-flex resp-2"
             style={{ alignItems: 'center' }}
           >
             <Link
@@ -247,15 +250,15 @@ function Navbar_Home_Page(props) {
 
 
 
-            {/* -------------- userProfile dropdown --------------*/}
+            {/* -------------- userProfile dropdown2 --------------*/}
             <div className="dropdown resp-2">
               {fetchProfileImg ?
-                <img title='' className='default-user-imagee' onClick={profileDropDown} src={`data:image;base64,${fetchProfileImg}`} alt='' />
+                <img title='' className='default-user-imagee' onClick={profileDropDown2} src={`data:image;base64,${fetchProfileImg}`} alt='' />
                 :
-                <img className="default-user-imagee" onClick={profileDropDown} src={avatar} alt='sss' />
+                <img className="default-user-imagee" onClick={profileDropDown2} src={avatar} alt='sss' />
               }
               {/* <button className="default-user-image" >HII</button> */}
-              <div id='dropdown-content' className="dropdown-content">
+              <div id='dropdown-content2' className="dropdown-content">
                 <Link to={`/userProfile/${localStorage.getItem('uid')}`} style={{ display: 'flex', columnGap: '10px' }}>
                   <span class="material-symbols-outlined ">account_circle</span>Profile
                 </Link>
@@ -281,65 +284,95 @@ function Navbar_Home_Page(props) {
 
 
 
+      {/* *********** bottom navBar for responsiveness************ */}
+      <nav
+        className="resp-1 resp-1-bottom-nav"
+        style={{  }}
+      >
+        <Link
+          className="me-4 py-2 text-decoration-none top-nav-link"
+          to="/"
+          style={{ cursor: 'pointer' }}
+        >
+          <img className='nav_icon' src={require('../../Nav_icons/home.png')} />
+        </Link>
+        <a
+          className="me-4 py-2 text-decoration-none top-nav-link"
+          // to='/'
+          onClick={() => alert('Sorry! still working on it.')}
+          style={{ cursor: 'pointer' }}
+        >
+          <img className='nav_icon' src={require('../../Nav_icons/chatting.png')} />
+        </a>
 
+        <a
+          className="py-2 text-decoration-none top-nav-link"
+          // to={props.link}
+          style={{ cursor: 'pointer' }}
+          // firing modal
+          data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+        >
+          <img className='nav_icon' src={require('../../Nav_icons/add_post.png')} />
+        </a>
 
+      </nav>
 
       {/* ********** File upload modal ************* */}
 
       {/* Modal */}
 
-        {/* Modal for file upload*/}
-        <div
-          className="modal fade"
-          id="staticBackdrop"
-          data-bs-backdrop="static"
-          data-bs-keyboard="false"
-          tabIndex={-1}
-          aria-labelledby="staticBackdropLabel"
-          aria-hidden="true"
-  
-          // custom
-          style={{ color: 'black' }}
-        >
-          <div className="modal-dialog modal-dialog-centered">
-            <div className="modal-content">
-  
-              <div className="modal-header">
-                <h1 className="modal-title fs-5" id="staticBackdropLabel">
-                  Upload File
-                </h1>
-                <button
-                  type="button"
-                  className="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                />
-              </div>
-  
-              {/* Main of Modal */}
-              <div className="modal-body flex1">
-                <input type='file' className="form-control" onChange={handler_post}></input>
-                <input type='text'  id="location" className=' form-control my-2  'placeholder='Location'></input>
-                <textarea rows={10} className='form-control my-2' id="desc" placeholder="Write something for post  "></textarea>
-              </div>
-  
-  
-              <div className="modal-footer">
-                <button
-                  type="button"
-                  className="btn btn-secondary"
-                  data-bs-dismiss="modal"
-                >
-                  Cancel
-                </button>
-                <button type="button" className="btn btn-primary" onClick={post}>
-                  Upload File
-                </button>
-              </div>
+      {/* Modal for file upload*/}
+      <div
+        className="modal fade"
+        id="staticBackdrop"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
+        tabIndex={-1}
+        aria-labelledby="staticBackdropLabel"
+        aria-hidden="true"
+
+        // custom
+        style={{ color: 'black' }}
+      >
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content">
+
+            <div className="modal-header">
+              <h1 className="modal-title fs-5" id="staticBackdropLabel">
+                Upload File
+              </h1>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              />
+            </div>
+
+            {/* Main of Modal */}
+            <div className="modal-body flex1">
+              <input type='file' className="form-control" onChange={handler_post}></input>
+              <input type='text' id="location" className=' form-control my-2  ' placeholder='Location'></input>
+              <textarea rows={10} className='form-control my-2' id="desc" placeholder="Write something for post  "></textarea>
+            </div>
+
+
+            <div className="modal-footer">
+              <button
+                type="button"
+                className="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Cancel
+              </button>
+              <button type="button" className="btn btn-primary" onClick={post}>
+                Upload File
+              </button>
             </div>
           </div>
         </div>
-  
+      </div>
+
 
 
 

@@ -62,7 +62,8 @@ const Nav_search_row = (props) => {
         }
 
         else {
-
+            const e = document.getElementById('follow-search')
+            e.disabled = true
             const authtoken = localStorage.getItem('authtoken')
 
             let response = await fetch(`${backend}/follow`, {
@@ -81,6 +82,7 @@ const Nav_search_row = (props) => {
             if (response.status == 200) {
                 setIsFriend(true)
             }
+            e.disabled = false
         }
 
 
@@ -95,7 +97,10 @@ const Nav_search_row = (props) => {
             return
         }
 
-        console.log(JSON.stringify({ targetUid: _id }))
+        const e = document.getElementbyId('unfollow-search')
+        e.disabled = true
+
+        // console.log(JSON.stringify({ targetUid: _id }))
 
         async function fetc() {
             let response = await fetch(`${backend}/follow`, {
@@ -113,6 +118,7 @@ const Nav_search_row = (props) => {
             if (response.status == 200) {
                 setIsFriend(false)
             }
+            e.disabled = false
         }
 
 
@@ -143,9 +149,9 @@ const Nav_search_row = (props) => {
                     </div>
                     
                     {!isThisUser && (!isFriend ?
-                                <button className='follow search-follow-btn' onClick={follow}>Follow</button>
+                                <button id='follow-search' className='follow search-follow-btn' onClick={follow}>Follow</button>
                                 :
-                                <button className='unfollow search-unfollow-btn' onClick={unfollow}>Following</button>
+                                <button id='unfollow-search' className='unfollow search-unfollow-btn' onClick={unfollow}>Following</button>
                                 )
                             }
                     

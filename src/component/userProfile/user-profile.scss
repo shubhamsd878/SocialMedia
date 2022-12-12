@@ -334,3 +334,17 @@
     color: black;
     background-color: azure;
 }
+
+
+@media (max-width: 950px){
+    .profileDescription{
+        // margin: 0.6em 1em 0.3 em 1 em !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        width: 90vw !important;
+    }
+    .post{    
+        width: 32vw !important;
+        height: 10em !important;
+    }
+}

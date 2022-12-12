@@ -291,10 +291,12 @@ const UserProfile = (props) => {
         }
 
         else {
-
+            console.log('follow clicked')
+            const e = document.getElementById('follow')
+            e.disabled = true
             const authtoken = localStorage.getItem('authtoken')
 
-            let response = await fetch(`${backend}:3001/follow`, {
+            let response = await fetch(`${backend}/follow`, {
                 method: 'POST',
                 headers: {
                     authtoken: authtoken,
@@ -311,6 +313,7 @@ const UserProfile = (props) => {
                 setIsFriend(true)
                 setTotalFollowers(prevCount => prevCount + 1)
             }
+            e.disabled = false
         }
 
 
@@ -328,6 +331,9 @@ const UserProfile = (props) => {
         // console.log(JSON.stringify({ targetUid: uid }))
 
         async function fetc() {
+            const e = document.getElementById('unfollow')
+            e.disabled = true;
+
             let response = await fetch(`${backend}/follow`, {
                 method: 'DELETE',
                 headers: {
@@ -343,8 +349,8 @@ const UserProfile = (props) => {
             if (response.status == 200) {
                 setIsFriend(false)
                 setTotalFollowers(prevCount => prevCount - 1)
-
             }
+            e.disabled = false;
         }
 
 
@@ -476,9 +482,9 @@ const UserProfile = (props) => {
                         <button className='message' onClick={() => alert("Not completed yet!")}>Message</button>
 
                         {!isFriend ?
-                            <button className='follow' onClick={follow}>Follow</button>
+                            <button id='follow' className='follow' onClick={follow}>Follow</button>
                             :
-                            <button className='unfollow' onClick={unfollow}>Following</button>
+                            <button id='unfollow' className='unfollow' onClick={unfollow}>Following</button>
                         }
                     </div>
                 }
