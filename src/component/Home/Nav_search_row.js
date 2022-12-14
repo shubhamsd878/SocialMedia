@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useId } from 'react'
 import {Link} from 'react-router-dom'
 
 const Nav_search_row = (props) => {
@@ -55,6 +55,8 @@ const Nav_search_row = (props) => {
 
 
       // ------------------------------- follow friend ------------------------------
+const [follow_pressed, setFollow_pressed] = useState(false)
+    //   const follow_btn_id = useId()
       async function follow() {
         if (!localStorage.getItem('authtoken')) {
             alert("To follow, first signIn!")
@@ -62,11 +64,15 @@ const Nav_search_row = (props) => {
         }
 
         else {
-            const e = document.getElementById('follow-search')
-            e.disabled = true
-            const authtoken = localStorage.getItem('authtoken')
+            // const e = document.getElementById(follow_btn_id)
+            // e.setAttribute("disabled", true)
+            if( follow_pressed === false ){
+                console.log('follow pressed')
+                setFollow_pressed(true)
 
-            let response = await fetch(`${backend}/follow`, {
+                const authtoken = localStorage.getItem('authtoken')
+
+                let response = await fetch(`${backend}/follow`, {
                 method: 'POST',
                 headers: {
                     authtoken: authtoken,
@@ -74,15 +80,18 @@ const Nav_search_row = (props) => {
                 },
                 // body: JSON.stringify({ targetUid: uid })
             })
-
+            
             response = await response.json()
-
+            
             console.log('follow successfull: ', response)
-
+            
             if (response.status == 200) {
                 setIsFriend(true)
             }
-            e.disabled = false
+            setFollow_pressed(false)
+
+        }
+            // e.setAttribute("disabled", false)
         }
 
 
@@ -90,17 +99,14 @@ const Nav_search_row = (props) => {
     }
 
 
-
+    // const unfollow_btn_id = useId()
     const unfollow = () => {
         if (!localStorage.getItem('authtoken')) {
             alert("To follow, first signIn!")
             return
         }
 
-        const e = document.getElementbyId('unfollow-search')
-        e.disabled = true
-
-        // console.log(JSON.stringify({ targetUid: _id }))
+        
 
         async function fetc() {
             let response = await fetch(`${backend}/follow`, {
@@ -118,11 +124,14 @@ const Nav_search_row = (props) => {
             if (response.status == 200) {
                 setIsFriend(false)
             }
-            e.disabled = false
+            // e.setAttribute("disabled", false)
         }
 
-
-        fetc()
+        if(follow_pressed === false){
+            setFollow_pressed(true)
+            fetc()
+            setFollow_pressed(false)
+        }
     }
 
 
@@ -149,9 +158,9 @@ const Nav_search_row = (props) => {
                     </div>
                     
                     {!isThisUser && (!isFriend ?
-                                <button id='follow-search' className='follow search-follow-btn' onClick={follow}>Follow</button>
+                                <button className='follow search-follow-btn' onClick={follow}>Follow</button>
                                 :
-                                <button id='unfollow-search' className='unfollow search-unfollow-btn' onClick={unfollow}>Following</button>
+                                <button className='unfollow search-unfollow-btn' onClick={unfollow}>Following</button>
                                 )
                             }
                     

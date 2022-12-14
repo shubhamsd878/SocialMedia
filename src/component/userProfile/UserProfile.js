@@ -413,6 +413,13 @@ const UserProfile = (props) => {
     }, 6000);
 
 
+// 
+const cardView = () => {
+    setSkip(0)
+    console.log('setSkip(0) success')
+}
+
+
     // topbar
     loadingContext.done();
 
@@ -533,7 +540,8 @@ const UserProfile = (props) => {
                 {/* gridView, cardView, savedPosts */}
                 {/* Note: the class link is common in the below link for css */}
                 <Link to={``} className="link"> Grid View</Link>
-                <Link onClick={() => {setSkip(0)}} to={`cardView`} className="link">Card View</Link>
+                {/* <Link onClick={() => {setSkip(0)}} to={`cardView`} className="link">Card View</Link> */}
+                <Link onClick={cardView} to={`cardView` } className="link">Card View</Link>
                 {/* Note: if current user profile then show saved posts else not */}
                 {profileEditable &&
                     <Link to={`savedPosts`} className="savedPost link">Saved Post</Link>

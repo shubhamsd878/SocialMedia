@@ -10,6 +10,7 @@
     "buffer": "^6.0.3",
     "buffer-reverse": "^1.0.1",
     "image-conversion": "^2.1.1",
+    "jquery": "^3.6.1",
     "latest-version": "^7.0.0",
     "node-sass": "^7.0.3",
     "package-lock-only": "^0.0.4",
