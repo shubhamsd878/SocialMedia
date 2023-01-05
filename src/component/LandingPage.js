@@ -42,9 +42,14 @@ function LandingPage() {
 
   function isEmpty(signUpForm) {
     return Object.keys(signUpForm).length===0;
-  
-}
+  }
+
+
+  const [signUpLoading, setSignUpLoading] = useState(false)
+
   const signUp = async (e) => {
+
+    e.preventDefault()
 
    if(Object.keys(signUpForm).length==5)
    {
@@ -52,12 +57,10 @@ function LandingPage() {
     if(signUpForm.password == signUpForm.cpassword)
     {
       
-    
-      
       console.log(JSON.stringify(signUpForm))
 
+    setSignUpLoading(true)
 
-    e.preventDefault()
     var response = await fetch(`${backend}/authentication/signup`,{
       method:'POST',
       headers:{'Content-type': 'application/json'},
@@ -67,24 +70,35 @@ function LandingPage() {
     
     if(response.message==true)
     {
+      setSignUpLoading(false)
       alert("signUp successfully")
+    }
+    else{
+      setSignUpLoading(false)
+      alert('SignUp Failed, mail already exists')
     }
   }
   else{
+    setSignUpLoading(false)
     alert("enter both  password  and confirm password same.");
     return;
   }
-  }
-  
-    
+  }  
   }
 
+
+  const [signInLoading, setSignInLoading] = useState(false)
+
   const signIn = async (e) => {
+    e.preventDefault()
+
     if(Object.keys(signInForm).length==2)
     {
    
-    e.preventDefault()
     console.log(signInForm)
+
+    setSignInLoading(true)
+
     var response = await fetch(`${backend}/authentication/login`,{
       method:'POST',
       headers:{ 'Content-Type':'application/json' },
@@ -93,12 +107,16 @@ function LandingPage() {
     response= await response.json()
 
     if(response.status == 200){
+
+      setSignInLoading(false)
+
       localStorage.setItem('authtoken', response.token)
       // wrong logic, --> bug
       localStorage.setItem('uid', response.uid)
       window.location.reload()
     }
     else{
+      setSignInLoading(false)
       alert("enter valid email and password")
     }
     
@@ -166,8 +184,12 @@ else{
                 />
                 {/* <a onClick={ShowSignUp} style={{ marginTop: '-1rem', display:'block', textAlign:'end', color: 'red', cursor: 'pointer' }}> <i>Create a new Account! </i></a> */}
                 {/* <br/> */}
-                <button className="btn btn-outline-success" width='4rem' onClick={signIn} >
-                  Login In
+                <button className="btn btn-outline-success" style={{width:'5.2rem'}} onClick={signIn} disabled={signInLoading}>
+                  {signInLoading ? 
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                  :
+                   'Login In'
+                  }
                 </button>
               </form>
             </div>
@@ -242,8 +264,12 @@ else{
 
                 {/* <a onClick={ShowSignUp} style={{ marginTop: '-1rem', display:'block', textAlign:'end', color: 'red', cursor: 'pointer' }}> <i>Already have an Account! </i></a> */}
                 {/* <br/> */}
-                <button className="btn btn-outline-success" width='4rem' onClick={signUp} >
-                  Sign Up
+                <button className="btn btn-outline-success" style={{width:'5.2rem'}} onClick={signUp} disabled={signUpLoading}>
+                {signUpLoading ? 
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                  :
+                   'Sign Up'
+                }
                 </button>
               </form>
             </div>

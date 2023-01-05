@@ -29,31 +29,19 @@ function Navbar_Home_Page(props) {
   }
 
 
-  // const post = async (e) => {
-  //   e.preventDefault()
-
-  //   formData.append('file', file_post)
-  //   console.log('formData: ' + JSON.stringify(formData))
-  //   await fetch('http://localhost:3001/posts/add', {
-  //     method: 'POST',
-  //     headers: {
-  //       'authtoken': localStorage.getItem('authtoken')
-  //     },
-  //     body: formData
-  //   })
-  //     .then((response) => { return response.json() })
-  //     .then((response) => { console.log(response) })
-  // }
+const [ postUploadLoading, setPostUploadLoading] = useState(false)
 
   const post = async (e) => {
     e.preventDefault()
 
+    setPostUploadLoading(true)
 
     formData.append('file', file_post)
     formData.append("location", document.getElementById("location").value)
     formData.append("description", document.getElementById("desc").value)
-    console.log(formData);
-    console.log('formData: ' + JSON.stringify(formData))
+    // console.log(formData);
+    // console.log('formData: ' + JSON.stringify(formData))
+
     await fetch(`${backend}/posts/add`, {
       method: 'POST',
       headers: {
@@ -62,18 +50,19 @@ function Navbar_Home_Page(props) {
       },
       body:
         formData
-
     })
       .then((response) => { return response.json() })
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         if (response.message == false) {
+
+          setPostUploadLoading(false)
           alert("Please select file to upload")
         }
         else {
-          alert("Post successfully posted.")
-          window.location.reload()
-
+          setPostUploadLoading(false)
+          alert("Post successfully posted, refresh to view changes.")
+          // window.location.reload()
         }
 
       })
@@ -317,6 +306,9 @@ function Navbar_Home_Page(props) {
 
       </nav>
 
+
+
+
       {/* ********** File upload modal ************* */}
 
       {/* Modal */}
@@ -351,7 +343,7 @@ function Navbar_Home_Page(props) {
 
             {/* Main of Modal */}
             <div className="modal-body flex1">
-              <input type='file' className="form-control" onChange={handler_post}></input>
+              <input type='file' className="form-control" onChange={handler_post} accept="image/x-png,image/jpg,image/jpeg"></input>
               <input type='text' id="location" className=' form-control my-2  ' placeholder='Location'></input>
               <textarea rows={10} className='form-control my-2' id="desc" placeholder="Write something for post  "></textarea>
             </div>
@@ -362,11 +354,19 @@ function Navbar_Home_Page(props) {
                 type="button"
                 className="btn btn-secondary"
                 data-bs-dismiss="modal"
+                disabled={postUploadLoading}
               >
                 Cancel
               </button>
-              <button type="button" className="btn btn-primary" onClick={post}>
-                Upload File
+              {/* width -> 6.6rem to not fluctuate width between text and spinner */}
+              <button type="button" className="btn btn-primary" style={{width:'6.6rem'}} onClick={post} disabled={postUploadLoading}>
+                {postUploadLoading? 
+                  <div class="spinner-border spinner-border-sm text-light" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                :
+                  'Upload File'
+                }
               </button>
             </div>
           </div>

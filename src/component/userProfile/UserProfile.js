@@ -8,7 +8,9 @@ import { useLoadingContext } from "react-router-loading";
 import * as imageConversion from 'image-conversion';
 
 import './user-profile.scss'
-import avatar from '../../assets/img_avatar.png'
+import Loading from '../Loading'
+
+import avatar from '../../assets/img_avatar.jpg'
 
 import GridPost from './gridPost/GridPost'
 import Post_Item from '../Home/Post_Item'
@@ -35,7 +37,7 @@ const UserProfile = (props) => {
     const profileEditable = propsParams.id === localStorage.getItem('uid') ? true : false
     const uid = propsParams.id
 
-    const [isFriend, setIsFriend] = useState(false)
+    const [isFriend, setIsFriend] = useState()
 
     const [userPosts, setUserPosts] = useState([])
 
@@ -53,6 +55,9 @@ const UserProfile = (props) => {
 
             if (response.isFollowing == true) {
                 setIsFriend(true)
+            }
+            else{
+                setIsFriend(false)
             }
         }
 
@@ -99,9 +104,10 @@ const UserProfile = (props) => {
     }
 
     const coverChangeForm = new FormData()
+    const [coverUploading, setCoverUploading] = useState(false)
 
     const handleCoverSubmit = async () => {
-
+        setCoverUploading(true)
         coverChangeForm.append('coverPic', coverChangeFile)
         let response = await fetch(`${backend}/userdetails/coverPic`, {
             method: 'PUT',
@@ -110,7 +116,12 @@ const UserProfile = (props) => {
             },
             body: coverChangeForm
         })
-        response = await response.json()
+
+        setCoverUploading(false)
+        if(response.status === 200 ){
+            alert('Success! Cover updated Successfully, refresh to see changes')
+        }
+        else alert('Err! Something went wrong while updating Cover')
         // console.log('response cover Change: ', response)
     }
     // ---------------------------------------------------
@@ -149,6 +160,7 @@ const UserProfile = (props) => {
 
     // ---------------------Update ProfileImg---------------------------
     const [profileChangeFile, setProfileChangeFile] = useState()
+    const [profileUploading, setProfileUploading] = useState(false)
 
     const handleProfileChange = async (e) => {
         let file = e.target.files[0]
@@ -165,6 +177,8 @@ const UserProfile = (props) => {
 
     const handleProfileSubmit = async () => {
 
+        setProfileUploading(true)
+
         profileChangeForm.append('profilePic', profileChangeFile)
         let response = await fetch(`${backend}/userdetails/profilepic`, {
             method: 'PUT',
@@ -173,14 +187,21 @@ const UserProfile = (props) => {
             },
             body: profileChangeForm
         })
-        response = await response.json()
-        // console.log('response cover Change: ', response)
+        setProfileUploading(false)
+        if( response.status === 200){
+            alert('Success! Profile Image updated Successfully, refresh to see changes')
+        }
+        else alert('Err! Something went wrong while updating Profile Image.')
+
     }
     // ---------------------------------------------------
 
 
     // -----------------------Update Description---------------------
     const [descriptionChange, setDescriptionChange] = useState()
+    const [descriptionUploading, setDescriptionUploading] = useState(false)
+
+
     const handleDescriptionChange = async (e) => {
         setDescriptionChange(e.target.value)
         // console.log('descriptionChange: ' + descriptionChange)
@@ -190,6 +211,8 @@ const UserProfile = (props) => {
 
     const handleDescriptionSubmit = async () => {
 
+        setDescriptionUploading(true)
+
         DescriptionChangeForm.append('description', descriptionChange)
         let response = await fetch(`${backend}/userdetails/description`, {
             method: 'PUT',
@@ -198,8 +221,14 @@ const UserProfile = (props) => {
             },
             body: DescriptionChangeForm
         })
-        response = await response.json()
-        // console.log('response cover Change: ', response)
+
+
+        setDescriptionUploading(false)
+        if(response.status === 200){
+            alert('Description updated Successfully, refresh to see changes')
+        }
+        else alert('Err! Something went wrong while updating Description')
+
     }
     // ---------------------------------------------------
 
@@ -377,7 +406,6 @@ const UserProfile = (props) => {
         response = await response.json()
         
         setTotalResults(response.totalResult)
-        // setUserPosts( response.result)
         setUserPosts( userPosts.concat(response.result))
 
     }
@@ -404,6 +432,9 @@ const UserProfile = (props) => {
             const e = document.getElementById('profileSkeleton')
             e.classList.remove('skeleton-image')
             e.classList.add('bg-grey')
+
+            e.classList.remove('profileImage')
+            e.innerHTML =  `<img class='profileImage' src=${avatar} />`
         }
 
 
@@ -489,7 +520,16 @@ const cardView = () => {
                         <button className='message' onClick={() => alert("Not completed yet!")}>Message</button>
 
                         {!isFriend ?
-                            <button id='follow' className='follow' onClick={follow}>Follow</button>
+                            <button id='follow' className='follow text-center' onClick={follow} disabled={isFriend == null} style={{width:'7rem'}}>
+                                
+                                { isFriend == null ? 
+                                    <div class="spinner-border spinner-border-sm text-light  text-center  d-flex align-items-center" style={{margin:'0px auto'}} role="status">
+                                        <span class="sr-only"></span>
+                                    </div>
+                                :
+                                    'Follow'
+                                }    
+                            </button>
                             :
                             <button id='unfollow' className='unfollow' onClick={unfollow}>Following</button>
                         }
@@ -552,7 +592,14 @@ const cardView = () => {
             <Routes>
                 <Route index element={(
                     <div>
-                        {userPosts.length == 0 &&
+                        {/* --- code if no posts --- */}
+                        {totalResults == 0 && 
+                            <h6 style={{ textAlign: "center", marginBottom: '10vh', marignTop: '3vh' }}>
+                                <b>The user has  not uploaded any post.</b>
+                            </h6>
+                        }
+
+                        {userPosts.length == 0 && totalResults > 0 &&
                             <div className='posts'>
 
                                 <div className='grid-item-skeleton skeleton-image'>
@@ -583,14 +630,14 @@ const cardView = () => {
                             }
                             >
 
-                            <div className="posts" >
+                                <div className="posts" >
 
+                                    {userPosts && userPosts.map(element =>
+                                        <GridPost key={element._id} _id={element._id} src={element.file} className='' />
+                                    )}
 
-                            {userPosts && userPosts.map(element =>
-                                <GridPost key={element._id} _id={element._id} src={element.file} className='' />
-                                )}
-                        </div>
-                                </InfiniteScroll>
+                                </div>
+                            </InfiniteScroll>
                             }
                                 
                     </div>
@@ -602,7 +649,7 @@ const cardView = () => {
                     dataLength={userPosts.length}
                     next={fetchPosts}
                     hasMore= {totalResults > userPosts.length}
-                    loader={<h4 style={{marginBottom:'10vh'}}>Loading...</h4>}
+                    loader={ <Loading /> }
                     endMessage={
                         <h6 style={{ textAlign: "center", marginBottom:'10vh', marignTop:'3vh' }}>
                         <b>Yay! You have all catched up.  </b>
@@ -665,7 +712,7 @@ const cardView = () => {
 
                         {/* Main of Modal */}
                         <div className="modal-body">
-                            <input type='file' onChange={handleCoverChange}></input>
+                            <input type='file' onChange={handleCoverChange} accept="image/x-png,image/jpg,image/jpeg"></input>
                         </div>
 
 
@@ -674,11 +721,18 @@ const cardView = () => {
                                 type="button"
                                 className="btn btn-secondary"
                                 data-bs-dismiss="modal"
+                                disabled={coverUploading}
                             >
                                 Cancel
                             </button>
-                            <button type="button" className="btn btn-primary" onClick={handleCoverSubmit}>
-                                Update
+                            <button type="button" style={{width:'5rem'}} className="btn btn-primary" onClick={handleCoverSubmit} disabled={coverUploading}>
+                                {coverUploading? 
+                                    <div class="spinner-border spinner-border-sm text-light" role="status">
+                                      <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                :
+                                    'Update'
+                                }
                             </button>
                         </div>
                     </div>
@@ -722,7 +776,7 @@ const cardView = () => {
 
                         {/* Main of Modal */}
                         <div className="modal-body">
-                            <input type='file' onChange={handleProfileChange}></input>
+                            <input type='file' onChange={handleProfileChange} accept="image/x-png,image/jpg,image/jpeg"></input>
                         </div>
 
 
@@ -731,11 +785,18 @@ const cardView = () => {
                                 type="button"
                                 className="btn btn-secondary"
                                 data-bs-dismiss="modal"
+                                disabled={profileUploading}
                             >
                                 Cancel
                             </button>
-                            <button type="button" className="btn btn-primary" onClick={handleProfileSubmit}>
-                                Update
+                            <button type="button" style={{width:'5rem'}} className="btn btn-primary" onClick={handleProfileSubmit} disabled={profileUploading}>
+                                {profileUploading ? 
+                                    <div class="spinner-border spinner-border-sm text-light" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                : 
+                                    'Update'
+                                }
                             </button>
                         </div>
                     </div>
@@ -788,11 +849,18 @@ const cardView = () => {
                                 type="button"
                                 className="btn btn-secondary"
                                 data-bs-dismiss="modal"
+                                disabled={descriptionUploading}
                             >
                                 Cancel
                             </button>
-                            <button type="button" className="btn btn-primary" onClick={handleDescriptionSubmit}>
-                                Update Description
+                            <button type="button" style={{width:'10.5rem'}} className="btn btn-primary" onClick={handleDescriptionSubmit} disabled={descriptionUploading}>
+                                {descriptionUploading ? 
+                                    <div class="spinner-border spinner-border-sm text-light" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                :
+                                    'Update Description'
+                                }
                             </button>
                         </div>
                     </div>

@@ -172,11 +172,12 @@ const Post_Item = (props) => {
     // ------------------- toggle comments -----------------------
     const uniqueId = useId()
     const toggleComments = () => {
-        console.log('toggleComments function')
         document.getElementById(`${uniqueId}`).classList.toggle('comments-none')
-        // document.getElementById('comments').classList.toggle('comments')
     }
 
+    const showComments = () => {
+        document.getElementById(`${uniqueId}`).classList.remove('comments-none')
+    }
 
     // --------------------- Comment Send --------------------------
 
@@ -320,7 +321,7 @@ const Post_Item = (props) => {
                                 <img src={avatar} alt="img" className="userImage" />
                             }
 
-                            <input className='commentBox' type='text' name='comment' onFocus={async () => { await toggleComments(); await fetchComments(); }} onChange={commentHandle} placeholder='Enter your comment here....' />
+                            <input className='commentBox' type='text' name='comment' onFocus={async () => { showComments(); await fetchComments(); }} onChange={commentHandle} placeholder='Enter your comment here....' />
 
                             <button type='submit' className='commentSubmit' onClick={sendComment} >Post</button>
 

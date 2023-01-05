@@ -5,11 +5,17 @@
 .post_column{
     margin-left: 20vw;
 }
+.loader{
+    width:25rem;
+}
 
 @media (max-width:780px) {
     .post_column{
         margin-left: auto !important;
         margin-right: auto !important;
-        max-width: 96vw;
+        max-width: 99vw;
+    }
+    .loader{
+        width:99vw;
     }
 }

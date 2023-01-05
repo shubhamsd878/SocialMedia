@@ -306,7 +306,8 @@
 // particulary for element
 #span_update {
     position: absolute;
-    left: 48%;
+    left: 50%;
+    transform: translateX(-50%);
 
     bottom: 20%;
 

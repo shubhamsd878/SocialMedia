@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Post_Item from '../../Home/Post_Item'
+import Loading from '../../Loading'
 import InfiniteScroll from "react-infinite-scroll-component";
 
 
@@ -47,7 +48,7 @@ const SavedPosts = () => {
                     dataLength={savedPosts.length}
                     next={fetchPosts}
                     hasMore={totalPosts > savedPosts.length}
-                    loader={<h4 style={{ marginBottom: '10vh' }}>Loading...</h4>}
+                    loader={<Loading />}
                     endMessage={
                         <h6 style={messageCSS}>
                             <b>Yay! You have all catched up.  </b>

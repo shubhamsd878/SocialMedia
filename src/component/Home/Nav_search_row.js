@@ -9,7 +9,7 @@ const Nav_search_row = (props) => {
   const isThisUser = _id == localStorage.getItem('uid') ? true : false
 
 
-  const [isFriend, setIsFriend] = useState(false)
+  const [isFriend, setIsFriend] = useState()
 
     // ---------------------------------isFriend-------------------------------
     useEffect(() => {
@@ -25,6 +25,9 @@ const Nav_search_row = (props) => {
 
           if (response.isFollowing == true) {
               setIsFriend(true)
+          }
+          else{
+            setIsFriend(false)
           }
       }
 
@@ -158,7 +161,15 @@ const [follow_pressed, setFollow_pressed] = useState(false)
                     </div>
                     
                     {!isThisUser && (!isFriend ?
-                                <button className='follow search-follow-btn' onClick={follow}>Follow</button>
+                                <button className='follow search-follow-btn text-center' onClick={follow} style={{width:'4.3rem', height:'2rem'}} disabled={isFriend == null}>
+                                    { isFriend == null ? 
+                                        <div class="spinner-border spinner-border-sm text-light  text-center  d-flex align-items-center" role="status" style={{margin:'0px auto'}}>
+                                            <span class="sr-only"></span>
+                                        </div>
+                                    :
+                                        'Follow'
+                                    } 
+                                </button>
                                 :
                                 <button className='unfollow search-unfollow-btn' onClick={unfollow}>Following</button>
                                 )
